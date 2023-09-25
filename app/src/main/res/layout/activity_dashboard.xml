@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+
+    <ImageView
+        android:id="@+id/login_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background_dashboard" />
+
+    <LinearLayout
+        android:id="@+id/LLheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/NavMenuIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_menu_burger" />
+
+        <TextView
+            android:id="@+id/TVapplicationName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:fontFamily="@font/museo_san_rounded900"
+            android:gravity="center"
+            android:text="Unita VPN"
+            android:textColor="@color/lightBlue"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/TelegramIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_telegram_background" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/PowerIcon"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/connect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LLheader" />
+
+    <TextView
+        android:id="@+id/TVaddTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginTop="100dp"
+        android:padding="5dp"
+        android:fontFamily="@font/museo_san_rounded700"
+        android:text="+30 min"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/PowerIcon"
+        app:layout_constraintTop_toTopOf="@+id/PowerIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/PowerIcon"
+        app:layout_constraintEnd_toEndOf="@+id/PowerIcon" />
+
+    <TextView
+        android:id="@+id/TVtimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:visibility="invisible"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/museo_san_rounded700"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="@+id/PowerIcon"
+        app:layout_constraintTop_toTopOf="@+id/PowerIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/PowerIcon"
+        app:layout_constraintEnd_toEndOf="@+id/PowerIcon" />
+
+    <TextView
+        android:id="@+id/PowerState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/PowerIcon"
+        android:text="Connect"
+        android:fontFamily="@font/museo_san_rounded700"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/lightBlue"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PowerIcon" />
+
+    <LinearLayout
+        android:id="@+id/LLdatatransfer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PowerState">
+
+        <LinearLayout
+            android:id="@+id/LLsend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/IVsend"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="2dp"
+                app:srcCompat="@drawable/ic_up" />
+
+            <TextView
+                android:id="@+id/tvsend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/museo_san_rounded500"
+                android:text="8 Mb/s"
+                android:textColor="@color/lightGray"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LLreceive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/IVreceive"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="2dp"
+                app:srcCompat="@drawable/ic_down" />
+
+            <TextView
+                android:id="@+id/tvreceive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="@font/museo_san_rounded500"
+                android:text="12 Mb/s"
+                android:textColor="@color/lightGray"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LLservers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/background_server_list_header"
+        app:layout_constraintTop_toBottomOf="@+id/LLdatatransfer">
+
+
+        <ImageView
+            android:id="@+id/IVall"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_all_colorfull"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/IVMTN"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/ic_mtn_irancell_gray"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:id="@+id/IVMCI"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/ic_mci_hamrahe_aval_gray"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LLservers">
+
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/navyBlue" />
+    </ScrollView>
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_weight="20"
+        android:background="@color/lightBlue"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+
+        <TextView
+            android:id="@+id/tvdataLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/museo_san_rounded700"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:text="10.00 GB Left" />
+
+        <TextView
+            android:id="@+id/tvGetmoredata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/museo_san_rounded700"
+            android:textSize="14sp"
+            android:textColor="@color/lightGray"
+            android:text="Get more data" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
