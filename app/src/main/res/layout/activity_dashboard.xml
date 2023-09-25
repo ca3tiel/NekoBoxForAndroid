@@ -120,7 +120,8 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PowerState">
+        app:layout_constraintTop_toBottomOf="@+id/PowerState"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:id="@+id/LLsend"
@@ -128,7 +129,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:layout_weight="0.5"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/IVsend"
@@ -140,7 +142,7 @@
 
             <TextView
                 android:id="@+id/tvsend"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="4dp"
@@ -150,8 +152,9 @@
                 android:fontFamily="@font/museo_san_rounded500"
                 android:text="8 Mb/s"
                 android:textColor="@color/lightGray"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="NestedWeights" />
         </LinearLayout>
 
         <LinearLayout
@@ -160,7 +163,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_weight="0.5"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/IVreceive"
@@ -172,7 +176,7 @@
 
             <TextView
                 android:id="@+id/tvreceive"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="4dp"
@@ -182,8 +186,9 @@
                 android:fontFamily="@font/museo_san_rounded500"
                 android:text="12 Mb/s"
                 android:textColor="@color/lightGray"
-                android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="NestedWeights" />
         </LinearLayout>
 
     </LinearLayout>
