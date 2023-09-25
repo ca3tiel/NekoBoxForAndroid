@@ -45,7 +45,7 @@
     </queries>
 
     <application
-        android:name="io.nekohasekai.sagernet.SagerNet"
+        android:name=".SagerNet"
         android:allowBackup="true"
         android:autoRevokePermissions="allowed"
         android:banner="@mipmap/ic_launcher"
@@ -62,16 +62,62 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Start">
+
+        <activity
+            android:name=".vpn.EmailVerify"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
+
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".vpn.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".vpn.DashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".vpn.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".vpn.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".vpn.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".vpn.WelcomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true" />
+
         <meta-data
             android:name="android.app.shortcuts"
             android:resource="@xml/shortcuts" />
 
         <activity
-            android:name="io.nekohasekai.sagernet.ui.BlankActivity"
+            android:name=".ui.BlankActivity"
             android:configChanges="uiMode" />
 
         <activity
-            android:name="io.nekohasekai.sagernet.ui.MainActivity"
+            android:name=".vpn.SplashActivity"
             android:configChanges="uiMode"
             android:exported="true"
             android:launchMode="singleTask">
@@ -80,7 +126,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -89,7 +134,6 @@
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
             </intent-filter>
-
             <intent-filter android:label="@string/subscription_import">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -99,9 +143,7 @@
                 <data
                     android:host="subscription"
                     android:scheme="sn" />
-
             </intent-filter>
-
             <intent-filter android:label="@string/subscription_import">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -112,7 +154,6 @@
                     android:host="install-config"
                     android:scheme="clash" />
             </intent-filter>
-
             <intent-filter android:label="@string/profile_import">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -132,7 +173,6 @@
                 <data android:scheme="naive+https" />
                 <data android:scheme="naive+quic" />
                 <data android:scheme="hysteria" />
-
             </intent-filter>
 
             <meta-data
@@ -140,47 +180,47 @@
                 android:resource="@xml/shortcuts" />
         </activity>
         <activity
-            android:name="io.nekohasekai.sagernet.ui.VpnRequestActivity"
+            android:name=".ui.VpnRequestActivity"
             android:excludeFromRecents="true"
             android:taskAffinity="" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.ConfigEditActivity"
+            android:name=".ui.profile.ConfigEditActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.SocksSettingsActivity"
+            android:name=".ui.profile.SocksSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.HttpSettingsActivity"
+            android:name=".ui.profile.HttpSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.ShadowsocksSettingsActivity"
+            android:name=".ui.profile.ShadowsocksSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.VMessSettingsActivity"
+            android:name=".ui.profile.VMessSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.TrojanSettingsActivity"
+            android:name=".ui.profile.TrojanSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.TrojanGoSettingsActivity"
+            android:name=".ui.profile.TrojanGoSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.NaiveSettingsActivity"
+            android:name=".ui.profile.NaiveSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.HysteriaSettingsActivity"
+            android:name=".ui.profile.HysteriaSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.SSHSettingsActivity"
+            android:name=".ui.profile.SSHSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.WireGuardSettingsActivity"
+            android:name=".ui.profile.WireGuardSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.TuicSettingsActivity"
+            android:name=".ui.profile.TuicSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.ChainSettingsActivity"
+            android:name=".ui.profile.ChainSettingsActivity"
             android:configChanges="uiMode" />
         <activity
             android:name="moe.matsuri.nb4a.proxy.shadowtls.ShadowTLSSettingsActivity"
@@ -192,16 +232,16 @@
             android:name="moe.matsuri.nb4a.proxy.config.ConfigSettingActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.GroupSettingsActivity"
+            android:name=".ui.GroupSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.RouteSettingsActivity"
+            android:name=".ui.RouteSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.AssetsActivity"
+            android:name=".ui.AssetsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.AppListActivity"
+            android:name=".ui.AppListActivity"
             android:configChanges="uiMode" />
         <activity
             android:name=".QuickToggleShortcut"
@@ -217,57 +257,53 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="io.nekohasekai.sagernet.ui.AppManagerActivity"
+            android:name=".ui.AppManagerActivity"
             android:configChanges="uiMode"
             android:excludeFromRecents="true"
             android:label="@string/proxied_apps"
             android:launchMode="singleTask"
             android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.ScannerActivity"
+            android:name=".ui.ScannerActivity"
             android:configChanges="uiMode"
             android:excludeFromRecents="true"
             android:label="@string/add_profile_methods_scan_qr_code"
             android:launchMode="singleTask"
-            android:parentActivityName="io.nekohasekai.sagernet.ui.MainActivity" />
+            android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.ProfileSelectActivity"
+            android:name=".ui.ProfileSelectActivity"
             android:configChanges="uiMode"
             android:label="@string/select_profile"
             android:launchMode="singleTask"
-            android:parentActivityName="io.nekohasekai.sagernet.ui.MainActivity" />
+            android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.StunActivity"
+            android:name=".ui.StunActivity"
             android:configChanges="uiMode"
             android:launchMode="singleTask"
-            android:parentActivityName="io.nekohasekai.sagernet.ui.MainActivity" />
-
+            android:parentActivityName=".ui.MainActivity" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.SwitchActivity"
+            android:name=".ui.SwitchActivity"
             android:configChanges="uiMode"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.SagerNet.Dialog" />
 
         <service
-            android:name="io.nekohasekai.sagernet.bg.ProxyService"
+            android:name=".bg.ProxyService"
             android:exported="false"
             android:process=":bg" />
-
         <service
-            android:name="io.nekohasekai.sagernet.bg.VpnService"
+            android:name=".bg.VpnService"
             android:exported="false"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_VPN_SERVICE"
             android:process=":bg">
-
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>
         </service>
-
         <service
-            android:name="io.nekohasekai.sagernet.bg.TileService"
+            android:name=".bg.TileService"
             android:exported="true"
             android:icon="@drawable/ic_service_active"
             android:label="@string/tile_title"
@@ -277,6 +313,7 @@
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.service.quicksettings.TOGGLEABLE_TILE"
                 android:value="true" />
@@ -291,14 +328,13 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/cache_paths" />
         </provider>
-
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             tools:node="remove" />
 
         <receiver
-            android:name="io.nekohasekai.sagernet.BootReceiver"
+            android:name=".BootReceiver"
             android:enabled="false"
             android:exported="true"
             android:process=":bg">
@@ -312,7 +348,6 @@
         <service
             android:name="androidx.room.MultiInstanceInvalidationService"
             android:process=":bg" />
-
     </application>
 
 </manifest>
