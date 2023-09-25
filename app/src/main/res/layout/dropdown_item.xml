@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_nav_item"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:gravity="center"
+    android:padding="10dp"
+    android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/dropdownItemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/museo_san_rounded700"
+            android:text="Dropdown Item"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/fastInternet"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_fast_internet"/>
+
+</LinearLayout>
