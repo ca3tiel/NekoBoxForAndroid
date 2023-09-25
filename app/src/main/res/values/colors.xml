@@ -278,9 +278,6 @@
     <color name="material_yellow_accent_400">#FFEA00</color>
     <color name="material_yellow_accent_700">#FFD600</color>
 
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-
     <color name="fab_color_progress">@color/material_light_black</color>
 
     <color name="color_pink_ssr">#fb7299</color>
@@ -289,5 +286,18 @@
     <color name="color_ng_black_primary">#2B2B2B</color>
 
     <color name="preference_simple_menu_background">#FAFAFA</color>
+
+    <!-- VPN -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="purple">#800080</color>
+    <color name="navyBlue">#18222E</color>
+    <color name="lightNavyBlue">#192533</color>
+    <color name="darkGray">#2B3340</color>
+    <color name="transparentGray">#4D2B3340</color>
+    <color name="lightGray">#8F939E</color>
+    <color name="Blue">#055C9D</color>
+    <color name="lightBlue">#12aeef</color>
+    <color name="red">#FF0000</color>
 
 </resources>
