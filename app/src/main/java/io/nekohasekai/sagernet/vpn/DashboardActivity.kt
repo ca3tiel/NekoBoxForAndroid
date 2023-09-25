@@ -1,5 +1,6 @@
 package io.nekohasekai.sagernet.vpn
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import io.nekohasekai.sagernet.R
+import io.nekohasekai.sagernet.ui.MainActivity
 import io.nekohasekai.sagernet.vpn.nav.MenuFragment
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
 
@@ -32,6 +34,17 @@ class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        val telegramIcon = findViewById<ImageView>(R.id.TelegramIcon)
+
+        // Set an OnClickListener to MainActivity
+        telegramIcon.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                // Start the MainActivity
+                val intent = Intent(this@DashboardActivity, MainActivity::class.java)
+                startActivity(intent)
+            }
+        })
 
         // Initialize the fragment container
         val fragmentContainer = findViewById<View>(R.id.fragmentContainer)
