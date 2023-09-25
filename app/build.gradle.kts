@@ -5,6 +5,8 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
+    id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 setupApp()
@@ -26,11 +28,20 @@ android {
         viewBinding = true
     }
     namespace = "io.nekohasekai.sagernet"
+
 }
 
 dependencies {
 
     implementation(fileTree("libs"))
+
+
+    implementation("com.google.firebase:firebase-auth-ktx:22.1.0")
+    implementation("com.facebook.android:facebook-android-sdk:latest.release")
+    implementation("com.google.android.gms:play-services-auth:20.6.0")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation("androidx.core:core-ktx:1.9.0")
