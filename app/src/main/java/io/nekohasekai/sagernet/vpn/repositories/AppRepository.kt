@@ -11,6 +11,8 @@ import okhttp3.Response
 import java.io.IOException
 
 object AppRepository {
+    public var appName: String = "UnitaVPN"
+    private var subscriptionLink: String = "https://panel.holyip.workers.dev/link/9RTsfMryrGwgWZVb48eN?config=1"
     private var baseUrl: String = "https://panel.holyip.com/"
     private var userLoginUrl: String = "https://panel.holyip.com/api/v2/client/token"
     private var userRegisterUrl: String = "https://panel.miatel.xyz/api/auth/register"
@@ -23,6 +25,14 @@ object AppRepository {
 
     fun setBaseUrl(url: String) {
         baseUrl = url
+    }
+
+    fun setSubscriptionLink(url: String) {
+        subscriptionLink = url
+    }
+
+    fun getSubscriptionLink(): String {
+        return subscriptionLink
     }
 
     private fun getBaseUrl(): String? {
