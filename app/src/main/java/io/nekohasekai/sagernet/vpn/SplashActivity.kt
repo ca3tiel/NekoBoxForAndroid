@@ -9,15 +9,17 @@ import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.database.DataStore
 import io.nekohasekai.sagernet.database.GroupManager
 import io.nekohasekai.sagernet.database.ProxyGroup
+import io.nekohasekai.sagernet.database.SagerDatabase
 import io.nekohasekai.sagernet.database.SubscriptionBean
 import io.nekohasekai.sagernet.group.GroupUpdater
 import io.nekohasekai.sagernet.ktx.applyDefaultValues
 import io.nekohasekai.sagernet.ktx.runOnDefaultDispatcher
+import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 
 class SplashActivity : AppCompatActivity() {
 
     fun ProxyGroup.init() {
-        DataStore.groupName = name ?: "HolyVpn"
+        DataStore.groupName = name ?: AppRepository.appName
         DataStore.groupType = 1
         DataStore.groupOrder = order
         DataStore.groupIsSelector = isSelector
@@ -28,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
         DataStore.landingProxyTmp = if (landingProxy >= 0) 3 else 0
 
         val subscription = subscription ?: SubscriptionBean().applyDefaultValues()
-        DataStore.subscriptionLink = "https://panel.holyip.workers.dev/link/9RTsfMryrGwgWZVb48eN?config=1"
+        DataStore.subscriptionLink = AppRepository.getSubscriptionLink()
         DataStore.subscriptionForceResolve = subscription.forceResolve
         DataStore.subscriptionDeduplication = subscription.deduplication
         DataStore.subscriptionUpdateWhenConnectedOnly = subscription.updateWhenConnectedOnly
@@ -67,7 +69,8 @@ class SplashActivity : AppCompatActivity() {
         // Use a Handler to post a delayed Runnable
         Handler().postDelayed({
             // After the delay, start the WelcomeActivity
-            val intent = Intent(this, WelcomeActivity::class.java)
+//            val intent = Intent(this, WelcomeActivity::class.java)
+            val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
 
             // Finish the current activity to prevent returning to it later
@@ -75,10 +78,13 @@ class SplashActivity : AppCompatActivity() {
         }, 1000) // Delay for 2000 milliseconds (2 seconds)
 
         runOnDefaultDispatcher {
-            ProxyGroup().init()
-            var subscription = ProxyGroup().apply { serialize() }
-            GroupManager.createGroup(subscription)
-            GroupUpdater.startUpdate(subscription, true)
+            val entity = SagerDatabase.groupDao.getById(1)
+            if (entity == null) {
+                ProxyGroup().init()
+                var subscription = ProxyGroup().apply { serialize() }
+                GroupManager.createGroup(subscription)
+                GroupUpdater.startUpdate(subscription, true)
+            }
         }
     }
 }
