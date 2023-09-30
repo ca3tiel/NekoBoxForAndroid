@@ -1323,6 +1323,7 @@ class ConfigurationFragment @JvmOverloads constructor(
                         undoManager.flush()
                     }
                     val pos = itemCount
+                    println("HAMED_LOG_3: " + profile.id.toString())
                     configurationList[profile.id] = profile
                     configurationIdList.add(profile.id)
                     notifyItemInserted(pos)
@@ -1401,6 +1402,7 @@ class ConfigurationFragment @JvmOverloads constructor(
 
             fun reloadProfiles() {
                 var newProfiles = SagerDatabase.proxyDao.getByGroup(proxyGroup.id)
+                println("HAMED_LOG_4: " + newProfiles.size.toString())
                 val subscription = proxyGroup.subscription
                 when (proxyGroup.order) {
                     GroupOrder.BY_NAME -> {
