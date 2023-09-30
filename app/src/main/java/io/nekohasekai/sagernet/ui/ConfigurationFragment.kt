@@ -1138,8 +1138,10 @@ class ConfigurationFragment @JvmOverloads constructor(
             configurationListView.adapter = adapter
             configurationListView.setItemViewCacheSize(20)
 
-            if (!select) {
+            println("HAMED_LOG_1: " +  configurationListView.childCount.toString())
 
+            if (!select) {
+                println("HAMED_LOG_2")
                 undoManager = UndoSnackbarManager(activity as MainActivity, adapter!!)
 
                 ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
@@ -1320,6 +1322,7 @@ class ConfigurationFragment @JvmOverloads constructor(
                         undoManager.flush()
                     }
                     val pos = itemCount
+                    println("HAMED_LOG_3: " + profile.id.toString())
                     configurationList[profile.id] = profile
                     configurationIdList.add(profile.id)
                     notifyItemInserted(pos)
@@ -1398,6 +1401,7 @@ class ConfigurationFragment @JvmOverloads constructor(
 
             fun reloadProfiles() {
                 var newProfiles = SagerDatabase.proxyDao.getByGroup(proxyGroup.id)
+                println("HAMED_LOG_4: " + newProfiles.size.toString())
                 val subscription = proxyGroup.subscription
                 when (proxyGroup.order) {
                     GroupOrder.BY_NAME -> {
