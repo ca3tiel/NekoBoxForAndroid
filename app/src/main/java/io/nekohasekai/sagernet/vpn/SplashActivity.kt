@@ -71,7 +71,7 @@ class SplashActivity : AppCompatActivity() {
         println("HAMED_LOG_Splash_1: " + newProfiles.size.toString())
         newProfiles.forEach { proxyEntity -> (
                 println("HAMED_LOG_Splash_2: " + proxyEntity.id.toString() + " - " +proxyEntity.displayName())
-        ) }
+        )}
 
         // Use a Handler to post a delayed Runnable
         Handler().postDelayed({
@@ -86,12 +86,12 @@ class SplashActivity : AppCompatActivity() {
 
         runOnDefaultDispatcher {
             val entity = SagerDatabase.groupDao.getById(1)
+            ProxyGroup().init()
+            var subscription = ProxyGroup().apply { serialize() }
             if (entity == null) {
-                ProxyGroup().init()
-                var subscription = ProxyGroup().apply { serialize() }
                 GroupManager.createGroup(subscription)
-                GroupUpdater.startUpdate(subscription, true)
             }
+            GroupUpdater.startUpdate(subscription, true)
         }
     }
 }

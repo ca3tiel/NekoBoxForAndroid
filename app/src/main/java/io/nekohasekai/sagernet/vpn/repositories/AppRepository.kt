@@ -142,4 +142,15 @@ object AppRepository {
         return request.build()
     }
 
+    fun flagNameMapper(countryCode: String): String
+    {
+        val countries = mapOf(
+            "de" to "Germany",
+            "tr" to "Turkey",
+            "bg" to "Bulgaria",
+            "fr" to "France"
+        )
+        return countries[countryCode].toString()
+    }
+
 }
