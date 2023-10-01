@@ -3,21 +3,35 @@ package io.nekohasekai.sagernet.vpn
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.RemoteException
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.preference.PreferenceDataStore
+import com.google.android.material.navigation.NavigationView
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.SagerNet
+import io.nekohasekai.sagernet.aidl.ISagerNetService
+import io.nekohasekai.sagernet.bg.BaseService
+import io.nekohasekai.sagernet.bg.SagerConnection
 import io.nekohasekai.sagernet.database.DataStore
+import io.nekohasekai.sagernet.database.GroupManager
+import io.nekohasekai.sagernet.database.preference.OnPreferenceDataStoreChangeListener
+import io.nekohasekai.sagernet.group.GroupInterfaceAdapter
 import io.nekohasekai.sagernet.ui.MainActivity
+import io.nekohasekai.sagernet.ui.ThemedActivity
 import io.nekohasekai.sagernet.ui.VpnRequestActivity
 import io.nekohasekai.sagernet.vpn.nav.MenuFragment
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
 
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : ThemedActivity(),
+    SagerConnection.Callback,
+    OnPreferenceDataStoreChangeListener,
+    NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var iconImageView: ImageView
     private lateinit var ivAll: ImageView
@@ -39,6 +53,7 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dashboard)
 
         val telegramIcon = findViewById<ImageView>(R.id.TelegramIcon)
+        val connection = SagerConnection(SagerConnection.CONNECTION_ID_MAIN_ACTIVITY_FOREGROUND, true)
 
         // Set an OnClickListener to MainActivity
         telegramIcon.setOnClickListener(object : View.OnClickListener {
@@ -123,11 +138,15 @@ class DashboardActivity : AppCompatActivity() {
                     startTimer()
                 }, 2000) // Delay of 2 seconds
             } else {
-                showConnectState()
+                showNotConnectedState()
                 stopTimer()
                 add30MinutesToTimer() // Add 30 minutes
             }
         }
+
+        connection.connect(this, this)
+        DataStore.configurationStore.registerChangeListener(this)
+//        GroupManager.userInterface = GroupInterfaceAdapter(this)
 
         // Set an OnClickListener for IVall
         ivAll.setOnClickListener {
@@ -223,7 +242,7 @@ class DashboardActivity : AppCompatActivity() {
         timerHandler.post(object : Runnable {
             override fun run() {
                 if (timeRemainingMillis <= 0) {
-                    showConnectState()
+                    showNotConnectedState()
                 } else {
                     timeRemainingMillis -= 1000 // Decrease by 1 second
                     updateTimerText()
@@ -262,7 +281,7 @@ class DashboardActivity : AppCompatActivity() {
         addtimeTextView.visibility = View.INVISIBLE
     }
 
-    private fun showConnectState() {
+    private fun showNotConnectedState() {
         iconImageView.setImageResource(R.drawable.connect)
         stateTextView.text = "Connect"
         isConnected = false
@@ -281,5 +300,47 @@ class DashboardActivity : AppCompatActivity() {
 
     private val connect = registerForActivityResult(VpnRequestActivity.StartService()) {
         if (it) println("HAMED_LOG_" + R.string.vpn_permission_denied)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(DataStore.serviceState.connected) {
+            showConnectedState()
+            startTimer()
+        } else {
+            showNotConnectedState()
+        }
+    }
+
+    override fun stateChanged(state: BaseService.State, profileName: String?, msg: String?) {
+        changeState(state, msg, true)
+    }
+
+    override fun onServiceConnected(service: ISagerNetService) = changeState(
+        try {
+            BaseService.State.values()[service.state]
+        } catch (_: RemoteException) {
+            BaseService.State.Idle
+        }
+    )
+
+    override fun onPreferenceDataStoreChanged(store: PreferenceDataStore, key: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    private fun changeState(
+        state: BaseService.State,
+        msg: String? = null,
+        animate: Boolean = false,
+    ) {
+        DataStore.serviceState = state
+
+//        binding.fab.changeState(state, DataStore.serviceState, animate)
+//        binding.stats.changeState(state)
+//        if (msg != null) snackbar(getString(R.string.vpn_error, msg)).show()
     }
 }
