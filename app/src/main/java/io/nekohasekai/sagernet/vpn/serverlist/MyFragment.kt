@@ -66,9 +66,9 @@ class MyFragment : Fragment() {
 
         val recyclerView: RecyclerView = rootView.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-//        val adapter = MyAdapter(allServers) { clickedItem ->
+        val adapter = MyAdapter(allServers) { clickedItem ->
 //            println("HAMED_LOG_3")
-//        }
+        }
         recyclerView.adapter = adapter
 
         return rootView
