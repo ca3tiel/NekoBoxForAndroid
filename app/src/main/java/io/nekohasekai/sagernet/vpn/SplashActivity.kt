@@ -66,12 +66,12 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        var proxyGroup = SagerDatabase.groupDao.getById(1)!!
-        var newProfiles = SagerDatabase.proxyDao.getByGroup(proxyGroup.id)
-        println("HAMED_LOG_Splash_1: " + newProfiles.size.toString())
-        newProfiles.forEach { proxyEntity -> (
-                println("HAMED_LOG_Splash_2: " + proxyEntity.id.toString() + " - " +proxyEntity.displayName())
-        )}
+//        var proxyGroup = SagerDatabase.groupDao.getById(1)!!
+//        var newProfiles = SagerDatabase.proxyDao.getByGroup(proxyGroup.id)
+//        println("HAMED_LOG_Splash_1: " + newProfiles.size.toString())
+//        newProfiles.forEach { proxyEntity -> (
+//                println("HAMED_LOG_Splash_2: " + proxyEntity.id.toString() + " - " +proxyEntity.displayName())
+//        )}
 
         // Use a Handler to post a delayed Runnable
         Handler().postDelayed({
@@ -82,7 +82,7 @@ class SplashActivity : AppCompatActivity() {
 
             // Finish the current activity to prevent returning to it later
             finish()
-        }, 1000) // Delay for 2000 milliseconds (2 seconds)
+        }, 2000) // Delay for 2000 milliseconds (2 seconds)
 
         runOnDefaultDispatcher {
             val entity = SagerDatabase.groupDao.getById(1)
