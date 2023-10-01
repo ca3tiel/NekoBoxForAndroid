@@ -1474,10 +1474,12 @@ class ConfigurationFragment @JvmOverloads constructor(
 
                 if (select) {
                     view.setOnClickListener {
+                        println("HAMED_LOG_15: " + proxyEntity.id.toString())
                         (requireActivity() as SelectCallback).returnProfile(proxyEntity.id)
                     }
                 } else {
                     view.setOnClickListener {
+                        println("HAMED_LOG_16: " + proxyEntity.id.toString())
                         runOnDefaultDispatcher {
                             var update: Boolean
                             var lastSelected: Long
@@ -1491,6 +1493,8 @@ class ConfigurationFragment @JvmOverloads constructor(
                             }
 
                             if (update) {
+                                println("HAMED_LOG_17: " + lastSelected.toString())
+                                println("HAMED_LOG_18: " + DataStore.selectedProxy)
                                 ProfileManager.postUpdate(lastSelected)
                                 if (DataStore.serviceState.canStop && reloadAccess.tryLock()) {
                                     SagerNet.reloadService()
