@@ -9,14 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.nekohasekai.sagernet.R
+import io.nekohasekai.sagernet.SagerNet
 import io.nekohasekai.sagernet.database.DataStore
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
+import kotlinx.coroutines.sync.Mutex
 
 class MyAdapter(
     private val itemList: List<ListItem>,
     private val itemClickListener: (ListItem) -> Unit // Pass a lambda function as a parameter
 ) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemName: TextView = itemView.findViewById(R.id.itemName)
         val itemIcon: ImageView = itemView.findViewById(R.id.itemIcon)
@@ -53,7 +54,9 @@ class MyAdapter(
         val dropdownAdapter = DropdownAdapter(item.dropdownItems) { clickedItem ->
             AppRepository.selectedServerId = clickedItem.id
             DataStore.selectedProxy = clickedItem.id
-            println("HAMED_LOG_11: " + clickedItem.id + " - " + clickedItem.name)
+            if (DataStore.serviceState.connected) {
+                SagerNet.reloadService()
+            }
         }
         holder.dropdownList.layoutManager = LinearLayoutManager(holder.dropdownList.context)
         holder.dropdownList.adapter = dropdownAdapter

@@ -14,9 +14,11 @@ import io.nekohasekai.sagernet.database.SubscriptionBean
 import io.nekohasekai.sagernet.group.GroupUpdater
 import io.nekohasekai.sagernet.ktx.applyDefaultValues
 import io.nekohasekai.sagernet.ktx.runOnDefaultDispatcher
+import io.nekohasekai.sagernet.ui.MainActivity
+import io.nekohasekai.sagernet.ui.ThemedActivity
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : ThemedActivity() {
 
     fun ProxyGroup.init() {
         DataStore.groupName = name ?: AppRepository.appName
@@ -66,6 +68,13 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        if(DataStore.serviceState.connected) {
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+
 //        var proxyGroup = SagerDatabase.groupDao.getById(1)!!
 //        var newProfiles = SagerDatabase.proxyDao.getByGroup(proxyGroup.id)
 //        println("HAMED_LOG_Splash_1: " + newProfiles.size.toString())
@@ -77,12 +86,13 @@ class SplashActivity : AppCompatActivity() {
         Handler().postDelayed({
             // After the delay, start the WelcomeActivity
 //            val intent = Intent(this, WelcomeActivity::class.java)
+//            val intent = Intent(this, MainActivity::class.java)
             val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
 
             // Finish the current activity to prevent returning to it later
             finish()
-        }, 2000) // Delay for 2000 milliseconds (2 seconds)
+        }, 10000) // Delay for 2000 milliseconds (2 seconds)
 
         runOnDefaultDispatcher {
             val entity = SagerDatabase.groupDao.getById(1)
