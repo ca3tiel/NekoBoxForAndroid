@@ -21,6 +21,7 @@ object AppRepository {
     private var userStateUrl: String = "https://panel.holyip.com/api/v2/client/stats"
     private var panelApiHeaderToken: String = "9f8a833ca1383c5449e1d8800b45fd54"
     private var panelSettingsUrl = "https://panel.miatel.xyz/api/settings"
+    public var selectedServerId: Long = -1
 
 
     fun setBaseUrl(url: String) {
@@ -148,7 +149,8 @@ object AppRepository {
             "de" to "Germany",
             "tr" to "Turkey",
             "bg" to "Bulgaria",
-            "fr" to "France"
+            "fr" to "France",
+            "nl" to "Netherlands"
         )
         return countries[countryCode].toString()
     }

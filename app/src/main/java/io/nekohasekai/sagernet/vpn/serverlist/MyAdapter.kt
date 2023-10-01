@@ -9,9 +9,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.nekohasekai.sagernet.R
+import io.nekohasekai.sagernet.database.DataStore
+import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 
-class MyAdapter(private val itemList: List<ListItem>) :
-    RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyAdapter(
+    private val itemList: List<ListItem>,
+    private val itemClickListener: (ListItem) -> Unit // Pass a lambda function as a parameter
+) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemName: TextView = itemView.findViewById(R.id.itemName)
@@ -40,10 +44,17 @@ class MyAdapter(private val itemList: List<ListItem>) :
         holder.itemHeader.setOnClickListener {
             item.isExpanded = !isExpanded
             notifyItemChanged(holder.adapterPosition)
+
+            // Handle item click by calling the lambda function
+            itemClickListener(item)
         }
 
         // Create and set a RecyclerView adapter for the dropdown list
-        val dropdownAdapter = DropdownAdapter(item.dropdownItems)
+        val dropdownAdapter = DropdownAdapter(item.dropdownItems) { clickedItem ->
+            AppRepository.selectedServerId = clickedItem.id
+            DataStore.selectedProxy = clickedItem.id
+            println("HAMED_LOG_11: " + clickedItem.id + " - " + clickedItem.name)
+        }
         holder.dropdownList.layoutManager = LinearLayoutManager(holder.dropdownList.context)
         holder.dropdownList.adapter = dropdownAdapter
     }

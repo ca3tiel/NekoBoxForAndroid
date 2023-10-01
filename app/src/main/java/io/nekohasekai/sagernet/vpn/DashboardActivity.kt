@@ -10,7 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import io.nekohasekai.sagernet.R
+import io.nekohasekai.sagernet.SagerNet
+import io.nekohasekai.sagernet.database.DataStore
 import io.nekohasekai.sagernet.ui.MainActivity
+import io.nekohasekai.sagernet.ui.VpnRequestActivity
 import io.nekohasekai.sagernet.vpn.nav.MenuFragment
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
 
@@ -110,6 +113,9 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         iconImageView.setOnClickListener {
+            if (DataStore.serviceState.canStop) SagerNet.stopService() else connect.launch(
+                null
+            )
             if (!isConnected) {
                 showConnectingState()
                 Handler().postDelayed({
@@ -271,5 +277,9 @@ class DashboardActivity : AppCompatActivity() {
         outState.putBoolean("ivAllClicked", ivAllClicked)
         outState.putBoolean("ivMtnClicked", ivMtnClicked)
         outState.putBoolean("ivMciClicked", ivMciClicked)
+    }
+
+    private val connect = registerForActivityResult(VpnRequestActivity.StartService()) {
+        if (it) println("HAMED_LOG_" + R.string.vpn_permission_denied)
     }
 }

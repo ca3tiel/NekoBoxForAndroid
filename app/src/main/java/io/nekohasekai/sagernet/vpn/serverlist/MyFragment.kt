@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.database.SagerDatabase
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
-import java.util.Locale
 
 class MyFragment : Fragment() {
 
@@ -27,39 +26,48 @@ class MyFragment : Fragment() {
         var proxyGroup = SagerDatabase.groupDao.getById(1)!!
         var newProfiles = SagerDatabase.proxyDao.getByGroup(proxyGroup.id)
 
-        // Initialize item lists
-        val allServers =  mutableListOf<ListItem>()
-        newProfiles.forEachIndexed { index, item ->
-            if(index < 2) {
-                return@forEachIndexed
+        val allServers = mutableListOf<ListItem>()
+        val groupedServers = newProfiles
+            .drop(2) // Skip the first 2 items
+            .groupBy { item ->
+                val serverName = item.displayName()
+                serverName.substring(serverName.length - 5, serverName.length).substring(0, 2).lowercase()
             }
-            val serverName = item.displayName()
-            val countryCode = serverName.substring(serverName.length - 5, serverName.length).substring(0, 2).lowercase()
+
+        groupedServers.forEach { (countryCode, profiles) ->
             val resourceName = "ic_${countryCode}_flag"
+            val countryName = AppRepository.flagNameMapper(countryCode)
+
+            val serverList = profiles.map { profile ->
+                ListSubItem(profile.id, profile.displayName())
+            }
+
+            val listItem = ListItem(
+                countryName,
+                serverList,
+                iconResId = resources.getIdentifier(resourceName, "drawable", context?.packageName)
+            )
+            listItem.setOnClickListener {
+//                println("HAMED_LOG_1")
+            }
             allServers.add(
-                ListItem(
-                    AppRepository.flagNameMapper(countryCode),
-                    listOf("Netherlands 1", "Netherlands 2", "Netherlands 3", "Netherlands 4"),
-                    iconResId = resources.getIdentifier(resourceName, "drawable", context?.packageName )
-                )
+                listItem
             )
         }
 
-        val mtnServers = mutableListOf(
-            ListItem("Germany", listOf("Germany 1", "Germany 2", "Germany 3", "Germany 4"), iconResId = R.drawable.ic_de_flag),
-            ListItem("France", listOf("France 1", "France 2", "France 3", "France 4"), iconResId = R.drawable.ic_fr_flag)
-        )
-
-        val mciServers = mutableListOf(
-            ListItem("Netherlands", listOf("Netherlands 1", "Netherlands 2", "Netherlands 3", "Netherlands 4"), iconResId = R.drawable.ic_nl_flag)
-        )
+//        val mtnServers = mutableListOf(
+//            ListItem("Germany", listOf("Germany 1", "Germany 2", "Germany 3", "Germany 4"), iconResId = R.drawable.ic_de_flag),
+//            ListItem("France", listOf("France 1", "France 2", "France 3", "France 4"), iconResId = R.drawable.ic_fr_flag)
+//        )
+//
+//        val mciServers = mutableListOf(
+//            ListItem("Netherlands", listOf("Netherlands 1", "Netherlands 2", "Netherlands 3", "Netherlands 4"), iconResId = R.drawable.ic_nl_flag)
+//        )
 
         val recyclerView: RecyclerView = rootView.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        val adapter = when (iconClicked) {
-            "IVMTN" -> MyAdapter(mtnServers)
-            "IVMCI" -> MyAdapter(mciServers)
-            else -> MyAdapter(allServers)
+        val adapter = MyAdapter(allServers) { clickedItem ->
+            println("HAMED_LOG_3")
         }
         recyclerView.adapter = adapter
 
