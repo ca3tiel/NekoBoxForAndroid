@@ -1,6 +1,6 @@
 package io.nekohasekai.sagernet.vpn.serverlist
 
-data class ListItem(var name: String, val dropdownItems: List<ListSubItem>, var isExpanded: Boolean = false, var iconResId: Int)
+data class ListSubItem(var id: Long, var name: String)
 {
     // Click listener function that can be set from outside the class
     private var clickListener: (() -> Unit)? = null
