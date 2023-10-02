@@ -92,7 +92,7 @@ class SplashActivity : ThemedActivity() {
 
             // Finish the current activity to prevent returning to it later
             finish()
-        }, 3000) // Delay for 2000 milliseconds (2 seconds)
+        }, 5000) // Delay for 2000 milliseconds (2 seconds)
 
         runOnDefaultDispatcher {
             val entity = SagerDatabase.groupDao.getById(1)
