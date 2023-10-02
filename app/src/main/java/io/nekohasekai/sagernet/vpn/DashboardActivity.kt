@@ -8,20 +8,19 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.preference.PreferenceDataStore
 import com.google.android.material.navigation.NavigationView
+import io.nekohasekai.sagernet.Key
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.SagerNet
 import io.nekohasekai.sagernet.aidl.ISagerNetService
 import io.nekohasekai.sagernet.bg.BaseService
 import io.nekohasekai.sagernet.bg.SagerConnection
 import io.nekohasekai.sagernet.database.DataStore
-import io.nekohasekai.sagernet.database.GroupManager
 import io.nekohasekai.sagernet.database.preference.OnPreferenceDataStoreChangeListener
-import io.nekohasekai.sagernet.group.GroupInterfaceAdapter
+import io.nekohasekai.sagernet.databinding.ActivityDashboardBinding
 import io.nekohasekai.sagernet.ui.MainActivity
 import io.nekohasekai.sagernet.ui.ThemedActivity
 import io.nekohasekai.sagernet.ui.VpnRequestActivity
@@ -33,6 +32,7 @@ class DashboardActivity : ThemedActivity(),
     OnPreferenceDataStoreChangeListener,
     NavigationView.OnNavigationItemSelectedListener {
 
+    lateinit var binding: ActivityDashboardBinding
     private lateinit var iconImageView: ImageView
     private lateinit var ivAll: ImageView
     private lateinit var ivMtn: ImageView
@@ -325,11 +325,23 @@ class DashboardActivity : ThemedActivity(),
     )
 
     override fun onPreferenceDataStoreChanged(store: PreferenceDataStore, key: String) {
-        TODO("Not yet implemented")
+        when (key) {
+            Key.SERVICE_MODE -> onBinderDied()
+            Key.PROXY_APPS, Key.BYPASS_MODE, Key.INDIVIDUAL -> {
+                if (DataStore.serviceState.canStop) {
+                    snackbar(getString(R.string.need_reload)).setAction(R.string.apply) {
+                        SagerNet.reloadService()
+                    }.show()
+                }
+            }
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        TODO("Not yet implemented")
+//        if (item.isChecked) binding.drawerLayout.closeDrawers() else {
+//            return displayFragmentWithId(item.itemId)
+//        }
+        return true
     }
 
     private fun changeState(
@@ -337,6 +349,7 @@ class DashboardActivity : ThemedActivity(),
         msg: String? = null,
         animate: Boolean = false,
     ) {
+        println("HAMED_LOG_TEST2: " + state)
         DataStore.serviceState = state
 
 //        binding.fab.changeState(state, DataStore.serviceState, animate)
