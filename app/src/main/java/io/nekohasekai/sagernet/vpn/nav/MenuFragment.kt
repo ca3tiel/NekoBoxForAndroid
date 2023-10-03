@@ -10,10 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import io.nekohasekai.sagernet.databinding.FragmentMenuBinding
 import io.nekohasekai.sagernet.vpn.DashboardActivity
-<<<<<<< HEAD
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
-=======
->>>>>>> 1ace808 (fix menu back key)
 
 class MenuFragment : Fragment() {
 
@@ -41,29 +38,52 @@ class MenuFragment : Fragment() {
             loadFragment(AccountFragment())
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c74ead6 (make all navigation menu item)
         // Add click listener for llConnection
         binding.llConnection.setOnClickListener {
             loadFragment(ConnectionFragment())
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c74ead6 (make all navigation menu item)
         // Add click listener for llVip
         binding.llVip.setOnClickListener {
             loadFragment(VipFragment())
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c74ead6 (make all navigation menu item)
         // Add click listener for llComment
         binding.llComment.setOnClickListener {
             loadFragment(CommentFragment())
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> c74ead6 (make all navigation menu item)
         // Add click listener for llSettings
         binding.llSettings.setOnClickListener {
             loadFragment(SettingsFragment())
         }
 
+<<<<<<< HEAD
         // Add click listener Message for llShare
         binding.llShare.setOnClickListener {
             shareLinkWithMessage(AppRepository.ShareCustomMessage)
+=======
+
+        // Add click listener for llShare
+        binding.llShare.setOnClickListener {
+            loadFragment(ShareFragment())
+>>>>>>> c74ead6 (make all navigation menu item)
         }
 
         // Add click listener for llTelegram
