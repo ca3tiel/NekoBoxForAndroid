@@ -17,6 +17,7 @@ class DropdownAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dropdownItemName: TextView = itemView.findViewById(R.id.dropdownItemName)
         val subItemLayout: LinearLayout = itemView.findViewById(R.id.subItemLayout)
+        val selectedView: LinearLayout = itemView.findViewById(R.id.selected_view)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,6 +31,7 @@ class DropdownAdapter(
 
         // Set up click listener for the expand/collapse functionality
         holder.subItemLayout.setOnClickListener {
+            holder.selectedView.visibility = View.VISIBLE
             notifyItemChanged(holder.adapterPosition)
 
             // Handle item click by calling the lambda function
