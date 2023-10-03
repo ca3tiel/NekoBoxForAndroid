@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/navyBlue"
-    tools:context=".nav.MenuFragment">
+    tools:context=".vpn.nav.MenuFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -80,7 +80,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/llAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -131,7 +131,7 @@
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+        app:layout_constraintTop_toBottomOf="@+id/llAccount">
 
         <ImageView
             android:id="@+id/iconConnection"
@@ -320,7 +320,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout10"
+        android:id="@+id/llTelegram"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -370,7 +370,7 @@
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
+        app:layout_constraintTop_toBottomOf="@+id/llTelegram">
 
         <ImageView
             android:id="@+id/iconAbout"
