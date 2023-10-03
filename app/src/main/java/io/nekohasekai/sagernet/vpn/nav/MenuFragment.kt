@@ -37,11 +37,46 @@ class MenuFragment : Fragment() {
             loadFragment(AccountFragment())
         }
 
+
+        // Add click listener for llConnection
+        binding.llConnection.setOnClickListener {
+            loadFragment(ConnectionFragment())
+        }
+
+
+        // Add click listener for llVip
+        binding.llVip.setOnClickListener {
+            loadFragment(VipFragment())
+        }
+
+
+        // Add click listener for llComment
+        binding.llComment.setOnClickListener {
+            loadFragment(CommentFragment())
+        }
+
+
+        // Add click listener for llSettings
+        binding.llSettings.setOnClickListener {
+            loadFragment(SettingsFragment())
+        }
+
+
+        // Add click listener for llShare
+        binding.llShare.setOnClickListener {
+            loadFragment(ShareFragment())
+        }
+
         // Add click listener for llTelegram
         binding.llTelegram.setOnClickListener {
             val telegramUri = Uri.parse("https://t.me/holyproxy")
             val telegramIntent = Intent(Intent.ACTION_VIEW, telegramUri)
             startActivity(telegramIntent)
+        }
+
+        // Add click listener for llAbout
+        binding.llAbout.setOnClickListener {
+            loadFragment(AboutFragment())
         }
 
         // Handle back button press

@@ -9,7 +9,7 @@
     tools:context=".vpn.nav.MenuFragment">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/llPreferences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -26,7 +26,7 @@
             android:src="@drawable/ic_angle_circle_left" />
 
         <TextView
-            android:id="@+id/textPreferences"
+            android:id="@+id/tvPreferences"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -51,17 +51,17 @@
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toBottomOf="@+id/llPreferences">
 
         <ImageView
-            android:id="@+id/iconGeneral"
+            android:id="@+id/ivGeneral"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/ic_general" />
 
         <TextView
-            android:id="@+id/textGeneral"
+            android:id="@+id/tvGeneral"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -72,7 +72,7 @@
             android:textSize="24sp" />
 
         <ImageView
-            android:id="@+id/angelGerenal"
+            android:id="@+id/ivGerenalAngel"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -94,14 +94,14 @@
         app:layout_constraintTop_toBottomOf="@+id/llGeneral">
 
         <ImageView
-            android:id="@+id/iconAccount"
+            android:id="@+id/ivAccount"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/ic_account" />
 
         <TextView
-            android:id="@+id/textAccount"
+            android:id="@+id/tvAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -112,7 +112,7 @@
             android:textSize="24sp" />
 
         <ImageView
-            android:id="@+id/angleAccount"
+            android:id="@+id/ivAccountAngle"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -120,7 +120,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
+        android:id="@+id/llConnection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -134,14 +134,14 @@
         app:layout_constraintTop_toBottomOf="@+id/llAccount">
 
         <ImageView
-            android:id="@+id/iconConnection"
+            android:id="@+id/ivConnection"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/ic_connection" />
 
         <TextView
-            android:id="@+id/textConnection"
+            android:id="@+id/tvConnection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -152,7 +152,7 @@
             android:textSize="24sp" />
 
         <ImageView
-            android:id="@+id/angleConnection"
+            android:id="@+id/ivConnectionAngle"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -160,7 +160,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/llVip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -171,17 +171,17 @@
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+        app:layout_constraintTop_toBottomOf="@+id/llConnection">
 
         <ImageView
-            android:id="@+id/iconVip"
+            android:id="@+id/ivVip"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/ic_vip" />
 
         <TextView
-            android:id="@+id/textVip"
+            android:id="@+id/tvVip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -192,7 +192,7 @@
             android:textSize="24sp" />
 
         <ImageView
-            android:id="@+id/angleVip"
+            android:id="@+id/ivVipAngle"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -200,7 +200,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout6"
+        android:id="@+id/llComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -211,17 +211,17 @@
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+        app:layout_constraintTop_toBottomOf="@+id/llVip">
 
         <ImageView
-            android:id="@+id/iconComment"
+            android:id="@+id/ivComment"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/ic_comment" />
 
         <TextView
-            android:id="@+id/textComment"
+            android:id="@+id/tvComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -232,7 +232,7 @@
             android:textSize="24sp" />
 
         <ImageView
-            android:id="@+id/angleComment"
+            android:id="@+id/ivCommentAngle"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -240,7 +240,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout7"
+        android:id="@+id/llSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -251,17 +251,17 @@
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+        app:layout_constraintTop_toBottomOf="@+id/llComment">
 
         <ImageView
-            android:id="@+id/iconSettings"
+            android:id="@+id/ivSettings"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/ic_settings" />
 
         <TextView
-            android:id="@+id/textSettings"
+            android:id="@+id/tvSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -272,7 +272,7 @@
             android:textSize="24sp" />
 
         <ImageView
-            android:id="@+id/angleSettings"
+            android:id="@+id/ivSettingsAngle"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -280,7 +280,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout8"
+        android:id="@+id/llShare"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -291,17 +291,17 @@
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+        app:layout_constraintTop_toBottomOf="@+id/llSettings">
 
         <ImageView
-            android:id="@+id/iconShare"
+            android:id="@+id/ivShare"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/ic_share" />
 
         <TextView
-            android:id="@+id/textShare"
+            android:id="@+id/tvShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -312,7 +312,7 @@
             android:textSize="24sp" />
 
         <ImageView
-            android:id="@+id/angleShare"
+            android:id="@+id/ivShareAngle"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -331,17 +331,17 @@
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
+        app:layout_constraintTop_toBottomOf="@+id/llShare">
 
         <ImageView
-            android:id="@+id/iconTelegram"
+            android:id="@+id/ivTelegram"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/ic_telegram" />
 
         <TextView
-            android:id="@+id/textTelegram"
+            android:id="@+id/tvTelegram"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -352,7 +352,7 @@
             android:textSize="24sp" />
 
         <ImageView
-            android:id="@+id/angleTelegram"
+            android:id="@+id/ivTelegramAngle"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -360,6 +360,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/llAbout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -373,14 +374,14 @@
         app:layout_constraintTop_toBottomOf="@+id/llTelegram">
 
         <ImageView
-            android:id="@+id/iconAbout"
+            android:id="@+id/ivAbout"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/ic_info" />
 
         <TextView
-            android:id="@+id/textAbout"
+            android:id="@+id/tvAbout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -391,7 +392,7 @@
             android:textSize="24sp" />
 
         <ImageView
-            android:id="@+id/angleAbout"
+            android:id="@+id/ivAboutAngle"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
