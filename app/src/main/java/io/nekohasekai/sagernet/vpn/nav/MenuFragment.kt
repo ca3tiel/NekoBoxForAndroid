@@ -10,7 +10,10 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import io.nekohasekai.sagernet.databinding.FragmentMenuBinding
 import io.nekohasekai.sagernet.vpn.DashboardActivity
+<<<<<<< HEAD
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
+=======
+>>>>>>> 1ace808 (fix menu back key)
 
 class MenuFragment : Fragment() {
 
