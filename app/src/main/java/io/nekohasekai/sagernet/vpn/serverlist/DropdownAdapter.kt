@@ -11,8 +11,9 @@ import io.nekohasekai.sagernet.R
 class DropdownAdapter(
     private val subItems: List<ListSubItem>,
     private val subItemClickListener: (ListSubItem) -> Unit // Pass a lambda function as a parameter
-) :
-    RecyclerView.Adapter<DropdownAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<DropdownAdapter.ViewHolder>() {
+
+    private var lastSelectedPosition: Int = RecyclerView.NO_POSITION
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dropdownItemName: TextView = itemView.findViewById(R.id.dropdownItemName)
@@ -27,16 +28,29 @@ class DropdownAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.dropdownItemName.text = subItems[position].name
+        val subItem = subItems[position]
+
+        holder.dropdownItemName.text = subItem.name
 
         // Set up click listener for the expand/collapse functionality
         holder.subItemLayout.setOnClickListener {
+            // Update the visibility of selectedView for the last selected item
+            if (lastSelectedPosition != RecyclerView.NO_POSITION) {
+                notifyItemChanged(lastSelectedPosition)
+            }
+
+            // Toggle the visibility of selectedView based on isSelected
             holder.selectedView.visibility = View.VISIBLE
-            notifyItemChanged(holder.adapterPosition)
+
+            // Update the last selected position
+            lastSelectedPosition = holder.adapterPosition
 
             // Handle item click by calling the lambda function
-            subItemClickListener(subItems[position])
+            subItemClickListener(subItem)
         }
+
+        // Set the initial visibility of selectedView
+        holder.selectedView.visibility = if (lastSelectedPosition == position) View.VISIBLE else View.INVISIBLE
     }
 
     override fun getItemCount(): Int {
