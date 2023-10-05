@@ -18,12 +18,18 @@ class GeneralFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_general, container, false)
         val tvGeneral = view.findViewById<TextView>(R.id.tvGeneral)
-        val iconGeneral = view.findViewById<ImageView>(R.id.iconGeneral)
-
+        val iconGeneral = view.findViewById<ImageView>(R.id.ivLocationOrderIcon)
+        val iconAngle = view.findViewById<ImageView>(R.id.ivConnectionIconAngle)
 
         tvGeneral.setOnClickListener { showPopupMenu(tvGeneral) }
 
         iconGeneral.setOnClickListener { showPopupMenu(tvGeneral) }
+
+        // Add click listener to iconAngle
+        iconAngle.setOnClickListener {
+            // Pop the back stack to navigate back to the previous fragment
+            requireActivity().supportFragmentManager.popBackStack()
+        }
 
         return view
     }

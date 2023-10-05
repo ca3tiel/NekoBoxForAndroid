@@ -22,6 +22,8 @@ object AppRepository {
     private var panelApiHeaderToken: String = "9f8a833ca1383c5449e1d8800b45fd54"
     private var panelSettingsUrl = "https://panel.miatel.xyz/api/settings"
     public var selectedServerId: Long = -1
+    public var ShareCustomMessage: String = "$appName is the best vpn.please visit this link"
+    public var ShareApplicationLink: String = "https://play.google.com/store/apps/details?id=com.File.Manager.Filemanager&pcampaignid=web_share"
 
 
     fun setBaseUrl(url: String) {

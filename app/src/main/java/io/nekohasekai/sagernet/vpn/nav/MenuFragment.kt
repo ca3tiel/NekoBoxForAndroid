@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import io.nekohasekai.sagernet.databinding.FragmentMenuBinding
 import io.nekohasekai.sagernet.vpn.DashboardActivity
+import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 
 class MenuFragment : Fragment() {
 
@@ -23,7 +24,7 @@ class MenuFragment : Fragment() {
         val view = binding.root
 
         // Add click listener for iconAngle
-        binding.iconAngle.setOnClickListener {
+        binding.ivPreferencesIconAngle.setOnClickListener {
             startActivity(Intent(activity, DashboardActivity::class.java))
         }
 
@@ -37,34 +38,29 @@ class MenuFragment : Fragment() {
             loadFragment(AccountFragment())
         }
 
-
         // Add click listener for llConnection
         binding.llConnection.setOnClickListener {
             loadFragment(ConnectionFragment())
         }
-
 
         // Add click listener for llVip
         binding.llVip.setOnClickListener {
             loadFragment(VipFragment())
         }
 
-
         // Add click listener for llComment
         binding.llComment.setOnClickListener {
             loadFragment(CommentFragment())
         }
-
 
         // Add click listener for llSettings
         binding.llSettings.setOnClickListener {
             loadFragment(SettingsFragment())
         }
 
-
-        // Add click listener for llShare
+        // Add click listener Message for llShare
         binding.llShare.setOnClickListener {
-            loadFragment(ShareFragment())
+            shareLinkWithMessage(AppRepository.ShareCustomMessage)
         }
 
         // Add click listener for llTelegram
@@ -97,6 +93,22 @@ class MenuFragment : Fragment() {
         transaction.replace(android.R.id.content, fragment)
         transaction.addToBackStack(null) // Optional: Allows you to navigate back to the previous fragment
         transaction.commit()
+    }
+
+    // Function to share link with a custom message
+    private fun shareLinkWithMessage(message: String) {
+        // Create an Intent with ACTION_SEND
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "$message\n" + AppRepository.ShareApplicationLink
+            )
+        }
+
+        // Start the system's chooser to share the content
+        startActivity(Intent.createChooser(sendIntent, "Share link with:"))
     }
 
     companion object {

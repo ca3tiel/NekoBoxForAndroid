@@ -7,36 +7,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/navyBlue"
-    tools:context=".nav.AccountFragment">
+    tools:context="vpn.nav.AccountFragment">
 
     <LinearLayout
-        android:id="@+id/AccountLayout"
+        android:id="@+id/llAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="40dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:id="@+id/iconAngle"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
+            android:id="@+id/ivAccountIconAngle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_angle_circle_left" />
 
         <TextView
-            android:id="@+id/tvPreferences"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvAccount"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_weight="4"
             android:fontFamily="@font/museo_san_rounded900"
             android:gravity="center"
             android:text="Account"
             android:textColor="@color/white"
-            android:textSize="28sp" />
+            android:textSize="22sp" />
 
     </LinearLayout>
 
@@ -49,17 +50,18 @@
         android:fontFamily="@font/museo_san_rounded700"
         android:text="Info"
         android:textColor="@color/lightGray"
-        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AccountLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/llAccount" />
 
     <LinearLayout
-        android:id="@+id/EmailLayout"
+        android:id="@+id/llEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
         android:background="@drawable/background_nav_item"
         android:orientation="horizontal"
         android:gravity="center"
@@ -70,7 +72,7 @@
 
 
         <TextView
-            android:id="@+id/tvAccountTitle"
+            android:id="@+id/tvEmailTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -78,10 +80,11 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="Email"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textStyle="bold"
+            android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tvAccount"
+            android:id="@+id/tvEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -90,7 +93,8 @@
             android:gravity="end"
             android:text="UnitaVPN.com"
             android:textColor="@color/lightGray"
-            android:textSize="18sp" />
+            android:textStyle="normal"
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -103,17 +107,18 @@
         android:fontFamily="@font/museo_san_rounded700"
         android:text="Plan"
         android:textColor="@color/lightGray"
-        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EmailLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/llEmail" />
 
     <LinearLayout
-        android:id="@+id/PlanLayout"
+        android:id="@+id/llPlan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
         android:background="@drawable/background_nav_item"
         android:orientation="horizontal"
         android:gravity="center"
@@ -132,7 +137,8 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="Expiration date"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textStyle="bold"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvExpiration"
@@ -144,23 +150,24 @@
             android:gravity="end"
             android:text="2023-10-12"
             android:textColor="@color/lightGray"
-            android:textSize="18sp" />
+            android:textStyle="normal"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/DataLeftLayout"
+        android:id="@+id/llDataLeft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/background_nav_item"
         android:orientation="horizontal"
         android:gravity="center"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PlanLayout">
+        app:layout_constraintTop_toBottomOf="@+id/llPlan">
 
 
         <TextView
@@ -172,7 +179,8 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="DataLeft"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textStyle="bold"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvDataLeft"
@@ -184,7 +192,8 @@
             android:gravity="end"
             android:text="10 GB"
             android:textColor="@color/lightGray"
-            android:textSize="18sp" />
+            android:textStyle="normal"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

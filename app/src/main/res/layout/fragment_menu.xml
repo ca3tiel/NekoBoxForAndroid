@@ -19,9 +19,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iconAngle"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:id="@+id/ivPreferencesIconAngle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:src="@drawable/ic_angle_circle_left" />
 
@@ -35,7 +35,7 @@
             android:gravity="center"
             android:text="Preferences"
             android:textColor="@color/white"
-            android:textSize="28sp" />
+            android:textSize="22sp" />
 
     </LinearLayout>
 
@@ -55,8 +55,8 @@
 
         <ImageView
             android:id="@+id/ivGeneral"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_general" />
 
@@ -69,12 +69,13 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="General"
             android:textColor="@color/lightGray"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ivGerenalAngel"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_angle_right" />
     </LinearLayout>
@@ -95,8 +96,8 @@
 
         <ImageView
             android:id="@+id/ivAccount"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_account" />
 
@@ -109,12 +110,13 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="Account"
             android:textColor="@color/lightGray"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ivAccountAngle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_angle_right" />
     </LinearLayout>
@@ -135,8 +137,8 @@
 
         <ImageView
             android:id="@+id/ivConnection"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_connection" />
 
@@ -149,12 +151,13 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="Connection"
             android:textColor="@color/lightGray"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ivConnectionAngle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_angle_right" />
     </LinearLayout>
@@ -175,8 +178,8 @@
 
         <ImageView
             android:id="@+id/ivVip"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_vip" />
 
@@ -189,12 +192,13 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="Vip"
             android:textColor="@color/lightGray"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ivVipAngle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_angle_right" />
     </LinearLayout>
@@ -215,8 +219,8 @@
 
         <ImageView
             android:id="@+id/ivComment"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_comment" />
 
@@ -229,12 +233,13 @@
             android:text="Comment"
             android:layout_marginLeft="20dp"
             android:textColor="@color/lightGray"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ivCommentAngle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_angle_right" />
     </LinearLayout>
@@ -255,8 +260,8 @@
 
         <ImageView
             android:id="@+id/ivSettings"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_settings" />
 
@@ -269,12 +274,13 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="Settings"
             android:textColor="@color/lightGray"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ivSettingsAngle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_angle_right" />
     </LinearLayout>
@@ -295,8 +301,8 @@
 
         <ImageView
             android:id="@+id/ivShare"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_share" />
 
@@ -309,12 +315,13 @@
             android:text="Share"
             android:layout_marginLeft="20dp"
             android:textColor="@color/lightGray"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ivShareAngle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_angle_right" />
     </LinearLayout>
@@ -335,8 +342,8 @@
 
         <ImageView
             android:id="@+id/ivTelegram"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_telegram" />
 
@@ -349,12 +356,13 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="Telegram"
             android:textColor="@color/lightGray"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ivTelegramAngle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_angle_right" />
     </LinearLayout>
@@ -375,8 +383,8 @@
 
         <ImageView
             android:id="@+id/ivAbout"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_info" />
 
@@ -389,12 +397,13 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="About"
             android:textColor="@color/lightGray"
-            android:textSize="24sp" />
+            android:textStyle="bold"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/ivAboutAngle"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_angle_right" />
     </LinearLayout>
