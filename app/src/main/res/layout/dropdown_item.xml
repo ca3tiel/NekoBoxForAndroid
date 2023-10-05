@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/subItemLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     android:background="@drawable/background_nav_item"
     android:layout_marginRight="10dp"
     android:layout_marginLeft="10dp"
@@ -26,15 +26,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:layout_marginLeft="20dp"
-            android:fontFamily="@font/museo_san_rounded700"
+            android:fontFamily="@font/museo_san_rounded500"
             android:text="Dropdown Item"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/fastInternet"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_fast_internet"/>
 
