@@ -3,48 +3,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/subItemLayout"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/background_nav_item"
     android:layout_marginRight="10dp"
     android:layout_marginLeft="10dp"
-    android:gravity="center"
     android:padding="10dp"
-    android:orientation="horizontal">
+    android:orientation="vertical">
+
 
         <LinearLayout
-            android:id="@+id/selected_view"
-            android:layout_width="4dp"
-            android:layout_height="match_parent"
-            android:background="?selectedColorPrimary"
-            android:orientation="horizontal"
-            android:visibility="invisible"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/dropdownItemName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="@font/museo_san_rounded500"
-            android:text="Dropdown Item"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/fastInternet"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_fast_internet"/>
+                <LinearLayout
+                    android:id="@+id/selected_view"
+                    android:layout_width="4dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="-5dp"
+                    android:layout_marginBottom="-5dp"
+                    android:background="?selectedColorPrimary"
+                    android:orientation="horizontal"
+                    android:visibility="invisible"
+                    tools:visibility="visible">
 
-        <TextView
-            android:id="@+id/profile_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="4dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="?attr/accentOrTextSecondary" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/dropdownItemName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="3"
+                    android:fontFamily="@font/museo_san_rounded500"
+                    android:text="Dropdown Item"
+                    android:layout_gravity="top"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/fastInternet"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="top"
+                    android:src="@drawable/ic_fast_internet" />
+
+                <TextView
+                    android:id="@+id/profile_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="top"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="?attr/accentOrTextSecondary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/view5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/lightGray"
+            android:orientation="horizontal" />
 
 </LinearLayout>
