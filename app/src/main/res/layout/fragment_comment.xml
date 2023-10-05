@@ -10,61 +10,62 @@
     tools:context=".vpn.nav.CommentFragment">
 
     <LinearLayout
-        android:id="@+id/generalLayout"
+        android:id="@+id/llComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="40dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:id="@+id/iconAngle"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
+            android:id="@+id/ivCommentIconAngle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/ic_angle_circle_left" />
 
         <TextView
-            android:id="@+id/tvPreferences"
-            android:layout_width="wrap_content"
+            android:id="@+id/tvComment"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_weight="4"
             android:fontFamily="@font/museo_san_rounded900"
             android:gravity="center"
             android:text="Comment"
             android:textColor="@color/white"
-            android:textSize="28sp" />
+            android:textSize="22sp" />
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/locationLayout"
+        android:id="@+id/llTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/background_nav_item"
         android:orientation="horizontal"
         android:gravity="center"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/generalLayout">
+        app:layout_constraintTop_toBottomOf="@+id/llComment">
 
         <ImageView
-            android:id="@+id/iconGeneral"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:id="@+id/ivTitleicon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_weight="1"
             android:src="@drawable/ic_comment_title" />
 
         <TextView
-            android:id="@+id/tvGeneralTitle"
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -72,52 +73,52 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="Title"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textStyle="bold"
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <EditText
-        android:id="@+id/tvGeneralInfo"
+        android:id="@+id/tvTitleBox"
         android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:fontFamily="@font/museo_san_rounded700"
         android:background="@drawable/background_nav_item_info"
         android:hint="Enter your title"
         android:textColorHint="@color/lightGray"
         android:textColor="@color/white"
+        android:gravity="start"
         android:padding="10dp"
-        android:justificationMode="inter_word"
-        android:gravity="center_vertical"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/locationLayout" />
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/llTitle" />
 
     <LinearLayout
-        android:id="@+id/DisplaylatencyLayout"
+        android:id="@+id/llMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/background_nav_item"
         android:orientation="horizontal"
         android:gravity="center"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGeneralInfo">
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleBox">
 
         <ImageView
-            android:id="@+id/iconDisplaylatency"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:id="@+id/ivMessageIcon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_weight="1"
             android:src="@drawable/ic_comment_text" />
 
         <TextView
-            android:id="@+id/tvDisplaylatencyTitle"
+            android:id="@+id/tvMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -125,15 +126,16 @@
             android:fontFamily="@font/museo_san_rounded700"
             android:text="Message"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textStyle="bold"
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <EditText
-        android:id="@+id/tvDisplaylatencyInfo"
+        android:id="@+id/tvMessageBox"
         android:inputType="text"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:fontFamily="@font/museo_san_rounded700"
@@ -144,20 +146,20 @@
         android:padding="10dp"
         android:justificationMode="inter_word"
         android:gravity="fill_horizontal"
-        android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@+id/DisplaylatencyLayout" />
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/llMessage" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Send"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/background_nav_item_info"
         android:fontFamily="@font/museo_san_rounded700"
+        android:text="Send"
         android:textColor="@color/white"
-        android:background="@drawable/background_nav_item"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDisplaylatencyInfo" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMessageBox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
