@@ -7,10 +7,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import io.nekohasekai.sagernet.R
+import io.nekohasekai.sagernet.ktx.getColorAttr
+import io.nekohasekai.sagernet.ktx.getColour
+import moe.matsuri.nb4a.Protocols
 
 class DropdownAdapter(
     private val subItems: List<ListSubItem>,
-    private val subItemClickListener: (ListSubItem) -> Unit // Pass a lambda function as a parameter
+    private val subItemClickListener: (ListSubItem) -> Unit
 ) : RecyclerView.Adapter<DropdownAdapter.ViewHolder>() {
 
     private var lastSelectedPosition: Int = RecyclerView.NO_POSITION
@@ -19,6 +22,7 @@ class DropdownAdapter(
         val dropdownItemName: TextView = itemView.findViewById(R.id.dropdownItemName)
         val subItemLayout: LinearLayout = itemView.findViewById(R.id.subItemLayout)
         val selectedView: LinearLayout = itemView.findViewById(R.id.selected_view)
+        val profileStatus: TextView = itemView.findViewById(R.id.profile_status) // Add profileStatus TextView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,6 +35,43 @@ class DropdownAdapter(
         val subItem = subItems[position]
 
         holder.dropdownItemName.text = subItem.name
+
+        var profileStatusText: String? = null
+        var profileStatusColor = 0
+
+        // Set the profile status text based on the status property
+        when (subItem.status) {
+            -1 -> {
+                profileStatusText = subItem.error
+                profileStatusColor = holder.itemView.context.getColorAttr(android.R.attr.textColorSecondary)
+            }
+
+            0 -> {
+                profileStatusText = holder.itemView.context.getString(R.string.connection_test_testing)
+                profileStatusColor = holder.itemView.context.getColorAttr(android.R.attr.textColorSecondary)
+            }
+
+            1 -> {
+                profileStatusText = holder.itemView.context.getString(R.string.available, subItem.ping)
+                profileStatusColor = holder.itemView.context.getColour(R.color.material_green_500)
+            }
+
+            2 -> {
+                profileStatusText = subItem.error
+                profileStatusColor = holder.itemView.context.getColour(R.color.material_red_500)
+            }
+
+            3 -> {
+                val err = subItem.error ?: ""
+                val msg = Protocols.genFriendlyMsg(err)
+                profileStatusText = if (msg != err) msg else holder.itemView.context.getString(R.string.unavailable)
+                profileStatusColor = holder.itemView.context.getColour(R.color.material_red_500)
+            }
+        }
+
+        // Set the profile status text and color
+        holder.profileStatus.text = profileStatusText
+        holder.profileStatus.setTextColor(profileStatusColor)
 
         // Set up click listener for the expand/collapse functionality
         holder.subItemLayout.setOnClickListener {
