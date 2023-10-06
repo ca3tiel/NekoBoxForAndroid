@@ -1,7 +1,12 @@
 package io.nekohasekai.sagernet.vpn.serverlist
 
-data class ListSubItem(var id: Long, var name: String)
-{
+data class ListSubItem(
+    var id: Long,
+    var name: String,
+    var status: Int,
+    var error: String?,  // Add error property
+    var ping: Int         // Add ping property
+) {
     // Click listener function that can be set from outside the class
     private var clickListener: (() -> Unit)? = null
 
