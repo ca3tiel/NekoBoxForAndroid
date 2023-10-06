@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.ktx.getColorAttr
@@ -19,10 +20,10 @@ class DropdownAdapter(
     private var lastSelectedPosition: Int = RecyclerView.NO_POSITION
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val dropdownItemName: TextView = itemView.findViewById(R.id.dropdownItemName)
-        val subItemLayout: LinearLayout = itemView.findViewById(R.id.subItemLayout)
-        val selectedView: LinearLayout = itemView.findViewById(R.id.selected_view)
-        val profileStatus: TextView = itemView.findViewById(R.id.profile_status) // Add profileStatus TextView
+        val dropdownItemName: TextView = itemView.findViewById(R.id.tvDropdownItemName)
+        val subItemLayout: ConstraintLayout = itemView.findViewById(R.id.subItemLayout)
+        val selectedView: LinearLayout = itemView.findViewById(R.id.llSelectedView)
+        val profileStatus: TextView = itemView.findViewById(R.id.tvProfileStatus)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
