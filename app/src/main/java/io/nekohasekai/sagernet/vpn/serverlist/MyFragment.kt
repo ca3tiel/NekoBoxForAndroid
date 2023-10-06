@@ -39,7 +39,7 @@ class MyFragment : Fragment() {
             val countryName = AppRepository.flagNameMapper(countryCode)
 
             val serverList = profiles.map { profile ->
-                ListSubItem(profile.id, profile.displayName())
+                ListSubItem(profile.id, profile.displayName(), profile.status, profile.error, profile.ping )
             }
 
             val listItem = ListItem(
