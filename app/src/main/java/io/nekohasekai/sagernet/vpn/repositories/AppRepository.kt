@@ -1,7 +1,9 @@
 package io.nekohasekai.sagernet.vpn.repositories
 
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -24,7 +26,8 @@ object AppRepository {
     public var selectedServerId: Long = -1
     public var ShareCustomMessage: String = "$appName is the best vpn.please visit this link"
     public var ShareApplicationLink: String = "https://play.google.com/store/apps/details?id=com.File.Manager.Filemanager&pcampaignid=web_share"
-
+    public var allServers: MutableList<ListItem> = mutableListOf()
+    public lateinit var recyclerView: RecyclerView
 
     fun setBaseUrl(url: String) {
         baseUrl = url
