@@ -13,7 +13,7 @@ import io.nekohasekai.sagernet.ktx.getColour
 import moe.matsuri.nb4a.Protocols
 
 class DropdownAdapter(
-    private val subItems: List<ListSubItem>,
+    private val subItems: MutableList<ListSubItem>,
     private val subItemClickListener: (ListSubItem) -> Unit
 ) : RecyclerView.Adapter<DropdownAdapter.ViewHolder>() {
 
