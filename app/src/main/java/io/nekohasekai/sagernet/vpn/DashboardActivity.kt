@@ -7,10 +7,14 @@ import android.os.RemoteException
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
+import android.app.AlertDialog
+import android.graphics.Color
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
@@ -81,6 +85,7 @@ class DashboardActivity : ThemedActivity(),
     private var ivAllClicked = true // Set IVall as clicked by default
     private var ivMtnClicked = false // Add a variable to track IVMTN click state
     private var ivMciClicked = false // Add a variable to track IVMCI click state
+    private lateinit var checkPingDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -389,26 +394,41 @@ class DashboardActivity : ThemedActivity(),
         msg: String? = null,
         animate: Boolean = false,
     ) {
-        println("HAMED_LOG_TEST2: " + state)
         DataStore.serviceState = state
 //        binding.fab.changeState(state, DataStore.serviceState, animate)
 //        binding.stats.changeState(state)
 //        if (msg != null) snackbar(getString(R.string.vpn_error, msg)).show()
     }
 
-    fun urlTest() {
-        val test = TestDialog()
-        val dialog = test.builder.show()
+    fun stopService() {
+        if (DataStore.serviceState.started) SagerNet.stopService()
+    }
+
+    private fun urlTest() {
+        val customDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)
+        val dialogServerName = customDialogView.findViewById<TextView>(R.id.tv_dialog_server_name)
+        val dialogServerPing = customDialogView.findViewById<TextView>(R.id.tv_dialog_server_ping)
+        val dialogButton = customDialogView.findViewById<Button>(R.id.btn_dialog_cancel)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setView(customDialogView)
+        checkPingDialog = builder.create()
+
+        dialogButton.setOnClickListener {
+            checkPingDialog.dismiss()
+        }
+        checkPingDialog.show()
+
+
         val testJobs = mutableListOf<Job>()
 
         val mainJob = runOnDefaultDispatcher {
             if (DataStore.serviceState.started) {
-//                stopService()
+                stopService()
                 delay(500) // wait for service stop
             }
             val group = DataStore.currentGroup()
             val profilesUnfiltered = SagerDatabase.proxyDao.getByGroup(group.id)
-            test.proxyN = profilesUnfiltered.size
             val profiles = ConcurrentLinkedQueue(profilesUnfiltered)
             val testPool = newFixedThreadPoolContext(
                 DataStore.connectionTestConcurrent,
@@ -420,24 +440,29 @@ class DashboardActivity : ThemedActivity(),
                     while (isActive) {
                         val profile = profiles.poll() ?: break
                         profile.status = 0
-                        test.insert(profile)
+                        dialogServerName.text = profile.displayName()
+                        dialogServerPing.text = ""
 
                         try {
                             val result = urlTest.doTest(profile)
                             setServerStatus(profile, result, 1, null)
                             profile.status = 1
                             profile.ping = result
+                            dialogServerPing.setTextColor(Color.BLACK)
+                            dialogServerPing.text = result.toString() + "ms"
                         } catch (e: PluginManager.PluginNotFoundException) {
                             setServerStatus(profile, 0, 2, e.readableMessage)
                             profile.status = 2
                             profile.error = e.readableMessage
+                            dialogServerPing.setTextColor(Color.RED)
+                            dialogServerPing.text = "Unavailable!"
                         } catch (e: Exception) {
                             setServerStatus(profile, 0, 3, e.readableMessage)
                             profile.status = 3
                             profile.error = e.readableMessage
+                            dialogServerPing.setTextColor(Color.RED)
+                            dialogServerPing.text = "Unavailable!"
                         }
-
-                        test.update(profile)
                     }
                 })
             }
@@ -445,24 +470,9 @@ class DashboardActivity : ThemedActivity(),
             testJobs.joinAll()
 
             onMainDispatcher {
-                dialog.dismiss()
+                checkPingDialog.dismiss()
                 val adapter = MyAdapter(AppRepository.allServers) { }
                 AppRepository.recyclerView.adapter = adapter
-            }
-        }
-        test.cancel = {
-            runOnDefaultDispatcher {
-                test.results.filterNotNull().forEach {
-                    try {
-                        ProfileManager.updateProfile(it)
-                    } catch (e: Exception) {
-                        Logs.w(e)
-                    }
-                }
-                GroupManager.postReload(DataStore.currentGroupId())
-                NekoJSInterface.Default.destroyAllJsi()
-                mainJob.cancel()
-                testJobs.forEach { it.cancel() }
             }
         }
     }
@@ -496,11 +506,11 @@ class DashboardActivity : ThemedActivity(),
         var proxyN = 0
         val finishedN = AtomicInteger(0)
 
-        suspend fun insert(profile: ProxyEntity?) {
+        fun insert(profile: ProxyEntity?) {
             results.add(profile)
         }
 
-        suspend fun update(profile: ProxyEntity) {
+        fun update(profile: ProxyEntity) {
             fragment?.configurationListView?.post {
                 val context = this@DashboardActivity ?: return@post
 //                if (!isAdded) return@post
