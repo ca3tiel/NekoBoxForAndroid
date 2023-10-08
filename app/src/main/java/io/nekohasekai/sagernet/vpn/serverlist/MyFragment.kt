@@ -26,7 +26,8 @@ class MyFragment : Fragment() {
         var proxyGroup = SagerDatabase.groupDao.getById(1)!!
         var newProfiles = SagerDatabase.proxyDao.getByGroup(proxyGroup.id)
 
-//        val allServers = mutableListOf<ListItem>()
+        AppRepository.allServers = mutableListOf<ListItem>()
+
         val groupedServers = newProfiles
             .drop(2) // Skip the first 2 items
             .groupBy { profile ->

@@ -18,12 +18,14 @@ class MyAdapter(
     private val itemList: List<ListItem>,
     private val itemClickListener: (ListItem) -> Unit // Pass a lambda function as a parameter
 ) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+    private var lastSelectedPosition: Int = RecyclerView.NO_POSITION
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemName: TextView = itemView.findViewById(R.id.itemName)
         val itemIcon: ImageView = itemView.findViewById(R.id.itemIcon)
         val expandIcon: ImageView = itemView.findViewById(R.id.expandIcon)
         val dropdownList: RecyclerView = itemView.findViewById(R.id.dropdownList)
         val itemHeader: LinearLayout = itemView.findViewById(R.id.itemHeader)
+        val selectedView: LinearLayout = itemView.findViewById(R.id.llSelectedView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,15 +42,30 @@ class MyAdapter(
         val isExpanded = item.isExpanded
         holder.expandIcon.setImageResource(if (isExpanded) R.drawable.ic_minus else R.drawable.ic_plus)
         holder.dropdownList.visibility = if (isExpanded) View.VISIBLE else View.GONE
+        holder.expandIcon.visibility = if (item.isBestServer) View.INVISIBLE else View.VISIBLE
 
         // Set up click listener for the expand/collapse functionality
         holder.itemHeader.setOnClickListener {
-            item.isExpanded = !isExpanded
-            notifyItemChanged(holder.adapterPosition)
+
+            if(item.isBestServer) {
+                holder.selectedView.visibility = View.VISIBLE
+            } else {
+                item.isExpanded = !isExpanded
+
+                if (lastSelectedPosition != RecyclerView.NO_POSITION) {
+                    notifyItemChanged(lastSelectedPosition)
+                }
+                holder.selectedView.visibility = View.INVISIBLE
+            }
+
+            // Update the last selected position
+            lastSelectedPosition = holder.adapterPosition
 
             // Handle item click by calling the lambda function
             itemClickListener(item)
         }
+
+        holder.selectedView.visibility = if (lastSelectedPosition == position && item.isBestServer) View.VISIBLE else View.INVISIBLE
 
         // Create and set a RecyclerView adapter for the dropdown list
         val dropdownAdapter = DropdownAdapter(item.dropdownItems) { clickedItem ->
