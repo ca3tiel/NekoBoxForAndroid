@@ -26,11 +26,11 @@ class MyFragment : Fragment() {
         var proxyGroup = SagerDatabase.groupDao.getById(1)!!
         var newProfiles = SagerDatabase.proxyDao.getByGroup(proxyGroup.id)
 
-        val allServers = mutableListOf<ListItem>()
+//        val allServers = mutableListOf<ListItem>()
         val groupedServers = newProfiles
             .drop(2) // Skip the first 2 items
-            .groupBy { item ->
-                val serverName = item.displayName()
+            .groupBy { profile ->
+                val serverName = profile.displayName()
                 serverName.substring(serverName.length - 5, serverName.length).substring(0, 2).lowercase()
             }
 
@@ -40,17 +40,15 @@ class MyFragment : Fragment() {
 
             val serverList = profiles.map { profile ->
                 ListSubItem(profile.id, profile.displayName(), profile.status, profile.error, profile.ping )
-            }
+            }.toMutableList()
 
             val listItem = ListItem(
                 countryName,
                 serverList,
                 iconResId = resources.getIdentifier(resourceName, "drawable", context?.packageName)
             )
-            listItem.setOnClickListener {
-//                println("HAMED_LOG_1")
-            }
-            allServers.add(
+
+            AppRepository.allServers.add(
                 listItem
             )
         }
@@ -64,12 +62,10 @@ class MyFragment : Fragment() {
 //            ListItem("Netherlands", listOf("Netherlands 1", "Netherlands 2", "Netherlands 3", "Netherlands 4"), iconResId = R.drawable.ic_nl_flag)
 //        )
 
-        val recyclerView: RecyclerView = rootView.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(activity)
-        val adapter = MyAdapter(allServers) { clickedItem ->
-//            println("HAMED_LOG_3")
-        }
-        recyclerView.adapter = adapter
+        AppRepository.recyclerView = rootView.findViewById(R.id.recyclerView)
+        AppRepository.recyclerView.layoutManager = LinearLayoutManager(activity)
+        val adapter = MyAdapter(AppRepository.allServers) { }
+        AppRepository.recyclerView.adapter = adapter
 
         return rootView
     }

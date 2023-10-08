@@ -4,13 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.RemoteException
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.preference.PreferenceDataStore
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import io.nekohasekai.sagernet.Key
 import io.nekohasekai.sagernet.R
@@ -18,14 +24,42 @@ import io.nekohasekai.sagernet.SagerNet
 import io.nekohasekai.sagernet.aidl.ISagerNetService
 import io.nekohasekai.sagernet.bg.BaseService
 import io.nekohasekai.sagernet.bg.SagerConnection
+import io.nekohasekai.sagernet.bg.proto.UrlTest
 import io.nekohasekai.sagernet.database.DataStore
+import io.nekohasekai.sagernet.database.GroupManager
+import io.nekohasekai.sagernet.database.ProfileManager
+import io.nekohasekai.sagernet.database.ProxyEntity
+import io.nekohasekai.sagernet.database.SagerDatabase
 import io.nekohasekai.sagernet.database.preference.OnPreferenceDataStoreChangeListener
 import io.nekohasekai.sagernet.databinding.ActivityDashboardBinding
+import io.nekohasekai.sagernet.databinding.LayoutProgressListBinding
+import io.nekohasekai.sagernet.ktx.Logs
+import io.nekohasekai.sagernet.ktx.getColorAttr
+import io.nekohasekai.sagernet.ktx.getColour
+import io.nekohasekai.sagernet.ktx.onMainDispatcher
+import io.nekohasekai.sagernet.ktx.readableMessage
+import io.nekohasekai.sagernet.ktx.runOnDefaultDispatcher
+import io.nekohasekai.sagernet.plugin.PluginManager
+import io.nekohasekai.sagernet.ui.ConfigurationFragment
 import io.nekohasekai.sagernet.ui.MainActivity
 import io.nekohasekai.sagernet.ui.ThemedActivity
 import io.nekohasekai.sagernet.ui.VpnRequestActivity
 import io.nekohasekai.sagernet.vpn.nav.MenuFragment
+import io.nekohasekai.sagernet.vpn.repositories.AppRepository
+import io.nekohasekai.sagernet.vpn.serverlist.MyAdapter
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newFixedThreadPoolContext
+import moe.matsuri.nb4a.Protocols
+import moe.matsuri.nb4a.Protocols.getProtocolColor
+import moe.matsuri.nb4a.proxy.neko.NekoJSInterface
+import java.util.Collections
+import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.atomic.AtomicInteger
 
 class DashboardActivity : ThemedActivity(),
     SagerConnection.Callback,
@@ -66,6 +100,12 @@ class DashboardActivity : ThemedActivity(),
 
         // Initialize the fragment container
         val fragmentContainer = findViewById<View>(R.id.fragmentContainer)
+
+        val pingBtn = findViewById<ConstraintLayout>(R.id.clIconPing)
+
+        pingBtn.setOnClickListener {
+            urlTest()
+        }
 
         // Find the NavMenuIcon ImageView and set an OnClickListener
         val navMenuIcon = findViewById<ImageView>(R.id.NavMenuIcon)
@@ -351,9 +391,182 @@ class DashboardActivity : ThemedActivity(),
     ) {
         println("HAMED_LOG_TEST2: " + state)
         DataStore.serviceState = state
-
 //        binding.fab.changeState(state, DataStore.serviceState, animate)
 //        binding.stats.changeState(state)
 //        if (msg != null) snackbar(getString(R.string.vpn_error, msg)).show()
+    }
+
+    fun urlTest() {
+        val test = TestDialog()
+        val dialog = test.builder.show()
+        val testJobs = mutableListOf<Job>()
+
+        val mainJob = runOnDefaultDispatcher {
+            if (DataStore.serviceState.started) {
+//                stopService()
+                delay(500) // wait for service stop
+            }
+            val group = DataStore.currentGroup()
+            val profilesUnfiltered = SagerDatabase.proxyDao.getByGroup(group.id)
+            test.proxyN = profilesUnfiltered.size
+            val profiles = ConcurrentLinkedQueue(profilesUnfiltered)
+            val testPool = newFixedThreadPoolContext(
+                DataStore.connectionTestConcurrent,
+                "urlTest"
+            )
+            repeat(DataStore.connectionTestConcurrent) {
+                testJobs.add(launch(testPool) {
+                    val urlTest = UrlTest() // note: this is NOT in bg process
+                    while (isActive) {
+                        val profile = profiles.poll() ?: break
+                        profile.status = 0
+                        test.insert(profile)
+
+                        try {
+                            val result = urlTest.doTest(profile)
+                            setServerStatus(profile, result, 1, null)
+                            profile.status = 1
+                            profile.ping = result
+                        } catch (e: PluginManager.PluginNotFoundException) {
+                            setServerStatus(profile, 0, 2, e.readableMessage)
+                            profile.status = 2
+                            profile.error = e.readableMessage
+                        } catch (e: Exception) {
+                            setServerStatus(profile, 0, 3, e.readableMessage)
+                            profile.status = 3
+                            profile.error = e.readableMessage
+                        }
+
+                        test.update(profile)
+                    }
+                })
+            }
+
+            testJobs.joinAll()
+
+            onMainDispatcher {
+                dialog.dismiss()
+                val adapter = MyAdapter(AppRepository.allServers) { }
+                AppRepository.recyclerView.adapter = adapter
+            }
+        }
+        test.cancel = {
+            runOnDefaultDispatcher {
+                test.results.filterNotNull().forEach {
+                    try {
+                        ProfileManager.updateProfile(it)
+                    } catch (e: Exception) {
+                        Logs.w(e)
+                    }
+                }
+                GroupManager.postReload(DataStore.currentGroupId())
+                NekoJSInterface.Default.destroyAllJsi()
+                mainJob.cancel()
+                testJobs.forEach { it.cancel() }
+            }
+        }
+    }
+
+    private fun setServerStatus(profile: ProxyEntity, ping: Int, status: Int, error: String?) {
+        val serverName = profile.displayName()
+        val countryCode = serverName.substring(serverName.length - 5, serverName.length).substring(0, 2).lowercase()
+        val foundItem = AppRepository.allServers.find {
+            it.name == AppRepository.flagNameMapper(countryCode)
+        }
+        val foundSubItem = foundItem?.dropdownItems?.find { it.id == profile.id}
+        foundSubItem?.status = status
+        foundSubItem?.ping = ping
+        foundSubItem?.error = error
+    }
+
+    inner class TestDialog {
+        val binding = LayoutProgressListBinding.inflate(layoutInflater)
+        val builder = MaterialAlertDialogBuilder(this@DashboardActivity).setView(binding.root)
+            .setNegativeButton(android.R.string.cancel) { _, _ ->
+                cancel()
+            }
+            .setOnDismissListener {
+                cancel()
+            }
+            .setCancelable(false)
+
+        lateinit var cancel: () -> Unit
+        val fragment by lazy { getCurrentGroupFragment() }
+        val results = Collections.synchronizedList(mutableListOf<ProxyEntity?>())
+        var proxyN = 0
+        val finishedN = AtomicInteger(0)
+
+        suspend fun insert(profile: ProxyEntity?) {
+            results.add(profile)
+        }
+
+        suspend fun update(profile: ProxyEntity) {
+            fragment?.configurationListView?.post {
+                val context = this@DashboardActivity ?: return@post
+//                if (!isAdded) return@post
+
+                var profileStatusText: String? = null
+                var profileStatusColor = 0
+
+                when (profile.status) {
+                    -1 -> {
+                        profileStatusText = profile.error
+                        profileStatusColor = context.getColorAttr(android.R.attr.textColorSecondary)
+                    }
+
+                    0 -> {
+                        profileStatusText = getString(R.string.connection_test_testing)
+                        profileStatusColor = context.getColorAttr(android.R.attr.textColorSecondary)
+                    }
+
+                    1 -> {
+                        profileStatusText = getString(R.string.available, profile.ping)
+                        profileStatusColor = context.getColour(R.color.material_green_500)
+                    }
+
+                    2 -> {
+                        profileStatusText = profile.error
+                        profileStatusColor = context.getColour(R.color.material_red_500)
+                    }
+
+                    3 -> {
+                        val err = profile.error ?: ""
+                        val msg = Protocols.genFriendlyMsg(err)
+                        profileStatusText = if (msg != err) msg else getString(R.string.unavailable)
+                        profileStatusColor = context.getColour(R.color.material_red_500)
+                    }
+                }
+
+                val text = SpannableStringBuilder().apply {
+                    append("\n" + profile.displayName())
+                    append("\n")
+                    append(
+                        profile.displayType(),
+                        ForegroundColorSpan(context.getProtocolColor(profile.type)),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    append(" ")
+                    append(
+                        profileStatusText,
+                        ForegroundColorSpan(profileStatusColor),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                    append("\n")
+                }
+
+                binding.nowTesting.text = text
+                binding.progress.text = "${finishedN.addAndGet(1)} / $proxyN"
+            }
+        }
+
+    }
+
+    fun getCurrentGroupFragment(): ConfigurationFragment.GroupFragment? {
+        return try {
+            supportFragmentManager.findFragmentByTag("f" + DataStore.selectedGroup) as ConfigurationFragment.GroupFragment?
+        } catch (e: Exception) {
+            Logs.e(e)
+            null
+        }
     }
 }
