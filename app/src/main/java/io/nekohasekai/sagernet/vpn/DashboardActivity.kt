@@ -1,5 +1,6 @@
 package io.nekohasekai.sagernet.vpn
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -50,6 +51,8 @@ import io.nekohasekai.sagernet.ui.ThemedActivity
 import io.nekohasekai.sagernet.ui.VpnRequestActivity
 import io.nekohasekai.sagernet.vpn.nav.MenuFragment
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
+import io.nekohasekai.sagernet.vpn.serverlist.ListItem
+import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import io.nekohasekai.sagernet.vpn.serverlist.MyAdapter
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
 import kotlinx.coroutines.Job
@@ -86,6 +89,8 @@ class DashboardActivity : ThemedActivity(),
     private var ivMtnClicked = false // Add a variable to track IVMTN click state
     private var ivMciClicked = false // Add a variable to track IVMCI click state
     private lateinit var checkPingDialog: AlertDialog
+    private lateinit var bestServer: ListItem
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -404,6 +409,7 @@ class DashboardActivity : ThemedActivity(),
         if (DataStore.serviceState.started) SagerNet.stopService()
     }
 
+    @SuppressLint("DiscouragedApi")
     private fun urlTest() {
         val customDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)
         val dialogServerName = customDialogView.findViewById<TextView>(R.id.tv_dialog_server_name)
@@ -418,6 +424,8 @@ class DashboardActivity : ThemedActivity(),
             checkPingDialog.dismiss()
         }
         checkPingDialog.show()
+
+        var bestPing: Int = 9999999
 
 
         val testJobs = mutableListOf<Job>()
@@ -450,6 +458,22 @@ class DashboardActivity : ThemedActivity(),
                             profile.ping = result
                             dialogServerPing.setTextColor(Color.BLACK)
                             dialogServerPing.text = result.toString() + "ms"
+                            if(result < bestPing) {
+                                val serverName = profile.displayName()
+                                val countryCode = serverName.substring(serverName.length - 5, serverName.length).substring(0, 2).lowercase()
+                                val emptyList: MutableList<ListSubItem> = mutableListOf()
+                                val resourceName = "ic_${countryCode}_flag"
+                                val iconResId = resources.getIdentifier(resourceName, "drawable", this@DashboardActivity.packageName)
+                                bestPing = result
+                                bestServer = ListItem(
+                                    AppRepository.flagNameMapper(countryCode) + " [Best Location]",
+                                    emptyList,
+                                    false,
+                                    iconResId,
+                                    true,
+                                    profile.id
+                                )
+                            }
                         } catch (e: PluginManager.PluginNotFoundException) {
                             setServerStatus(profile, 0, 2, e.readableMessage)
                             profile.status = 2
@@ -471,6 +495,10 @@ class DashboardActivity : ThemedActivity(),
 
             onMainDispatcher {
                 checkPingDialog.dismiss()
+                if(AppRepository.allServers[0].isBestServer) {
+                    AppRepository.allServers.removeAt(0)
+                }
+                AppRepository.allServers.add(0, bestServer)
                 val adapter = MyAdapter(AppRepository.allServers) { }
                 AppRepository.recyclerView.adapter = adapter
             }
