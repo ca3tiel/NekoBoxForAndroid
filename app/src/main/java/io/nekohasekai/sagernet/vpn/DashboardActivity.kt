@@ -74,7 +74,7 @@ class DashboardActivity : ThemedActivity(),
     NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var binding: ActivityDashboardBinding
-    private lateinit var iconImageView: ImageView
+    private lateinit var PowerIcon: ImageView
     private lateinit var ivAll: ImageView
     private lateinit var ivMtn: ImageView
     private lateinit var ivMci: ImageView
@@ -113,6 +113,7 @@ class DashboardActivity : ThemedActivity(),
         val pingBtn = findViewById<ConstraintLayout>(R.id.clIconPing)
         pingBtn.setOnClickListener {
             urlTest()
+            showNotConnectedState()
         }
 
         // Find the NavMenuIcon ImageView and set an OnClickListener
@@ -132,7 +133,7 @@ class DashboardActivity : ThemedActivity(),
             transaction.commit()
         }
 
-        iconImageView = findViewById(R.id.PowerIcon)
+        PowerIcon = findViewById(R.id.ivPowerIcon)
         ivAll = findViewById(R.id.IVall)
         ivMtn = findViewById(R.id.IVMTN)
         ivMci = findViewById(R.id.IVMCI)
@@ -175,7 +176,7 @@ class DashboardActivity : ThemedActivity(),
             transaction.commit()
         }
 
-        iconImageView.setOnClickListener {
+        PowerIcon.setOnClickListener {
             if (DataStore.serviceState.canStop) SagerNet.stopService() else connect.launch(
                 null
             )
@@ -313,24 +314,24 @@ class DashboardActivity : ThemedActivity(),
     }
 
     private fun showConnectingState() {
-        iconImageView.setImageResource(R.drawable.connecting)
+        PowerIcon.setImageResource(R.drawable.connecting)
         stateTextView.text = "Connecting..."
         timerTextView.visibility = View.INVISIBLE
         addtimeTextView.visibility = View.INVISIBLE
-        iconImageView.isEnabled = false
+        PowerIcon.isEnabled = false
     }
 
     private fun showConnectedState() {
-        iconImageView.setImageResource(R.drawable.connected)
+        PowerIcon.setImageResource(R.drawable.connected)
         stateTextView.text = "Connected"
         isConnected = true
-        iconImageView.isEnabled = true
+        PowerIcon.isEnabled = true
         timerTextView.visibility = View.VISIBLE
         addtimeTextView.visibility = View.INVISIBLE
     }
 
     private fun showNotConnectedState() {
-        iconImageView.setImageResource(R.drawable.connect)
+        PowerIcon.setImageResource(R.drawable.connect)
         stateTextView.text = "Connect"
         isConnected = false
         timerTextView.visibility = View.INVISIBLE
@@ -508,6 +509,15 @@ class DashboardActivity : ThemedActivity(),
                     AppRepository.allServers.add(0, it)
                     val adapter = MyAdapter(AppRepository.allServers) { }
                     AppRepository.recyclerView.adapter = adapter
+                }
+                // Run the code after urlTest() processing
+                if (DataStore.serviceState.canStop) SagerNet.stopService() else connect.launch(null)
+                if (!isConnected) {
+                    showConnectingState()
+                    Handler().postDelayed({
+                        showConnectedState()
+                        startTimer()
+                    }, 1000) // Delay of 2 seconds
                 }
             }
         }
