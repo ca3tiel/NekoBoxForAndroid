@@ -91,6 +91,7 @@
             android:exported="false" />
         <activity
             android:name=".vpn.DashboardActivity"
+            android:launchMode="standard"
             android:exported="false" />
         <activity
             android:name=".vpn.ForgotPasswordActivity"
@@ -120,7 +121,7 @@
             android:name=".vpn.SplashActivity"
             android:configChanges="uiMode"
             android:exported="true"
-            android:launchMode="singleTask">
+            android:launchMode="standard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
