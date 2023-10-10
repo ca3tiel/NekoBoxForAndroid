@@ -80,7 +80,7 @@ class DashboardActivity : ThemedActivity(),
     private lateinit var addtimeTextView: TextView
     private var isConnected = false
     private var timerRunning = false
-    private var timeRemainingMillis = 0 * 60 * 1000 // 30 minutes in milliseconds
+    private var timeRemainingMillis = 0
     private var ivAllClicked = true // Set IVall as clicked by default
     private var ivMtnClicked = false // Add a variable to track IVMTN click state
     private var ivMciClicked = false // Add a variable to track IVMCI click state
@@ -186,7 +186,6 @@ class DashboardActivity : ThemedActivity(),
             } else {
                 showNotConnectedState()
                 stopTimer()
-                add30MinutesToTimer() // Add 30 minutes
             }
         }
 
