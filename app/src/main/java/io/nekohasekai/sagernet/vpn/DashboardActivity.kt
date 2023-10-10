@@ -89,8 +89,7 @@ class DashboardActivity : ThemedActivity(),
     private var ivMtnClicked = false // Add a variable to track IVMTN click state
     private var ivMciClicked = false // Add a variable to track IVMCI click state
     private lateinit var checkPingDialog: AlertDialog
-    private lateinit var bestServer: ListItem
-
+    private var bestServer: ListItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,7 +111,6 @@ class DashboardActivity : ThemedActivity(),
         val fragmentContainer = findViewById<View>(R.id.fragmentContainer)
 
         val pingBtn = findViewById<ConstraintLayout>(R.id.clIconPing)
-
         pingBtn.setOnClickListener {
             urlTest()
         }
@@ -427,7 +425,6 @@ class DashboardActivity : ThemedActivity(),
 
         var bestPing: Int = 9999999
 
-
         val testJobs = mutableListOf<Job>()
 
         val mainJob = runOnDefaultDispatcher {
@@ -444,7 +441,8 @@ class DashboardActivity : ThemedActivity(),
             )
             repeat(DataStore.connectionTestConcurrent) {
                 testJobs.add(launch(testPool) {
-                    val urlTest = UrlTest() // note: this is NOT in bg process
+                    val urlTest = UrlTest()
+
                     while (isActive) {
                         val profile = profiles.poll() ?: break
                         profile.status = 0
@@ -458,12 +456,18 @@ class DashboardActivity : ThemedActivity(),
                             profile.ping = result
                             dialogServerPing.setTextColor(Color.BLACK)
                             dialogServerPing.text = result.toString() + "ms"
-                            if(result < bestPing) {
+                            if (result < bestPing) {
                                 val serverName = profile.displayName()
-                                val countryCode = serverName.substring(serverName.length - 5, serverName.length).substring(0, 2).lowercase()
+                                val countryCode =
+                                    serverName.substring(serverName.length - 5, serverName.length)
+                                        .substring(0, 2).lowercase()
                                 val emptyList: MutableList<ListSubItem> = mutableListOf()
                                 val resourceName = "ic_${countryCode}_flag"
-                                val iconResId = resources.getIdentifier(resourceName, "drawable", this@DashboardActivity.packageName)
+                                val iconResId = resources.getIdentifier(
+                                    resourceName,
+                                    "drawable",
+                                    this@DashboardActivity.packageName
+                                )
                                 bestPing = result
                                 bestServer = ListItem(
                                     AppRepository.flagNameMapper(countryCode) + " [Best Location]",
@@ -495,17 +499,21 @@ class DashboardActivity : ThemedActivity(),
 
             onMainDispatcher {
                 checkPingDialog.dismiss()
-                if(AppRepository.allServers[0].isBestServer) {
-                    AppRepository.allServers.removeAt(0)
+
+                bestServer?.let {
+                    if (AppRepository.allServers[0].isBestServer) {
+                        AppRepository.allServers.removeAt(0)
+                    }
+
+                    AppRepository.allServers.add(0, it)
+                    val adapter = MyAdapter(AppRepository.allServers) { }
+                    AppRepository.recyclerView.adapter = adapter
                 }
-                AppRepository.allServers.add(0, bestServer)
-                val adapter = MyAdapter(AppRepository.allServers) { }
-                AppRepository.recyclerView.adapter = adapter
             }
         }
     }
 
-    private fun setServerStatus(profile: ProxyEntity, ping: Int, status: Int, error: String?) {
+    private suspend fun setServerStatus(profile: ProxyEntity, ping: Int, status: Int, error: String?) {
         val serverName = profile.displayName()
         val countryCode = serverName.substring(serverName.length - 5, serverName.length).substring(0, 2).lowercase()
         val foundItem = AppRepository.allServers.find {
@@ -515,6 +523,18 @@ class DashboardActivity : ThemedActivity(),
         foundSubItem?.status = status
         foundSubItem?.ping = ping
         foundSubItem?.error = error
+
+        onMainDispatcher {
+            val serverName = profile.displayName()
+            val countryCode = serverName.substring(serverName.length - 5, serverName.length).substring(0, 2).lowercase()
+            val foundItem = AppRepository.allServers.find {
+                it.name == AppRepository.flagNameMapper(countryCode)
+            }
+            val foundSubItem = foundItem?.dropdownItems?.find { it.id == profile.id}
+            foundSubItem?.status = status
+            foundSubItem?.ping = ping
+            foundSubItem?.error = error
+        }
     }
 
     inner class TestDialog {
