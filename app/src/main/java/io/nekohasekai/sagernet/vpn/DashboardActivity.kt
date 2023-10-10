@@ -14,8 +14,8 @@ import android.view.View
 import android.widget.ImageView
 import android.app.AlertDialog
 import android.graphics.Color
+import android.os.CountDownTimer
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
@@ -31,8 +31,6 @@ import io.nekohasekai.sagernet.bg.BaseService
 import io.nekohasekai.sagernet.bg.SagerConnection
 import io.nekohasekai.sagernet.bg.proto.UrlTest
 import io.nekohasekai.sagernet.database.DataStore
-import io.nekohasekai.sagernet.database.GroupManager
-import io.nekohasekai.sagernet.database.ProfileManager
 import io.nekohasekai.sagernet.database.ProxyEntity
 import io.nekohasekai.sagernet.database.SagerDatabase
 import io.nekohasekai.sagernet.database.preference.OnPreferenceDataStoreChangeListener
@@ -63,7 +61,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.newFixedThreadPoolContext
 import moe.matsuri.nb4a.Protocols
 import moe.matsuri.nb4a.Protocols.getProtocolColor
-import moe.matsuri.nb4a.proxy.neko.NekoJSInterface
 import java.util.Collections
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.atomic.AtomicInteger
@@ -82,9 +79,8 @@ class DashboardActivity : ThemedActivity(),
     private lateinit var timerTextView: TextView
     private lateinit var addtimeTextView: TextView
     private var isConnected = false
-    private var timerHandler: Handler = Handler()
     private var timerRunning = false
-    private var timeRemainingMillis = 30 * 60 * 1000 // 30 minutes in milliseconds
+    private var timeRemainingMillis = 0 * 60 * 1000 // 30 minutes in milliseconds
     private var ivAllClicked = true // Set IVall as clicked by default
     private var ivMtnClicked = false // Add a variable to track IVMTN click state
     private var ivMciClicked = false // Add a variable to track IVMCI click state
@@ -114,6 +110,7 @@ class DashboardActivity : ThemedActivity(),
         pingBtn.setOnClickListener {
             urlTest()
             showNotConnectedState()
+            addtimeTextView.visibility = View.INVISIBLE
         }
 
         // Find the NavMenuIcon ImageView and set an OnClickListener
@@ -280,25 +277,33 @@ class DashboardActivity : ThemedActivity(),
     }
 
     private fun add30MinutesToTimer() {
-        if (!timerRunning) {
             timeRemainingMillis += 30 * 60 * 1000
             updateTimerText()
-        }
     }
+
+    private var countDownTimer: CountDownTimer? = null
 
     private fun startTimer() {
         timerRunning = true
-        timerHandler.post(object : Runnable {
-            override fun run() {
-                if (timeRemainingMillis <= 0) {
-                    showNotConnectedState()
-                } else {
-                    timeRemainingMillis -= 1000 // Decrease by 1 second
-                    updateTimerText()
-                    timerHandler.postDelayed(this, 1000) // Run every 1 second
+
+        countDownTimer = object : CountDownTimer(timeRemainingMillis.toLong(), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                timeRemainingMillis = millisUntilFinished.toInt()
+                updateTimerText()
+            }
+
+            override fun onFinish() {
+                showNotConnectedState()
+
+                // Add a check for isConnected and timerTextView
+                if (DataStore.serviceState.started && timerTextView.text == "00:00") {
+                    // Stop the service if isConnected is true and timer is 0
+                    SagerNet.stopService()
                 }
             }
-        })
+        }
+
+        countDownTimer?.start()
     }
 
     private fun updateTimerText() {
@@ -310,7 +315,7 @@ class DashboardActivity : ThemedActivity(),
 
     private fun stopTimer() {
         timerRunning = false
-        timerHandler.removeCallbacksAndMessages(null)
+        countDownTimer?.cancel()
     }
 
     private fun showConnectingState() {
@@ -331,6 +336,7 @@ class DashboardActivity : ThemedActivity(),
     }
 
     private fun showNotConnectedState() {
+        add30MinutesToTimer()
         PowerIcon.setImageResource(R.drawable.connect)
         stateTextView.text = "Connect"
         isConnected = false
@@ -510,7 +516,7 @@ class DashboardActivity : ThemedActivity(),
                     val adapter = MyAdapter(AppRepository.allServers) { }
                     AppRepository.recyclerView.adapter = adapter
                 }
-                // Run the code after urlTest() processing
+                // Start service after urlTest() processing
                 if (DataStore.serviceState.canStop) SagerNet.stopService() else connect.launch(null)
                 if (!isConnected) {
                     showConnectingState()
