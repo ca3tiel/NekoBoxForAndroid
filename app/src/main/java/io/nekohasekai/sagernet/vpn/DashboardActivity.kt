@@ -111,6 +111,7 @@ class DashboardActivity : ThemedActivity(),
             urlTest()
             showNotConnectedState()
             addtimeTextView.visibility = View.INVISIBLE
+            stopTimer()
         }
 
         // Find the NavMenuIcon ImageView and set an OnClickListener
