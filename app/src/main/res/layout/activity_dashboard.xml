@@ -55,7 +55,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/PowerIcon"
+        android:id="@+id/ivPowerIcon"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="20dp"
@@ -75,10 +75,10 @@
         android:text="+30 min"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/PowerIcon"
-        app:layout_constraintTop_toTopOf="@+id/PowerIcon"
-        app:layout_constraintBottom_toBottomOf="@+id/PowerIcon"
-        app:layout_constraintEnd_toEndOf="@+id/PowerIcon" />
+        app:layout_constraintStart_toStartOf="@+id/ivPowerIcon"
+        app:layout_constraintTop_toTopOf="@+id/ivPowerIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/ivPowerIcon"
+        app:layout_constraintEnd_toEndOf="@+id/ivPowerIcon" />
 
     <TextView
         android:id="@+id/TVtimer"
@@ -91,16 +91,16 @@
         android:text=""
         android:textColor="@color/black"
         android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="@+id/PowerIcon"
-        app:layout_constraintTop_toTopOf="@+id/PowerIcon"
-        app:layout_constraintBottom_toBottomOf="@+id/PowerIcon"
-        app:layout_constraintEnd_toEndOf="@+id/PowerIcon" />
+        app:layout_constraintStart_toStartOf="@+id/ivPowerIcon"
+        app:layout_constraintTop_toTopOf="@+id/ivPowerIcon"
+        app:layout_constraintBottom_toBottomOf="@+id/ivPowerIcon"
+        app:layout_constraintEnd_toEndOf="@+id/ivPowerIcon" />
 
     <TextView
         android:id="@+id/PowerState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/PowerIcon"
+        android:layout_below="@id/ivPowerIcon"
         android:text="Connect"
         android:fontFamily="@font/museo_san_rounded700"
         android:layout_marginTop="10dp"
@@ -109,7 +109,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PowerIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/ivPowerIcon" />
 
     <LinearLayout
         android:id="@+id/LLdatatransfer"
