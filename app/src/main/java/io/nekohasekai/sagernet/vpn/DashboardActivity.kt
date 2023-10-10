@@ -283,6 +283,11 @@ class DashboardActivity : ThemedActivity(),
 
     private var countDownTimer: CountDownTimer? = null
 
+    private fun stopTimer() {
+        timerRunning = false
+        countDownTimer?.cancel()
+    }
+
     private fun startTimer() {
         timerRunning = true
 
@@ -293,12 +298,10 @@ class DashboardActivity : ThemedActivity(),
             }
 
             override fun onFinish() {
-                showNotConnectedState()
-
-                // Add a check for isConnected and timerTextView
-                if (DataStore.serviceState.started && timerTextView.text == "00:00") {
+                if (timerTextView.text == "00:00") {
                     // Stop the service if isConnected is true and timer is 0
-                    SagerNet.stopService()
+                    stopService()
+                showNotConnectedState()
                 }
             }
         }
@@ -313,10 +316,6 @@ class DashboardActivity : ThemedActivity(),
         timerTextView.text = formattedTime
     }
 
-    private fun stopTimer() {
-        timerRunning = false
-        countDownTimer?.cancel()
-    }
 
     private fun showConnectingState() {
         PowerIcon.setImageResource(R.drawable.connecting)
