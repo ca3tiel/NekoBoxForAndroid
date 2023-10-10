@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.database.SagerDatabase
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
@@ -21,51 +20,36 @@ class MyFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_list, container, false)
 
-        val iconClicked = arguments?.getString("iconClicked")
+        arguments?.getString("iconClicked") // Do something with iconClicked if needed
 
-        var proxyGroup = SagerDatabase.groupDao.getById(1)!!
-        var newProfiles = SagerDatabase.proxyDao.getByGroup(proxyGroup.id)
+        val proxyGroup = SagerDatabase.groupDao.getById(1)!!
+        val newProfiles = SagerDatabase.proxyDao.getByGroup(proxyGroup.id)
 
-        AppRepository.allServers = mutableListOf<ListItem>()
-
-        val groupedServers = newProfiles
-            .drop(2) // Skip the first 2 items
+        AppRepository.allServers = newProfiles
+            .drop(2)
             .groupBy { profile ->
                 val serverName = profile.displayName()
                 serverName.substring(serverName.length - 5, serverName.length).substring(0, 2).lowercase()
             }
+            .map { (countryCode, profiles) ->
+                val resourceName = "ic_${countryCode}_flag"
+                val countryName = AppRepository.flagNameMapper(countryCode)
 
-        groupedServers.forEach { (countryCode, profiles) ->
-            val resourceName = "ic_${countryCode}_flag"
-            val countryName = AppRepository.flagNameMapper(countryCode)
+                val serverList = profiles.map { profile ->
+                    ListSubItem(profile.id, profile.displayName(), profile.status, profile.error, profile.ping)
+                }
 
-            val serverList = profiles.map { profile ->
-                ListSubItem(profile.id, profile.displayName(), profile.status, profile.error, profile.ping )
-            }.toMutableList()
-
-            val listItem = ListItem(
-                countryName,
-                serverList,
-                iconResId = resources.getIdentifier(resourceName, "drawable", context?.packageName)
-            )
-
-            AppRepository.allServers.add(
-                listItem
-            )
-        }
-
-//        val mtnServers = mutableListOf(
-//            ListItem("Germany", listOf("Germany 1", "Germany 2", "Germany 3", "Germany 4"), iconResId = R.drawable.ic_de_flag),
-//            ListItem("France", listOf("France 1", "France 2", "France 3", "France 4"), iconResId = R.drawable.ic_fr_flag)
-//        )
-//
-//        val mciServers = mutableListOf(
-//            ListItem("Netherlands", listOf("Netherlands 1", "Netherlands 2", "Netherlands 3", "Netherlands 4"), iconResId = R.drawable.ic_nl_flag)
-//        )
+                ListItem(
+                    countryName,
+                    serverList.toMutableList(),
+                    iconResId = resources.getIdentifier(resourceName, "drawable", context?.packageName)
+                )
+            }
+            .toMutableList()
 
         AppRepository.recyclerView = rootView.findViewById(R.id.recyclerView)
         AppRepository.recyclerView.layoutManager = LinearLayoutManager(activity)
-        val adapter = MyAdapter(AppRepository.allServers) { }
+        val adapter = MyAdapter(AppRepository.allServers) { /* Handle item click if needed */ }
         AppRepository.recyclerView.adapter = adapter
 
         return rootView
