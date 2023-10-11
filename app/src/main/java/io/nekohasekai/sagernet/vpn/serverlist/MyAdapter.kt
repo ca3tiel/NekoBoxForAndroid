@@ -19,7 +19,7 @@ class MyAdapter(
     private val itemClickListener: (ListItem) -> Unit
 ) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
-    private var lastSelectedPosition: Int = RecyclerView.NO_POSITION
+    private var lastExpandedPosition: Int = RecyclerView.NO_POSITION
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemName: TextView = itemView.findViewById(R.id.itemName)
@@ -56,6 +56,12 @@ class MyAdapter(
             if (item.isBestServer) {
                 holder.selectedView.visibility = View.VISIBLE
             } else {
+                if (lastExpandedPosition != RecyclerView.NO_POSITION && lastExpandedPosition != position) {
+                    // Close the last expanded item
+                    itemList[lastExpandedPosition].isExpanded = false
+                    notifyItemChanged(lastExpandedPosition)
+                }
+
                 item.isExpanded = !isExpanded
 
                 // Using notifyDataSetChanged for a smoother transition
@@ -64,16 +70,16 @@ class MyAdapter(
                 holder.selectedView.visibility = View.INVISIBLE
             }
 
-            // Update the last selected position
-            lastSelectedPosition = holder.adapterPosition
+            // Update the last expanded position
+            lastExpandedPosition = if (item.isExpanded) position else RecyclerView.NO_POSITION
 
             // Handle item click by calling the lambda function
             itemClickListener(item)
         }
 
-        // Set visibility of selectedView based on the last selected position and isBestServer
+        // Set visibility of selectedView based on the last expanded position and isBestServer
         holder.selectedView.visibility =
-            if (lastSelectedPosition == position && item.isBestServer) View.VISIBLE else View.INVISIBLE
+            if (lastExpandedPosition == position && item.isBestServer) View.VISIBLE else View.INVISIBLE
 
         // Create and set a RecyclerView adapter for the dropdown list
         val dropdownAdapter = DropdownAdapter(item.dropdownItems) { clickedItem ->
