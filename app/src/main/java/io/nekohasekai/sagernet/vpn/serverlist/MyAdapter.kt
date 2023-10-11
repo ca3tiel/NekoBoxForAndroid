@@ -64,10 +64,13 @@ class MyAdapter(
 
                 item.isExpanded = !isExpanded
 
-                // Using notifyDataSetChanged for a smoother transition
-                notifyDataSetChanged()
+                // Use notifyItemChanged to refresh the specific item
+                notifyItemChanged(position)
 
                 holder.selectedView.visibility = View.INVISIBLE
+
+                // Scroll smoothly to the clicked position
+                holder.dropdownList.smoothScrollToPosition(0)
             }
 
             // Update the last expanded position
