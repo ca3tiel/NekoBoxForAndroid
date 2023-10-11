@@ -13,10 +13,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.CountDownTimer
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -109,8 +113,7 @@ class DashboardActivity : ThemedActivity(),
         val pingBtn = findViewById<ConstraintLayout>(R.id.clIconPing)
         pingBtn.setOnClickListener {
             urlTest()
-            showNotConnectedState()
-            addtimeTextView.visibility = View.INVISIBLE
+            showNotConnectedStateForPingBtn()
             stopTimer()
         }
 
@@ -175,18 +178,25 @@ class DashboardActivity : ThemedActivity(),
         }
 
         PowerIcon.setOnClickListener {
-            if (DataStore.serviceState.canStop) SagerNet.stopService() else connect.launch(
-                null
-            )
-            if (!isConnected) {
-                showConnectingState()
-                Handler().postDelayed({
-                    showConnectedState()
-                    startTimer()
-                }, 2000) // Delay of 2 seconds
+            val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
+
+            if (networkInfo != null && networkInfo.isConnected) {
+                // Internet is connected, proceed with your code
+                if (DataStore.serviceState.canStop) SagerNet.stopService() else connect.launch(null)
+                if (!isConnected) {
+                    showConnectingState()
+                    Handler().postDelayed({
+                        showConnectedState()
+                        startTimer()
+                    }, 2000) // Delay of 2 seconds
+                } else {
+                    showNotConnectedState()
+                    stopTimer()
+                }
             } else {
-                showNotConnectedState()
-                stopTimer()
+                // Internet is not connected, show a toast
+                Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -318,29 +328,37 @@ class DashboardActivity : ThemedActivity(),
 
 
     private fun showConnectingState() {
-        PowerIcon.setImageResource(R.drawable.connecting)
-        stateTextView.text = "Connecting..."
         timerTextView.visibility = View.INVISIBLE
         addtimeTextView.visibility = View.INVISIBLE
+        PowerIcon.setImageResource(R.drawable.connecting)
+        stateTextView.text = "Connecting..."
         PowerIcon.isEnabled = false
     }
 
     private fun showConnectedState() {
+        timerTextView.visibility = View.VISIBLE
+        addtimeTextView.visibility = View.INVISIBLE
         PowerIcon.setImageResource(R.drawable.connected)
         stateTextView.text = "Connected"
         isConnected = true
         PowerIcon.isEnabled = true
-        timerTextView.visibility = View.VISIBLE
-        addtimeTextView.visibility = View.INVISIBLE
     }
 
     private fun showNotConnectedState() {
+        timerTextView.visibility = View.INVISIBLE
+        addtimeTextView.visibility = View.VISIBLE
         add30MinutesToTimer()
         PowerIcon.setImageResource(R.drawable.connect)
         stateTextView.text = "Connect"
         isConnected = false
+    }
+
+    private fun showNotConnectedStateForPingBtn() {
         timerTextView.visibility = View.INVISIBLE
-        addtimeTextView.visibility = View.VISIBLE
+        addtimeTextView.visibility = View.INVISIBLE
+        PowerIcon.setImageResource(R.drawable.connect)
+        stateTextView.text = "Connect"
+        isConnected = false
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -360,6 +378,7 @@ class DashboardActivity : ThemedActivity(),
         super.onResume()
         if(DataStore.serviceState.connected) {
             showConnectedState()
+            timerTextView.visibility = View.VISIBLE
             startTimer()
         } else {
             showNotConnectedState()
