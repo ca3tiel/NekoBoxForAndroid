@@ -22,6 +22,7 @@ import io.nekohasekai.sagernet.ktx.getColorAttr
 import io.nekohasekai.sagernet.ktx.runOnMainDispatcher
 import io.nekohasekai.sagernet.ui.SwitchActivity
 import io.nekohasekai.sagernet.utils.Theme
+import io.nekohasekai.sagernet.vpn.DashboardActivity
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -115,7 +116,14 @@ class ServiceNotification(
         .setTicker(service.getString(R.string.forward_success))
         .setContentTitle(title)
         .setOnlyAlertOnce(true)
-        .setContentIntent(SagerNet.configureIntent(service))
+        .setContentIntent(
+            PendingIntent.getActivity(
+                service,
+                0,
+                Intent(service, DashboardActivity::class.java),
+                flags
+            )
+        )
         .setSmallIcon(R.drawable.ic_service_active)
         .setCategory(NotificationCompat.CATEGORY_SERVICE)
         .setPriority(if (visible) NotificationCompat.PRIORITY_LOW else NotificationCompat.PRIORITY_MIN)
@@ -180,7 +188,6 @@ class ServiceNotification(
             listenPostSpeed = intent.action == Intent.ACTION_SCREEN_ON
         }
     }
-
 
     private suspend fun show() =
         useBuilder { (service as Service).startForeground(notificationId, it.build()) }
