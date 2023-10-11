@@ -97,30 +97,45 @@
         app:layout_constraintEnd_toEndOf="@+id/ivPowerIcon" />
 
     <TextView
-        android:id="@+id/PowerState"
+    android:id="@+id/PowerState"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/ivPowerIcon"
+    android:text="Connect"
+    android:fontFamily="@font/museo_san_rounded700"
+    android:layout_marginTop="10dp"
+    android:textSize="18sp"
+    android:textColor="@color/lightBlue"
+    android:textStyle="bold"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/ivPowerIcon" />
+
+    <TextView
+        android:id="@+id/tvSelectedServer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivPowerIcon"
-        android:text="Connect"
+        android:text="NO Selected Server"
         android:fontFamily="@font/museo_san_rounded700"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:textSize="18sp"
         android:textColor="@color/lightBlue"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPowerIcon" />
+        app:layout_constraintTop_toBottomOf="@+id/PowerState" />
 
     <LinearLayout
         android:id="@+id/LLdatatransfer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:padding="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PowerState"
+        app:layout_constraintTop_toBottomOf="@+id/tvSelectedServer"
         android:baselineAligned="false">
 
         <LinearLayout
