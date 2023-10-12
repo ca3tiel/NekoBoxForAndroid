@@ -39,7 +39,7 @@
             android:id="@+id/ivFastInternet"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginRight="70dp"
+            android:layout_marginRight="75dp"
             android:src="@drawable/ic_fast_internet"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
