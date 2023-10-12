@@ -22,6 +22,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.preference.PreferenceDataStore
@@ -479,7 +480,13 @@ class DashboardActivity : ThemedActivity(),
                             setServerStatus(profile, result, 1, null)
                             profile.status = 1
                             profile.ping = result
-                            dialogServerPing.setTextColor(Color.BLACK)
+                            // Delay for 1 second
+                            delay(1000)
+                            if (result <= 600) {
+                                dialogServerPing.setTextColor(ContextCompat.getColor(this@DashboardActivity, R.color.material_green_500))
+                            } else {
+                                dialogServerPing.setTextColor(ContextCompat.getColor(this@DashboardActivity, R.color.material_red_500))
+                            }
                             dialogServerPing.text = result.toString() + "ms"
                             if (result < bestPing) {
                                 val serverName = profile.displayName()
