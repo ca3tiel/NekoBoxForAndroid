@@ -437,7 +437,7 @@ class DashboardActivity : ThemedActivity(),
         val customDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)
         val dialogServerName = customDialogView.findViewById<TextView>(R.id.tv_dialog_server_name)
         val dialogServerPing = customDialogView.findViewById<TextView>(R.id.tv_dialog_server_ping)
-        val dialogButton = customDialogView.findViewById<Button>(R.id.btn_dialog_cancel)
+        val dialogButton = customDialogView.findViewById<TextView>(R.id.btn_dialog_cancel)
 
         val builder = AlertDialog.Builder(this)
         builder.setView(customDialogView)
