@@ -1,6 +1,7 @@
 package io.nekohasekai.sagernet.vpn
 
 import android.annotation.SuppressLint
+import kotlinx.coroutines.CoroutineScope
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -58,12 +59,14 @@ import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import io.nekohasekai.sagernet.vpn.serverlist.MyAdapter
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newFixedThreadPoolContext
+import kotlinx.coroutines.withContext
 import moe.matsuri.nb4a.Protocols
 import moe.matsuri.nb4a.Protocols.getProtocolColor
 import java.util.Collections
@@ -453,7 +456,7 @@ class DashboardActivity : ThemedActivity(),
 
         val testJobs = mutableListOf<Job>()
 
-        val mainJob = runOnDefaultDispatcher {
+        val mainJob = CoroutineScope(Dispatchers.Main).launch {
             if (DataStore.serviceState.started) {
                 stopService()
                 delay(500) // wait for service stop
@@ -472,8 +475,10 @@ class DashboardActivity : ThemedActivity(),
                     while (isActive) {
                         val profile = profiles.poll() ?: break
                         profile.status = 0
-                        dialogServerName.text = profile.displayName()
-                        dialogServerPing.text = ""
+                        withContext(Dispatchers.Main) {
+                            dialogServerName.text = profile.displayName()
+                            dialogServerPing.text = ""
+                        }
 
                         try {
                             val result = urlTest.doTest(profile)
@@ -483,11 +488,16 @@ class DashboardActivity : ThemedActivity(),
                             // Delay for 1 second
                             delay(1000)
                             if (result <= 600) {
-                                dialogServerPing.setTextColor(ContextCompat.getColor(this@DashboardActivity, R.color.material_green_500))
+                                withContext(Dispatchers.Main) {
+                                    dialogServerPing.setTextColor(ContextCompat.getColor(this@DashboardActivity, R.color.material_green_500))
+                                    dialogServerPing.text = result.toString() + "ms"
+                                }
                             } else {
-                                dialogServerPing.setTextColor(ContextCompat.getColor(this@DashboardActivity, R.color.material_red_500))
+                                withContext(Dispatchers.Main) {
+                                    dialogServerPing.setTextColor(ContextCompat.getColor(this@DashboardActivity, R.color.material_red_500))
+                                    dialogServerPing.text = result.toString() + "ms"
+                                }
                             }
-                            dialogServerPing.text = result.toString() + "ms"
                             if (result < bestPing) {
                                 val serverName = profile.displayName()
                                 val countryCode =
@@ -514,14 +524,18 @@ class DashboardActivity : ThemedActivity(),
                             setServerStatus(profile, 0, 2, e.readableMessage)
                             profile.status = 2
                             profile.error = e.readableMessage
-                            dialogServerPing.setTextColor(Color.RED)
-                            dialogServerPing.text = "Unavailable!"
+                            withContext(Dispatchers.Main) {
+                                dialogServerPing.setTextColor(Color.RED)
+                                dialogServerPing.text = "Unavailable!"
+                            }
                         } catch (e: Exception) {
                             setServerStatus(profile, 0, 3, e.readableMessage)
                             profile.status = 3
                             profile.error = e.readableMessage
-                            dialogServerPing.setTextColor(Color.RED)
-                            dialogServerPing.text = "Unavailable!"
+                            withContext(Dispatchers.Main) {
+                                dialogServerPing.setTextColor(Color.RED)
+                                dialogServerPing.text = "Unavailable!"
+                            }
                         }
                     }
                 })
@@ -529,29 +543,32 @@ class DashboardActivity : ThemedActivity(),
 
             testJobs.joinAll()
 
-            onMainDispatcher {
-                checkPingDialog.dismiss()
+            checkPingDialog.dismiss()
 
-                bestServer?.let {
-                    if (AppRepository.allServers[0].isBestServer) {
-                        AppRepository.allServers.removeAt(0)
-                    }
+            bestServer?.let {
+                if (AppRepository.allServers[0].isBestServer) {
+                    AppRepository.allServers.removeAt(0)
+                }
 
-                    AppRepository.allServers.add(0, it)
-                    val adapter = MyAdapter(AppRepository.allServers) { }
-                    AppRepository.recyclerView.adapter = adapter
-                }
-                // Start service after urlTest() processing
-                if (DataStore.serviceState.canStop) SagerNet.stopService() else connect.launch(null)
-                if (!isConnected) {
-                    showConnectingState()
-                    Handler().postDelayed({
-                        showConnectedState()
-                        startTimer()
-                    }, 1000) // Delay of 2 seconds
-                }
+                AppRepository.allServers.add(0, it)
+                val adapter = MyAdapter(AppRepository.allServers) { }
+                AppRepository.recyclerView.adapter = adapter
+            }
+
+            // Start service after urlTest() processing
+            if (DataStore.serviceState.canStop) SagerNet.stopService() else connect.launch(null)
+            if (!isConnected) {
+                showConnectingState()
+                Handler().postDelayed({
+                    showConnectedState()
+                    startTimer()
+                }, 1000) // Delay of 2 seconds
             }
         }
+
+        // Utility function to switch coroutine context to the main thread
+        suspend fun <T> withMainContext(block: suspend CoroutineScope.() -> T): T =
+            withContext(Dispatchers.Main, block)
     }
 
     private suspend fun setServerStatus(profile: ProxyEntity, ping: Int, status: Int, error: String?) {
@@ -565,7 +582,7 @@ class DashboardActivity : ThemedActivity(),
         foundSubItem?.ping = ping
         foundSubItem?.error = error
 
-        onMainDispatcher {
+        withContext(Dispatchers.Main) {
             val serverName = profile.displayName()
             val countryCode = serverName.substring(serverName.length - 5, serverName.length).substring(0, 2).lowercase()
             val foundItem = AppRepository.allServers.find {
@@ -577,6 +594,7 @@ class DashboardActivity : ThemedActivity(),
             foundSubItem?.error = error
         }
     }
+
 
     inner class TestDialog {
         val binding = LayoutProgressListBinding.inflate(layoutInflater)
