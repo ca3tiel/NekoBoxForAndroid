@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
+import io.nekohasekai.sagernet.vpn.serverlist.MyAdapter
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -28,6 +29,7 @@ object AppRepository {
     public var ShareApplicationLink: String = "https://play.google.com/store/apps/details?id=com.File.Manager.Filemanager&pcampaignid=web_share"
     public var allServers: MutableList<ListItem> = mutableListOf()
     public lateinit var recyclerView: RecyclerView
+    public var isBestServerSelected: Boolean = false
 
     fun setBaseUrl(url: String) {
         baseUrl = url
@@ -158,6 +160,21 @@ object AppRepository {
             "nl" to "Netherlands"
         )
         return countries[countryCode].toString()
+    }
+
+    fun refreshServersListView()
+    {
+        val adapter = MyAdapter(allServers) { }
+        recyclerView.adapter = adapter
+    }
+
+    fun resetAllSubItemsStatus()
+    {
+        allServers.forEach { it ->
+            it.dropdownItems.forEach { it ->
+                it.isSelected = false
+            }
+        }
     }
 
 }

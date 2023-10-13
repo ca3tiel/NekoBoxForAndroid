@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.ktx.getColorAttr
 import io.nekohasekai.sagernet.ktx.getColour
+import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 import moe.matsuri.nb4a.Protocols
 
 class DropdownAdapter(
@@ -87,16 +88,28 @@ class DropdownAdapter(
 
             // Toggle the visibility of selectedView based on isSelected
             holder.selectedView.visibility = View.VISIBLE
+            AppRepository.resetAllSubItemsStatus()
+            subItem.isSelected = true
 
             // Update the last selected position
             lastSelectedPosition = holder.adapterPosition
 
             // Handle item click by calling the lambda function
             subItemClickListener(subItem)
+
+            AppRepository.isBestServerSelected = false
+            AppRepository.refreshServersListView()
         }
 
         // Set the initial visibility of selectedView
-        holder.selectedView.visibility = if (lastSelectedPosition == position) View.VISIBLE else View.INVISIBLE
+        if (lastSelectedPosition == position || subItem.isSelected) {
+            holder.selectedView.visibility = View.VISIBLE
+        } else {
+            holder.selectedView.visibility = View.INVISIBLE
+        }
+        if(AppRepository.isBestServerSelected) {
+            holder.selectedView.visibility = View.INVISIBLE
+        }
     }
 
     override fun getItemCount(): Int {

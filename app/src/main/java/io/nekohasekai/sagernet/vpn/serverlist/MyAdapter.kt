@@ -55,6 +55,8 @@ class MyAdapter(
         holder.itemHeader.setOnClickListener {
             if (item.isBestServer) {
                 holder.selectedView.visibility = View.VISIBLE
+                AppRepository.isBestServerSelected = true
+                AppRepository.refreshServersListView()
             } else {
                 if (lastExpandedPosition != RecyclerView.NO_POSITION && lastExpandedPosition != position) {
                     // Close the last expanded item
@@ -81,8 +83,11 @@ class MyAdapter(
         }
 
         // Set visibility of selectedView based on the last expanded position and isBestServer
-        holder.selectedView.visibility =
-            if (lastExpandedPosition == position && item.isBestServer) View.VISIBLE else View.INVISIBLE
+        if (item.isBestServer && AppRepository.isBestServerSelected) {
+            holder.selectedView.visibility = View.VISIBLE
+        } else {
+            holder.selectedView.visibility = View.INVISIBLE
+        }
 
         // Create and set a RecyclerView adapter for the dropdown list
         val dropdownAdapter = DropdownAdapter(item.dropdownItems) { clickedItem ->
