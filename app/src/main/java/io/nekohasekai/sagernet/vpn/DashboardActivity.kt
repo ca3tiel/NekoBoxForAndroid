@@ -6,20 +6,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.RemoteException
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.app.AlertDialog
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.CountDownTimer
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -27,8 +24,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.preference.PreferenceDataStore
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
+import com.google.gson.Gson
 import io.nekohasekai.sagernet.Key
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.SagerNet
@@ -41,13 +38,8 @@ import io.nekohasekai.sagernet.database.ProxyEntity
 import io.nekohasekai.sagernet.database.SagerDatabase
 import io.nekohasekai.sagernet.database.preference.OnPreferenceDataStoreChangeListener
 import io.nekohasekai.sagernet.databinding.ActivityDashboardBinding
-import io.nekohasekai.sagernet.databinding.LayoutProgressListBinding
 import io.nekohasekai.sagernet.ktx.Logs
-import io.nekohasekai.sagernet.ktx.getColorAttr
-import io.nekohasekai.sagernet.ktx.getColour
-import io.nekohasekai.sagernet.ktx.onMainDispatcher
 import io.nekohasekai.sagernet.ktx.readableMessage
-import io.nekohasekai.sagernet.ktx.runOnDefaultDispatcher
 import io.nekohasekai.sagernet.plugin.PluginManager
 import io.nekohasekai.sagernet.ui.ConfigurationFragment
 import io.nekohasekai.sagernet.ui.MainActivity
@@ -57,7 +49,6 @@ import io.nekohasekai.sagernet.vpn.nav.MenuFragment
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
-import io.nekohasekai.sagernet.vpn.serverlist.MyAdapter
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -67,11 +58,7 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newFixedThreadPoolContext
 import kotlinx.coroutines.withContext
-import moe.matsuri.nb4a.Protocols
-import moe.matsuri.nb4a.Protocols.getProtocolColor
-import java.util.Collections
 import java.util.concurrent.ConcurrentLinkedQueue
-import java.util.concurrent.atomic.AtomicInteger
 
 class DashboardActivity : ThemedActivity(),
     SagerConnection.Callback,
@@ -85,19 +72,22 @@ class DashboardActivity : ThemedActivity(),
     private lateinit var ivMci: ImageView
     private lateinit var stateTextView: TextView
     private lateinit var timerTextView: TextView
-    private lateinit var addtimeTextView: TextView
+    private lateinit var appTitle: TextView
+    private lateinit var addTimeTextView: TextView
     private var isConnected = false
     private var timerRunning = false
-    private var timeRemainingMillis = 0
+    private var timeRemainingMillis: Long = 0
     private var ivAllClicked = true // Set IVall as clicked by default
     private var ivMtnClicked = false // Add a variable to track IVMTN click state
     private var ivMciClicked = false // Add a variable to track IVMCI click state
     private lateinit var checkPingDialog: AlertDialog
     private var bestServer: ListItem? = null
-
+    private var countDownTimer: CountDownTimer? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
         val telegramIcon = findViewById<ImageView>(R.id.TelegramIcon)
         val connection = SagerConnection(SagerConnection.CONNECTION_ID_MAIN_ACTIVITY_FOREGROUND, true)
@@ -144,7 +134,8 @@ class DashboardActivity : ThemedActivity(),
         ivMci = findViewById(R.id.IVMCI)
         stateTextView = findViewById(R.id.PowerState)
         timerTextView = findViewById(R.id.TVtimer)
-        addtimeTextView = findViewById(R.id.TVaddTime)
+        appTitle = findViewById(R.id.TVapplicationName)
+        addTimeTextView = findViewById(R.id.TVaddTime)
 
         // Check if returning from a fragment
         if (savedInstanceState != null) {
@@ -188,16 +179,6 @@ class DashboardActivity : ThemedActivity(),
             if (networkInfo != null && networkInfo.isConnected) {
                 // Internet is connected, proceed with your code
                 if (DataStore.serviceState.canStop) SagerNet.stopService() else connect.launch(null)
-                if (!isConnected) {
-                    showConnectingState()
-                    Handler().postDelayed({
-                        showConnectedState()
-                        startTimer()
-                    }, 2000) // Delay of 2 seconds
-                } else {
-                    showNotConnectedState()
-                    stopTimer()
-                }
             } else {
                 // Internet is not connected, show a toast
                 Toast.makeText(this, "No internet connection", Toast.LENGTH_LONG).show()
@@ -291,11 +272,18 @@ class DashboardActivity : ThemedActivity(),
     }
 
     private fun add30MinutesToTimer() {
-            timeRemainingMillis += 30 * 60 * 1000
+            println("HAMED_LOG_TIME_1: " + timeRemainingMillis.toString())
+            var remainTime = AppRepository.sharedPreferences.getLong("remainingTime", 0)
+            println("HAMED_LOG_TIME_2: " + remainTime.toString())
+            timeRemainingMillis = remainTime + (30 * 60 * 1000)
+            println("HAMED_LOG_TIME_3: " + timeRemainingMillis.toString())
+            AppRepository.sharedPreferences.edit().putLong("remainingTime", timeRemainingMillis).apply()
+            var remainTime2 = AppRepository.sharedPreferences.getLong("remainingTime", 0)
+            println("HAMED_LOG_TIME_4: " + remainTime2.toString())
             updateTimerText()
     }
 
-    private var countDownTimer: CountDownTimer? = null
+
 
     private fun stopTimer() {
         timerRunning = false
@@ -304,18 +292,21 @@ class DashboardActivity : ThemedActivity(),
 
     private fun startTimer() {
         timerRunning = true
+        val initialTimeMillis = AppRepository.sharedPreferences.getLong("remainingTime", 1800000)
 
-        countDownTimer = object : CountDownTimer(timeRemainingMillis.toLong(), 1000) {
+        countDownTimer = object : CountDownTimer(initialTimeMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                timeRemainingMillis = millisUntilFinished.toInt()
+                timeRemainingMillis = millisUntilFinished
+                AppRepository.sharedPreferences.edit().putLong("remainingTime", millisUntilFinished).apply()
                 updateTimerText()
             }
 
             override fun onFinish() {
+                // Stop the service if isConnected is true and timer is 0
                 if (timerTextView.text == "00:00") {
-                    // Stop the service if isConnected is true and timer is 0
+                    AppRepository.sharedPreferences.edit().remove("remainingTime").apply()
                     stopService()
-                showNotConnectedState()
+                    showNotConnectedState()
                 }
             }
         }
@@ -333,7 +324,7 @@ class DashboardActivity : ThemedActivity(),
 
     private fun showConnectingState() {
         timerTextView.visibility = View.INVISIBLE
-        addtimeTextView.visibility = View.INVISIBLE
+        addTimeTextView.visibility = View.INVISIBLE
         PowerIcon.setImageResource(R.drawable.connecting)
         stateTextView.text = "Connecting..."
         PowerIcon.isEnabled = false
@@ -341,7 +332,7 @@ class DashboardActivity : ThemedActivity(),
 
     private fun showConnectedState() {
         timerTextView.visibility = View.VISIBLE
-        addtimeTextView.visibility = View.INVISIBLE
+        addTimeTextView.visibility = View.INVISIBLE
         PowerIcon.setImageResource(R.drawable.connected)
         stateTextView.text = "Connected"
         isConnected = true
@@ -350,7 +341,7 @@ class DashboardActivity : ThemedActivity(),
 
     private fun showNotConnectedState() {
         timerTextView.visibility = View.INVISIBLE
-        addtimeTextView.visibility = View.VISIBLE
+        addTimeTextView.visibility = View.VISIBLE
         add30MinutesToTimer()
         PowerIcon.setImageResource(R.drawable.connect)
         stateTextView.text = "Connect"
@@ -359,7 +350,7 @@ class DashboardActivity : ThemedActivity(),
 
     private fun showNotConnectedStateForPingBtn() {
         timerTextView.visibility = View.INVISIBLE
-        addtimeTextView.visibility = View.INVISIBLE
+        addTimeTextView.visibility = View.INVISIBLE
         PowerIcon.setImageResource(R.drawable.connect)
         stateTextView.text = "Connect"
         isConnected = false
@@ -382,7 +373,6 @@ class DashboardActivity : ThemedActivity(),
         super.onResume()
         if(DataStore.serviceState.connected) {
             showConnectedState()
-            timerTextView.visibility = View.VISIBLE
             startTimer()
         } else {
             showNotConnectedState()
@@ -427,6 +417,16 @@ class DashboardActivity : ThemedActivity(),
         animate: Boolean = false,
     ) {
         DataStore.serviceState = state
+        if (state.toString() === "Connected") {
+            val profile = SagerDatabase.proxyDao.getById(DataStore.selectedProxy)
+            val tvSelectedServer = findViewById<TextView>(R.id.tvSelectedServer)
+            tvSelectedServer.text = profile?.displayName()
+            showConnectedState()
+        } else if(state.toString() === "Connecting") {
+            showConnectingState()
+        } else if(state.toString() === "Stopped") {
+            showNotConnectedState()
+        }
 //        binding.fab.changeState(state, DataStore.serviceState, animate)
 //        binding.stats.changeState(state)
 //        if (msg != null) snackbar(getString(R.string.vpn_error, msg)).show()
@@ -434,6 +434,13 @@ class DashboardActivity : ThemedActivity(),
 
     fun stopService() {
         if (DataStore.serviceState.started) SagerNet.stopService()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val gson = Gson()
+        val allServersInJson = gson.toJson(AppRepository.allServers)
+        AppRepository.sharedPreferences.edit().putString("allServers", allServersInJson).apply()
     }
 
     @SuppressLint("DiscouragedApi")
@@ -556,13 +563,6 @@ class DashboardActivity : ThemedActivity(),
 
             // Start service after urlTest() processing
             if (DataStore.serviceState.canStop) SagerNet.stopService() else connect.launch(null)
-            if (!isConnected) {
-                showConnectingState()
-                Handler().postDelayed({
-                    showConnectedState()
-                    startTimer()
-                }, 1000) // Delay of 2 seconds
-            }
         }
 
         // Utility function to switch coroutine context to the main thread
@@ -592,89 +592,6 @@ class DashboardActivity : ThemedActivity(),
             foundSubItem?.ping = ping
             foundSubItem?.error = error
         }
-    }
-
-
-    inner class TestDialog {
-        val binding = LayoutProgressListBinding.inflate(layoutInflater)
-        val builder = MaterialAlertDialogBuilder(this@DashboardActivity).setView(binding.root)
-            .setNegativeButton(android.R.string.cancel) { _, _ ->
-                cancel()
-            }
-            .setOnDismissListener {
-                cancel()
-            }
-            .setCancelable(false)
-
-        lateinit var cancel: () -> Unit
-        val fragment by lazy { getCurrentGroupFragment() }
-        val results = Collections.synchronizedList(mutableListOf<ProxyEntity?>())
-        var proxyN = 0
-        val finishedN = AtomicInteger(0)
-
-        fun insert(profile: ProxyEntity?) {
-            results.add(profile)
-        }
-
-        fun update(profile: ProxyEntity) {
-            fragment?.configurationListView?.post {
-                val context = this@DashboardActivity ?: return@post
-//                if (!isAdded) return@post
-
-                var profileStatusText: String? = null
-                var profileStatusColor = 0
-
-                when (profile.status) {
-                    -1 -> {
-                        profileStatusText = profile.error
-                        profileStatusColor = context.getColorAttr(android.R.attr.textColorSecondary)
-                    }
-
-                    0 -> {
-                        profileStatusText = getString(R.string.connection_test_testing)
-                        profileStatusColor = context.getColorAttr(android.R.attr.textColorSecondary)
-                    }
-
-                    1 -> {
-                        profileStatusText = getString(R.string.available, profile.ping)
-                        profileStatusColor = context.getColour(R.color.material_green_500)
-                    }
-
-                    2 -> {
-                        profileStatusText = profile.error
-                        profileStatusColor = context.getColour(R.color.material_red_500)
-                    }
-
-                    3 -> {
-                        val err = profile.error ?: ""
-                        val msg = Protocols.genFriendlyMsg(err)
-                        profileStatusText = if (msg != err) msg else getString(R.string.unavailable)
-                        profileStatusColor = context.getColour(R.color.material_red_500)
-                    }
-                }
-
-                val text = SpannableStringBuilder().apply {
-                    append("\n" + profile.displayName())
-                    append("\n")
-                    append(
-                        profile.displayType(),
-                        ForegroundColorSpan(context.getProtocolColor(profile.type)),
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    append(" ")
-                    append(
-                        profileStatusText,
-                        ForegroundColorSpan(profileStatusColor),
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                    )
-                    append("\n")
-                }
-
-                binding.nowTesting.text = text
-                binding.progress.text = "${finishedN.addAndGet(1)} / $proxyN"
-            }
-        }
-
     }
 
     fun getCurrentGroupFragment(): ConfigurationFragment.GroupFragment? {
