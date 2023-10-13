@@ -1,8 +1,10 @@
 package io.nekohasekai.sagernet.vpn.repositories
 
+import android.content.SharedPreferences
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import io.nekohasekai.sagernet.vpn.serverlist.MyAdapter
 import okhttp3.Call
@@ -30,9 +32,27 @@ object AppRepository {
     public var allServers: MutableList<ListItem> = mutableListOf()
     public lateinit var recyclerView: RecyclerView
     public var isBestServerSelected: Boolean = false
+    public lateinit var sharedPreferences: SharedPreferences
 
     fun setBaseUrl(url: String) {
         baseUrl = url
+    }
+
+    fun getAllServer(): MutableList<ListItem> {
+        val allServersString = sharedPreferences.getString("allServers", null)
+        if(allServersString === null) {
+            return allServers
+        }
+        val gson = Gson()
+        val itemType = object : TypeToken<MutableList<ListItem>>() {}.type
+        val allServersList = gson.fromJson<MutableList<ListItem>>(allServersString, itemType)
+        sharedPreferences.edit().remove("allServers").apply()
+        allServers = allServersList
+        return allServersList
+    }
+
+    fun setAllServer(servers: MutableList<ListItem>) {
+        allServers = servers
     }
 
     fun setSubscriptionLink(url: String) {
@@ -164,7 +184,7 @@ object AppRepository {
 
     fun refreshServersListView()
     {
-        val adapter = MyAdapter(allServers) { }
+        val adapter = MyAdapter(getAllServer()) { }
         recyclerView.adapter = adapter
     }
 
