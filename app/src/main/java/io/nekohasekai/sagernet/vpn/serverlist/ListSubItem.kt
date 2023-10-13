@@ -5,7 +5,8 @@ data class ListSubItem(
     var name: String,
     var status: Int,
     var error: String?,  // Add error property
-    var ping: Int         // Add ping property
+    var ping: Int, // Add ping property
+    var isSelected: Boolean = false
 ) {
     // Click listener function that can be set from outside the class
     private var clickListener: (() -> Unit)? = null

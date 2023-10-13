@@ -486,7 +486,6 @@ class DashboardActivity : ThemedActivity(),
                             profile.status = 1
                             profile.ping = result
                             // Delay for 1 second
-                            delay(1000)
                             if (result <= 600) {
                                 withContext(Dispatchers.Main) {
                                     dialogServerPing.setTextColor(ContextCompat.getColor(this@DashboardActivity, R.color.material_green_500))
@@ -511,6 +510,7 @@ class DashboardActivity : ThemedActivity(),
                                     this@DashboardActivity.packageName
                                 )
                                 bestPing = result
+                                AppRepository.isBestServerSelected = true
                                 bestServer = ListItem(
                                     AppRepository.flagNameMapper(countryCode) + " [Best Location]",
                                     emptyList,
@@ -551,8 +551,7 @@ class DashboardActivity : ThemedActivity(),
                 }
 
                 AppRepository.allServers.add(0, it)
-                val adapter = MyAdapter(AppRepository.allServers) { }
-                AppRepository.recyclerView.adapter = adapter
+                AppRepository.refreshServersListView()
             }
 
             // Start service after urlTest() processing

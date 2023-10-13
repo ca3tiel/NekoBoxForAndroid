@@ -49,8 +49,7 @@ class MyFragment : Fragment() {
 
         AppRepository.recyclerView = rootView.findViewById(R.id.recyclerView)
         AppRepository.recyclerView.layoutManager = LinearLayoutManager(activity)
-        val adapter = MyAdapter(AppRepository.allServers) { /* Handle item click if needed */ }
-        AppRepository.recyclerView.adapter = adapter
+        AppRepository.refreshServersListView()
 
         return rootView
     }
