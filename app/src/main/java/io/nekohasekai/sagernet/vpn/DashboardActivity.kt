@@ -75,6 +75,8 @@ class DashboardActivity : ThemedActivity(),
     private lateinit var appTitle: TextView
     private lateinit var addTimeTextView: TextView
     private var isConnected = false
+    private var onResumeCalled = false
+    private var onCreateCalled = false
     private var timerRunning = false
     private var timeRemainingMillis: Long = 0
     private var ivAllClicked = true // Set IVall as clicked by default
@@ -86,6 +88,7 @@ class DashboardActivity : ThemedActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+        onCreateCalled = true
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
@@ -257,6 +260,8 @@ class DashboardActivity : ThemedActivity(),
             updateIVAllIcon() // Update the IVall icon
             updateIVMtnIcon() // Update the IVMTN icon
         }
+
+        println("HAMED_LOG_TIME_0: " + timeRemainingMillis.toString())
     }
 
     private fun updateIVAllIcon() {
@@ -272,6 +277,7 @@ class DashboardActivity : ThemedActivity(),
     }
 
     private fun add30MinutesToTimer() {
+            println("HAMED_LOG_TIMER_add30MinutesToTimer_CALLED_IN_CHANGE_STATE")
             println("HAMED_LOG_TIME_1: " + timeRemainingMillis.toString())
             var remainTime = AppRepository.sharedPreferences.getLong("remainingTime", 0)
             println("HAMED_LOG_TIME_2: " + remainTime.toString())
@@ -280,10 +286,9 @@ class DashboardActivity : ThemedActivity(),
             AppRepository.sharedPreferences.edit().putLong("remainingTime", timeRemainingMillis).apply()
             var remainTime2 = AppRepository.sharedPreferences.getLong("remainingTime", 0)
             println("HAMED_LOG_TIME_4: " + remainTime2.toString())
-            updateTimerText()
+//            updateTimerText()
+            startTimer()
     }
-
-
 
     private fun stopTimer() {
         timerRunning = false
@@ -291,14 +296,19 @@ class DashboardActivity : ThemedActivity(),
     }
 
     private fun startTimer() {
-        timerRunning = true
-        val initialTimeMillis = AppRepository.sharedPreferences.getLong("remainingTime", 1800000)
+        var initialTimeMillis = AppRepository.sharedPreferences.getLong("remainingTime", 0)
+        if(initialTimeMillis.toInt() === 0) {
+            println("HAMED_LOG_TIME_INITIALIZED")
+            initialTimeMillis = 1800000;
+        } else {
+            println("HAMED_LOG_TIME_NOT_INITIALIZED: " + initialTimeMillis.toString())
+        }
 
         countDownTimer = object : CountDownTimer(initialTimeMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeRemainingMillis = millisUntilFinished
-                AppRepository.sharedPreferences.edit().putLong("remainingTime", millisUntilFinished).apply()
-                updateTimerText()
+                AppRepository.sharedPreferences.edit().putLong("remainingTime", timeRemainingMillis).apply()
+                updateTimerText(timeRemainingMillis)
             }
 
             override fun onFinish() {
@@ -310,13 +320,17 @@ class DashboardActivity : ThemedActivity(),
                 }
             }
         }
-
-        countDownTimer?.start()
+        if(!timerRunning) {
+            timerRunning = true
+            countDownTimer?.start()
+        }
     }
 
-    private fun updateTimerText() {
-        val minutes = (timeRemainingMillis / 1000) / 60
-        val seconds = (timeRemainingMillis / 1000) % 60
+    private fun updateTimerText(remainedTime: Long) {
+        var initialTimeMillis = AppRepository.sharedPreferences.getLong("remainingTime", 0)
+        println("HAMED_LOG_TIMER_UPDATE: " + initialTimeMillis.toString())
+        val minutes = (initialTimeMillis / 1000) / 60
+        val seconds = (initialTimeMillis / 1000) % 60
         val formattedTime = String.format("%02d:%02d", minutes, seconds)
         timerTextView.text = formattedTime
     }
@@ -342,7 +356,6 @@ class DashboardActivity : ThemedActivity(),
     private fun showNotConnectedState() {
         timerTextView.visibility = View.INVISIBLE
         addTimeTextView.visibility = View.VISIBLE
-        add30MinutesToTimer()
         PowerIcon.setImageResource(R.drawable.connect)
         stateTextView.text = "Connect"
         isConnected = false
@@ -373,7 +386,7 @@ class DashboardActivity : ThemedActivity(),
         super.onResume()
         if(DataStore.serviceState.connected) {
             showConnectedState()
-            startTimer()
+//            startTimer()
         } else {
             showNotConnectedState()
         }
@@ -418,6 +431,12 @@ class DashboardActivity : ThemedActivity(),
     ) {
         DataStore.serviceState = state
         if (state.toString() === "Connected") {
+            if(onResumeCalled) {
+                onResumeCalled = false
+            } else {
+                add30MinutesToTimer()
+            }
+
             val profile = SagerDatabase.proxyDao.getById(DataStore.selectedProxy)
             val tvSelectedServer = findViewById<TextView>(R.id.tvSelectedServer)
             tvSelectedServer.text = profile?.displayName()
@@ -426,6 +445,7 @@ class DashboardActivity : ThemedActivity(),
             showConnectingState()
         } else if(state.toString() === "Stopped") {
             showNotConnectedState()
+            stopTimer()
         }
 //        binding.fab.changeState(state, DataStore.serviceState, animate)
 //        binding.stats.changeState(state)
