@@ -74,9 +74,6 @@ class DashboardActivity : ThemedActivity(),
     private lateinit var timerTextView: TextView
     private lateinit var appTitle: TextView
     private lateinit var addTimeTextView: TextView
-    private var isConnected = false
-    private var onResumeCalled = false
-    private var onCreateCalled = false
     private var timerRunning = false
     private var timeRemainingMillis: Long = 0
     private var ivAllClicked = true // Set IVall as clicked by default
@@ -88,7 +85,6 @@ class DashboardActivity : ThemedActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
-        onCreateCalled = true
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
@@ -277,16 +273,11 @@ class DashboardActivity : ThemedActivity(),
     }
 
     private fun add30MinutesToTimer() {
-            println("HAMED_LOG_TIMER_add30MinutesToTimer_CALLED_IN_CHANGE_STATE")
-            println("HAMED_LOG_TIME_1: " + timeRemainingMillis.toString())
+        if(!AppRepository.isConnected) {
             var remainTime = AppRepository.sharedPreferences.getLong("remainingTime", 0)
-            println("HAMED_LOG_TIME_2: " + remainTime.toString())
-            timeRemainingMillis = remainTime + (30 * 60 * 1000)
-            println("HAMED_LOG_TIME_3: " + timeRemainingMillis.toString())
+            timeRemainingMillis = remainTime + 1800000
             AppRepository.sharedPreferences.edit().putLong("remainingTime", timeRemainingMillis).apply()
-            var remainTime2 = AppRepository.sharedPreferences.getLong("remainingTime", 0)
-            println("HAMED_LOG_TIME_4: " + remainTime2.toString())
-//            updateTimerText()
+        }
             startTimer()
     }
 
@@ -298,10 +289,7 @@ class DashboardActivity : ThemedActivity(),
     private fun startTimer() {
         var initialTimeMillis = AppRepository.sharedPreferences.getLong("remainingTime", 0)
         if(initialTimeMillis.toInt() === 0) {
-            println("HAMED_LOG_TIME_INITIALIZED")
             initialTimeMillis = 1800000;
-        } else {
-            println("HAMED_LOG_TIME_NOT_INITIALIZED: " + initialTimeMillis.toString())
         }
 
         countDownTimer = object : CountDownTimer(initialTimeMillis, 1000) {
@@ -316,7 +304,6 @@ class DashboardActivity : ThemedActivity(),
                 if (timerTextView.text == "00:00") {
                     AppRepository.sharedPreferences.edit().remove("remainingTime").apply()
                     stopService()
-                    showNotConnectedState()
                 }
             }
         }
@@ -328,7 +315,6 @@ class DashboardActivity : ThemedActivity(),
 
     private fun updateTimerText(remainedTime: Long) {
         var initialTimeMillis = AppRepository.sharedPreferences.getLong("remainingTime", 0)
-        println("HAMED_LOG_TIMER_UPDATE: " + initialTimeMillis.toString())
         val minutes = (initialTimeMillis / 1000) / 60
         val seconds = (initialTimeMillis / 1000) % 60
         val formattedTime = String.format("%02d:%02d", minutes, seconds)
@@ -349,7 +335,6 @@ class DashboardActivity : ThemedActivity(),
         addTimeTextView.visibility = View.INVISIBLE
         PowerIcon.setImageResource(R.drawable.connected)
         stateTextView.text = "Connected"
-        isConnected = true
         PowerIcon.isEnabled = true
     }
 
@@ -358,7 +343,6 @@ class DashboardActivity : ThemedActivity(),
         addTimeTextView.visibility = View.VISIBLE
         PowerIcon.setImageResource(R.drawable.connect)
         stateTextView.text = "Connect"
-        isConnected = false
     }
 
     private fun showNotConnectedStateForPingBtn() {
@@ -366,7 +350,6 @@ class DashboardActivity : ThemedActivity(),
         addTimeTextView.visibility = View.INVISIBLE
         PowerIcon.setImageResource(R.drawable.connect)
         stateTextView.text = "Connect"
-        isConnected = false
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -386,7 +369,6 @@ class DashboardActivity : ThemedActivity(),
         super.onResume()
         if(DataStore.serviceState.connected) {
             showConnectedState()
-//            startTimer()
         } else {
             showNotConnectedState()
         }
@@ -431,12 +413,8 @@ class DashboardActivity : ThemedActivity(),
     ) {
         DataStore.serviceState = state
         if (state.toString() === "Connected") {
-            if(onResumeCalled) {
-                onResumeCalled = false
-            } else {
-                add30MinutesToTimer()
-            }
-
+            add30MinutesToTimer()
+            AppRepository.isConnected = true
             val profile = SagerDatabase.proxyDao.getById(DataStore.selectedProxy)
             val tvSelectedServer = findViewById<TextView>(R.id.tvSelectedServer)
             tvSelectedServer.text = profile?.displayName()
@@ -444,6 +422,7 @@ class DashboardActivity : ThemedActivity(),
         } else if(state.toString() === "Connecting") {
             showConnectingState()
         } else if(state.toString() === "Stopped") {
+            AppRepository.isConnected = false
             showNotConnectedState()
             stopTimer()
         }

@@ -76,24 +76,15 @@ class SplashActivity : ThemedActivity() {
             return
         }
 
-//        var proxyGroup = SagerDatabase.groupDao.getById(1)!!
-//        var newProfiles = SagerDatabase.proxyDao.getByGroup(proxyGroup.id)
-//        println("HAMED_LOG_Splash_1: " + newProfiles.size.toString())
-//        newProfiles.forEach { proxyEntity -> (
-//                println("HAMED_LOG_Splash_2: " + proxyEntity.id.toString() + " - " +proxyEntity.displayName())
-//        )}
-
         // Use a Handler to post a delayed Runnable
         Handler().postDelayed({
             // After the delay, start the WelcomeActivity
-//            val intent = Intent(this, WelcomeActivity::class.java)
-//            val intent = Intent(this, MainActivity::class.java)
             val intent = Intent(this, DashboardActivity::class.java)
             startActivity(intent)
 
             // Finish the current activity to prevent returning to it later
             finish()
-        }, 5000) // Delay for 2000 milliseconds (2 seconds)
+        }, 8000) // Delay for 2000 milliseconds (2 seconds)
 
         runOnDefaultDispatcher {
             val entity = SagerDatabase.groupDao.getById(1)
