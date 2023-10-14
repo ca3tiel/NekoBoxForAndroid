@@ -1,5 +1,6 @@
 package io.nekohasekai.sagernet.vpn
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
