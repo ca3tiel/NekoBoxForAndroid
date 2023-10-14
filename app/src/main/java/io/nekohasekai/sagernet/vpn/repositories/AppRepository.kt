@@ -33,6 +33,7 @@ object AppRepository {
     public lateinit var recyclerView: RecyclerView
     public var isBestServerSelected: Boolean = false
     public lateinit var sharedPreferences: SharedPreferences
+    public var isConnected: Boolean = false
 
     fun setBaseUrl(url: String) {
         baseUrl = url
