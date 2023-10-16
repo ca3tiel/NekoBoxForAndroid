@@ -264,6 +264,18 @@ object AppRepository {
         return countries[countryCode].toString()
     }
 
+    fun countryCodeMapper(countryName: String): String
+    {
+        val countries = mapOf(
+            "Germany" to "de",
+            "Turkey" to "tr",
+            "Bulgaria" to "bg",
+            "France" to "fr",
+            "Netherlands" to "nl"
+        )
+        return countries[countryName].toString()
+    }
+
     fun refreshServersListView()
     {
         val adapter = MyAdapter(getAllServer()) { }

@@ -504,10 +504,16 @@ class DashboardActivity : ThemedActivity(),
                                 }
                             }
                             if (result < bestPing) {
-                                val serverName = profile.displayName()
-                                val countryCode =
-                                    serverName.substring(serverName.length - 5, serverName.length)
-                                        .substring(0, 2).lowercase()
+                                var countryCode = ""
+                                var serverName = ""
+                                AppRepository.allServers.forEach { item ->
+                                    item.dropdownItems.forEach{
+                                        if(it.id == profile.id) {
+                                            countryCode = AppRepository.countryCodeMapper(item.name)
+                                            serverName = it.name
+                                        }
+                                    }
+                                }
                                 val emptyList: MutableList<ListSubItem> = mutableListOf()
                                 val resourceName = "ic_${countryCode}_flag"
                                 val iconResId = resources.getIdentifier(
@@ -518,7 +524,7 @@ class DashboardActivity : ThemedActivity(),
                                 bestPing = result
                                 AppRepository.isBestServerSelected = true
                                 bestServer = ListItem(
-                                    AppRepository.flagNameMapper(countryCode) + " [Best Location]",
+                                    serverName + " [Best Location]",
                                     emptyList,
                                     false,
                                     iconResId,
