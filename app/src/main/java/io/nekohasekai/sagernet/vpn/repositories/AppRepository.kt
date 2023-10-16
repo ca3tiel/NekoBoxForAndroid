@@ -216,12 +216,6 @@ object AppRepository {
         }
     }
 
-    fun initServersFormats(servers: JsonObject): Int
-    {
-        var newServers : MutableList<ListItem>
-        return 1
-    }
-
     fun getRawServersConfigAsString(): String
     {
         var serversConfigString: MutableList<String> = mutableListOf()
