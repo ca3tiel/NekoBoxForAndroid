@@ -115,7 +115,6 @@ class SplashActivity : ThemedActivity() {
         return withContext(Dispatchers.IO) {
             var response = AppRepository.getServersListSync()
             if(response == 200) {
-//                AppRepository.initServersFormats(AppRepository.allServersRaw)
                 var serversString = AppRepository.getRawServersConfigAsString()
                 val proxies = RawUpdater.parseRaw(serversString)
                 if(!proxies.isNullOrEmpty()) {
