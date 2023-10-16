@@ -2,11 +2,15 @@ package io.nekohasekai.sagernet.vpn.serverlist
 
 data class ListSubItem(
     var id: Long,
+    var serverId: Int,
     var name: String,
     var status: Int,
     var error: String?,  // Add error property
-    var ping: Int, // Add ping property
-    var isSelected: Boolean = false
+    var ping: Int,
+    var isSelected: Boolean = false,
+    var isFree: Boolean = false,
+    var config: String = "",
+    var operator: Array<String> = arrayOf(),
 ) {
     // Click listener function that can be set from outside the class
     private var clickListener: (() -> Unit)? = null

@@ -291,7 +291,6 @@ class ConfigurationFragment @JvmOverloads constructor(
                 )
             ).show()
         }
-
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
