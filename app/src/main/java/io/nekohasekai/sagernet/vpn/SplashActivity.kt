@@ -1,5 +1,8 @@
 package io.nekohasekai.sagernet.vpn
 
+import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,20 +12,34 @@ import io.nekohasekai.sagernet.GroupType
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.database.DataStore
 import io.nekohasekai.sagernet.database.GroupManager
+import io.nekohasekai.sagernet.database.ProfileManager
 import io.nekohasekai.sagernet.database.ProxyGroup
 import io.nekohasekai.sagernet.database.SagerDatabase
 import io.nekohasekai.sagernet.database.SubscriptionBean
+import io.nekohasekai.sagernet.fmt.AbstractBean
 import io.nekohasekai.sagernet.group.GroupUpdater
+import io.nekohasekai.sagernet.group.RawUpdater
 import io.nekohasekai.sagernet.ktx.applyDefaultValues
+import io.nekohasekai.sagernet.ktx.onMainDispatcher
 import io.nekohasekai.sagernet.ktx.runOnDefaultDispatcher
+import io.nekohasekai.sagernet.ktx.snackbar
 import io.nekohasekai.sagernet.ui.MainActivity
 import io.nekohasekai.sagernet.ui.ThemedActivity
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
+import io.nekohasekai.sagernet.vpn.serverlist.ListItem
+import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import java.util.concurrent.ConcurrentLinkedQueue
+import kotlinx.coroutines.launch
 
 class SplashActivity : ThemedActivity() {
 
     fun ProxyGroup.init() {
-        DataStore.groupName = name ?: AppRepository.appName
+//        DataStore.groupName = name ?: AppRepository.appName
+        DataStore.groupName = "Ungrouped"
         DataStore.groupType = 1
         DataStore.groupOrder = order
         DataStore.groupIsSelector = isSelector
@@ -34,6 +51,7 @@ class SplashActivity : ThemedActivity() {
 
         val subscription = subscription ?: SubscriptionBean().applyDefaultValues()
         DataStore.subscriptionLink = AppRepository.getSubscriptionLink()
+//        DataStore.subscriptionLink = subscription.link
         DataStore.subscriptionForceResolve = subscription.forceResolve
         DataStore.subscriptionDeduplication = subscription.deduplication
         DataStore.subscriptionUpdateWhenConnectedOnly = subscription.updateWhenConnectedOnly
@@ -69,31 +87,88 @@ class SplashActivity : ThemedActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        if(DataStore.serviceState.connected) {
-            val intent = Intent(this, DashboardActivity::class.java)
-            startActivity(intent)
-            finish()
-            return
+        AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
+
+        GlobalScope.launch(Dispatchers.Main) {
+            getServers()
+            startNewActivity()
         }
 
-        // Use a Handler to post a delayed Runnable
-        Handler().postDelayed({
-            // After the delay, start the WelcomeActivity
-            val intent = Intent(this, DashboardActivity::class.java)
-            startActivity(intent)
+//        runOnDefaultDispatcher {
+//            val entity = SagerDatabase.groupDao.getById(1)
+//            ProxyGroup().init()
+//            var subscription = ProxyGroup().apply { serialize() }
+//            if (entity == null) {
+//                GroupManager.createGroup(subscription)
+//            }
+//            GroupUpdater.startUpdate(subscription, true)
+//        }
+    }
 
-            // Finish the current activity to prevent returning to it later
-            finish()
-        }, 8000) // Delay for 2000 milliseconds (2 seconds)
+    private fun startNewActivity() {
+        val intent = Intent(this, DashboardActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
-        runOnDefaultDispatcher {
-            val entity = SagerDatabase.groupDao.getById(1)
-            ProxyGroup().init()
-            var subscription = ProxyGroup().apply { serialize() }
-            if (entity == null) {
-                GroupManager.createGroup(subscription)
+    private suspend fun getServers(): String {
+        return withContext(Dispatchers.IO) {
+            var response = AppRepository.getServersListSync()
+            if(response == 200) {
+//                AppRepository.initServersFormats(AppRepository.allServersRaw)
+                var serversString = AppRepository.getRawServersConfigAsString()
+                val proxies = RawUpdater.parseRaw(serversString)
+                if(!proxies.isNullOrEmpty()) {
+                    import(proxies)
+                }
             }
-            GroupUpdater.startUpdate(subscription, true)
+            "Finished"
         }
+    }
+
+    @SuppressLint("DiscouragedApi")
+    suspend fun import(proxies: List<AbstractBean>) {
+        removeAllProfiles()
+        val targetId = DataStore.selectedGroupForImport()
+        var counter = 0
+        AppRepository.allServers = mutableListOf()
+        AppRepository.allServersRaw.entrySet().forEach { entry ->
+            val serverSubItems: MutableList<ListSubItem> = mutableListOf()
+            val countryCode = entry.key
+            val resourceName = "ic_${countryCode}_flag"
+            val countryName = AppRepository.flagNameMapper(countryCode)
+            entry.value.asJsonArray.forEach { it ->
+                var profile = ProfileManager.createProfile(targetId, proxies[counter])
+                var serverId = it.asJsonObject.get("id").asInt
+                serverSubItems.add(
+                    ListSubItem(profile.id, serverId, it.asJsonObject.get("name").asString, profile.status, profile.error, profile.ping)
+                )
+                counter++;
+            }
+            AppRepository.allServers.add(
+                ListItem(
+                    countryName,
+                    serverSubItems,
+                    iconResId = resources.getIdentifier(resourceName, "drawable", this.packageName)
+                )
+            )
+        }
+        AppRepository.setAllServer(AppRepository.allServers)
+
+        onMainDispatcher {
+            DataStore.editingGroup = targetId
+        }
+    }
+
+    suspend fun removeAllProfiles() {
+        val groupId = DataStore.selectedGroupForImport()
+        val profilesUnfiltered = SagerDatabase.proxyDao.getByGroup(groupId)
+        val profiles = ConcurrentLinkedQueue(profilesUnfiltered)
+        profiles.forEach { it ->
+            ProfileManager.deleteProfile2(
+                it.groupId, it.id
+            )
+        }
+
     }
 }
