@@ -6,6 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
+import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import io.nekohasekai.sagernet.vpn.serverlist.MyAdapter
 import okhttp3.Call
 import okhttp3.Callback
@@ -17,7 +18,8 @@ import java.io.IOException
 
 object AppRepository {
     public var appName: String = "UnitaVPN"
-    private var subscriptionLink: String = "https://panel.holyip.workers.dev/link/9RTsfMryrGwgWZVb48eN?config=1"
+    private var subscriptionLink: String = "https://Apanel.holyip.workers.dev/link/9RTsfMryrGwgWZVb48eN?config=1"
+    private var apiServersListUrl: String = "https://panel.miatel.xyz/api/servers"
     private var baseUrl: String = "https://panel.holyip.com/"
     private var userLoginUrl: String = "https://panel.holyip.com/api/v2/client/token"
     private var userRegisterUrl: String = "https://panel.miatel.xyz/api/auth/register"
@@ -30,6 +32,7 @@ object AppRepository {
     public var ShareCustomMessage: String = "$appName is the best vpn.please visit this link"
     public var ShareApplicationLink: String = "https://play.google.com/store/apps/details?id=com.File.Manager.Filemanager&pcampaignid=web_share"
     public var allServers: MutableList<ListItem> = mutableListOf()
+    public lateinit var allServersRaw: JsonObject
     public lateinit var recyclerView: RecyclerView
     public var isBestServerSelected: Boolean = false
     public lateinit var sharedPreferences: SharedPreferences
@@ -53,7 +56,9 @@ object AppRepository {
     }
 
     fun setAllServer(servers: MutableList<ListItem>) {
-        allServers = servers
+        val gson = Gson()
+        val allServersInJson = gson.toJson(servers)
+        sharedPreferences.edit().putString("allServers", allServersInJson).apply()
     }
 
     fun setSubscriptionLink(url: String) {
@@ -146,6 +151,88 @@ object AppRepository {
             }
         })
     }
+
+    fun getServersListAsync() {
+        val client = OkHttpClient()
+        val request = getHttpRequest(apiServersListUrl, null, "GET")
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                e.printStackTrace()
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    if (!response.isSuccessful) {
+                        throw IOException("Unexpected code ${response.code}")
+                    }
+                    val gson = Gson()
+                    val jsonObject = gson.fromJson(response.body!!.string(), JsonObject::class.java)
+                    val servers = jsonObject.get("servers").asJsonObject
+                    servers.entrySet().forEach { it ->
+                        println("HAMED_LOG_SERVER: " + it.toString())
+                    }
+                }
+            }
+        })
+    }
+    fun getServersListSync(): Int {
+        val client = OkHttpClient()
+        val url = apiServersListUrl
+
+        val request = Request.Builder()
+            .url(url)
+            .header("XMPus-API-Token", getPanelApiHeaderToken())
+            .header("Content-Type", "application/json")
+            .header("Accept", "application/json")
+            .get()
+            .build()
+
+        try {
+            val response: Response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val responseBody = response.body?.string()
+                val gson = Gson()
+                val serversObject = gson.fromJson(responseBody, JsonObject::class.java)
+//                println("HAMED_LOG_SERVERS_LIST1: " + serversObject.toString());
+                val servers = serversObject.get("servers").asJsonObject
+                allServersRaw = servers
+//                println("HAMED_LOG_SERVERS_LIST2: " + servers.toString());
+//                servers.entrySet().forEach { it ->
+//                    println("HAMED_LOG_SERVER_ITEM: " + it.key)
+//                    println("HAMED_LOG_SERVER_ITEM_VAL: " + it.value)
+//                    it.value.asJsonArray.forEach { it ->
+//                        println("HAMED_LOG_SERVER_SUB_ITEM: " + it.asJsonObject.get("name"))
+//                    }
+//                    it.value.asJsonObject.entrySet().forEach { it ->
+//                        println("HAMED_LOG_SERVER_SUB_ITEM: " + it.toString())
+//                    }
+//                }
+
+            }
+            return response.code;
+        } catch (e: Exception) {
+            println("Request failed: ${e.message}")
+            return -1;
+        }
+    }
+
+    fun initServersFormats(servers: JsonObject): Int
+    {
+        var newServers : MutableList<ListItem>
+        return 1
+    }
+
+    fun getRawServersConfigAsString(): String
+    {
+        var serversConfigString: MutableList<String> = mutableListOf()
+        allServersRaw.entrySet().forEach { it ->
+            it.value.asJsonArray.forEach { it ->
+                serversConfigString.add(it.asJsonObject.get("config").asString)
+            }
+        }
+        return serversConfigString.joinToString("\n")
+    }
+
 
     fun getHttpRequest(url: String, formParams: HashMap<String, String>?, requestType: String = "GET"): Request {
         val requestBuilder = FormBody.Builder()

@@ -116,7 +116,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivPowerIcon"
-        android:text="NO Selected Server"
+        android:text=""
         android:fontFamily="@font/museo_san_rounded700"
         android:layout_marginTop="5dp"
         android:textSize="18sp"
