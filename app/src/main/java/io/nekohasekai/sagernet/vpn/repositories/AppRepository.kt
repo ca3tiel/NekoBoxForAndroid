@@ -285,11 +285,13 @@ object AppRepository {
 
     fun resetAllSubItemsStatus()
     {
-        allServers.forEach { it ->
-            it.dropdownItems.forEach { it ->
-                it.isSelected = false
+        var servers = allServersOriginal
+        servers.forEach { item ->
+            item.dropdownItems.forEach { subIitem ->
+                subIitem.isSelected = false
             }
         }
+        allServers = servers.filter { element -> element in allServers }.toMutableList()
     }
 
     fun filterServersByTag(tag: String): Unit
