@@ -10,7 +10,7 @@ data class ListSubItem(
     var isSelected: Boolean = false,
     var isFree: Boolean = false,
     var config: String = "",
-    var operator: Array<String> = arrayOf(),
+    var tags: Array<String> = arrayOf(),
 ) {
     // Click listener function that can be set from outside the class
     private var clickListener: (() -> Unit)? = null
