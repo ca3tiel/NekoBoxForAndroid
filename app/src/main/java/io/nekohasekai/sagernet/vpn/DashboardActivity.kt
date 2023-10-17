@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import kotlinx.coroutines.CoroutineScope
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.os.RemoteException
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -12,7 +11,6 @@ import android.view.View
 import android.widget.ImageView
 import android.app.AlertDialog
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
@@ -190,6 +188,7 @@ class DashboardActivity : ThemedActivity(),
 
         // Set an OnClickListener for IVall
         ivAll.setOnClickListener {
+            AppRepository.filterServersByTag("all")
             ivAllClicked = !ivAllClicked // Toggle the IVall click state
             updateIVAllIcon() // Update the IVall icon
             // Show/hide the MyFragment based on the click state
@@ -218,6 +217,7 @@ class DashboardActivity : ThemedActivity(),
             // Show/hide the MyFragment based on the click state
             fragmentContainer.visibility = if (ivMtnClicked) View.VISIBLE else View.INVISIBLE
             if (ivMtnClicked) {
+                AppRepository.filterServersByTag("mtn")
                 val fragment = MyFragment()
                 val bundle = Bundle()
                 bundle.putString("iconClicked", "IVMTN") // Pass the clicked icon value to the fragment
@@ -241,6 +241,7 @@ class DashboardActivity : ThemedActivity(),
             // Show/hide the MyFragment based on the click state
             fragmentContainer.visibility = if (ivMciClicked) View.VISIBLE else View.INVISIBLE
             if (ivMciClicked) {
+                AppRepository.filterServersByTag("mci")
                 val fragment = MyFragment()
                 val bundle = Bundle()
                 bundle.putString("iconClicked", "IVMCI") // Pass the clicked icon value to the fragment

@@ -32,6 +32,7 @@ object AppRepository {
     public var ShareCustomMessage: String = "$appName is the best vpn.please visit this link"
     public var ShareApplicationLink: String = "https://play.google.com/store/apps/details?id=com.File.Manager.Filemanager&pcampaignid=web_share"
     public var allServers: MutableList<ListItem> = mutableListOf()
+    public var allServersOriginal: MutableList<ListItem> = mutableListOf()
     public lateinit var allServersRaw: JsonObject
     public lateinit var recyclerView: RecyclerView
     public var isBestServerSelected: Boolean = false
@@ -289,6 +290,20 @@ object AppRepository {
                 it.isSelected = false
             }
         }
+    }
+
+    fun filterServersByTag(tag: String): Unit
+    {
+        var servers = allServersOriginal
+        if(tag === "all") {
+            allServers = servers
+            return
+        }
+        allServers = servers.map { item ->
+            item.copy(dropdownItems = item.dropdownItems.filter { subItem ->
+                subItem.tags.contains(tag)
+            }.toMutableList())
+        }.toMutableList()
     }
 
 }
