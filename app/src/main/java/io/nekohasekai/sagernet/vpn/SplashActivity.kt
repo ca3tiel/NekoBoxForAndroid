@@ -129,8 +129,10 @@ class SplashActivity : ThemedActivity() {
             entry.value.asJsonArray.forEach { it ->
                 var profile = ProfileManager.createProfile(targetId, proxies[counter])
                 var serverId = it.asJsonObject.get("id").asInt
+                val tagsArray = it.asJsonObject.getAsJsonArray("tags")
+                val tags = Array(tagsArray.size()) { tagsArray[it].asString }
                 serverSubItems.add(
-                    ListSubItem(profile.id, serverId, it.asJsonObject.get("name").asString, profile.status, profile.error, profile.ping)
+                    ListSubItem(profile.id, serverId, it.asJsonObject.get("name").asString, profile.status, profile.error, profile.ping, tags = tags)
                 )
                 counter++;
             }
@@ -142,6 +144,7 @@ class SplashActivity : ThemedActivity() {
                 )
             )
         }
+        AppRepository.allServersOriginal = AppRepository.allServers
         AppRepository.setAllServer(AppRepository.allServers)
 
         onMainDispatcher {
