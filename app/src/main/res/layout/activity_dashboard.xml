@@ -126,87 +126,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPowerState" />
 
-    <LinearLayout
-        android:id="@+id/llDataTransfer"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPremium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:padding="8dp"
-        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        android:background="@drawable/background_server_list"
+        app:layout_constraintBottom_toTopOf="@+id/llServers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSelectedServer"
-        android:baselineAligned="false">
+        app:layout_constraintTop_toBottomOf="@+id/tvSelectedServer">
 
-        <LinearLayout
-            android:id="@+id/llSend"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/ivPremium"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_premium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvPremium"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:id="@+id/ivSend"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="2dp"
-                app:srcCompat="@drawable/ic_up" />
-
-            <TextView
-                android:id="@+id/tvSend"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/museo_san_rounded500"
-                android:text="8 Mb/s"
-                android:textColor="@color/lightGray"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:ignore="NestedWeights" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llReceive"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:id="@+id/ivReceive"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="2dp"
-                app:srcCompat="@drawable/ic_down" />
-
-            <TextView
-                android:id="@+id/tvReceive"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/museo_san_rounded500"
-                android:text="12 Mb/s"
-                android:textColor="@color/lightGray"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:ignore="NestedWeights" />
-        </LinearLayout>
-
-    </LinearLayout>
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/museo_san_rounded500"
+            android:text="Premium"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivPremium"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llServers"
@@ -217,7 +172,7 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llDataTransfer">
+        app:layout_constraintTop_toBottomOf="@+id/clPremium">
 
 
         <ImageView
@@ -272,8 +227,8 @@
                 android:id="@+id/ivIconPing"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginTop="2dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginTop="2dp"
                 android:contentDescription="Ping Icon"
                 android:src="@drawable/ic_ping_test"
                 app:layout_constraintEnd_toEndOf="parent"
