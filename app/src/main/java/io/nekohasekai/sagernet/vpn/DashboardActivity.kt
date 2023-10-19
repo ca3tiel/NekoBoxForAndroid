@@ -89,6 +89,9 @@ class DashboardActivity : ThemedActivity(),
         val telegramIcon = findViewById<ImageView>(R.id.ivTelegramIcon)
         val connection = SagerConnection(SagerConnection.CONNECTION_ID_MAIN_ACTIVITY_FOREGROUND, true)
 
+        val clPremium = findViewById<ConstraintLayout>(R.id.clPremium)
+        clPremium.setOnClickListener {navigateToPremiumActivity()}
+
         // Set an OnClickListener to MainActivity
         telegramIcon.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View) {
@@ -257,8 +260,11 @@ class DashboardActivity : ThemedActivity(),
             updateIVAllIcon() // Update the IVall icon
             updateIVMtnIcon() // Update the IVMTN icon
         }
+    }
 
-        println("HAMED_LOG_TIME_0: " + timeRemainingMillis.toString())
+    private fun navigateToPremiumActivity() {
+        val intent = Intent(this, PremiumActivity::class.java)
+        startActivity(intent)
     }
 
     private fun updateIVAllIcon() {
