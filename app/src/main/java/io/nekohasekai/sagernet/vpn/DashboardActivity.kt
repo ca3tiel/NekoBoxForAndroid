@@ -86,7 +86,7 @@ class DashboardActivity : ThemedActivity(),
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
-        val telegramIcon = findViewById<ImageView>(R.id.TelegramIcon)
+        val telegramIcon = findViewById<ImageView>(R.id.ivTelegramIcon)
         val connection = SagerConnection(SagerConnection.CONNECTION_ID_MAIN_ACTIVITY_FOREGROUND, true)
 
         // Set an OnClickListener to MainActivity
@@ -99,7 +99,7 @@ class DashboardActivity : ThemedActivity(),
         })
 
         // Initialize the fragment container
-        val fragmentContainer = findViewById<View>(R.id.fragmentContainer)
+        val fragmentContainer = findViewById<View>(R.id.flFragmentContainer)
 
         val pingBtn = findViewById<ConstraintLayout>(R.id.clIconPing)
         pingBtn.setOnClickListener {
@@ -109,7 +109,7 @@ class DashboardActivity : ThemedActivity(),
         }
 
         // Find the NavMenuIcon ImageView and set an OnClickListener
-        val navMenuIcon = findViewById<ImageView>(R.id.NavMenuIcon)
+        val navMenuIcon = findViewById<ImageView>(R.id.ivNavMenuIcon)
         navMenuIcon.setOnClickListener {
             // Create an instance of the NavMenuFragment
             val navMenuFragment = MenuFragment()
@@ -126,13 +126,13 @@ class DashboardActivity : ThemedActivity(),
         }
 
         PowerIcon = findViewById(R.id.ivPowerIcon)
-        ivAll = findViewById(R.id.IVall)
-        ivMtn = findViewById(R.id.IVMTN)
-        ivMci = findViewById(R.id.IVMCI)
-        stateTextView = findViewById(R.id.PowerState)
-        timerTextView = findViewById(R.id.TVtimer)
-        appTitle = findViewById(R.id.TVapplicationName)
-        addTimeTextView = findViewById(R.id.TVaddTime)
+        ivAll = findViewById(R.id.ivAll)
+        ivMtn = findViewById(R.id.ivMtn)
+        ivMci = findViewById(R.id.ivMci)
+        stateTextView = findViewById(R.id.tvPowerState)
+        timerTextView = findViewById(R.id.tvTimer)
+        appTitle = findViewById(R.id.tvApplicationName)
+        addTimeTextView = findViewById(R.id.tvAddTime)
 
         // Check if returning from a fragment
         if (savedInstanceState != null) {
@@ -165,7 +165,7 @@ class DashboardActivity : ThemedActivity(),
             fragment.arguments = bundle
             val fragmentManager: FragmentManager = supportFragmentManager
             val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentContainer, fragment)
+            transaction.replace(R.id.flFragmentContainer, fragment)
             transaction.commit()
         }
 
@@ -200,7 +200,7 @@ class DashboardActivity : ThemedActivity(),
                 fragment.arguments = bundle
                 val fragmentManager: FragmentManager = supportFragmentManager
                 val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.fragmentContainer, fragment)
+                transaction.replace(R.id.flFragmentContainer, fragment)
                 transaction.commit()
             }
             // Reset IVMTN and IVMCI click states
@@ -224,7 +224,7 @@ class DashboardActivity : ThemedActivity(),
                 fragment.arguments = bundle
                 val fragmentManager: FragmentManager = supportFragmentManager
                 val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.fragmentContainer, fragment)
+                transaction.replace(R.id.flFragmentContainer, fragment)
                 transaction.commit()
             }
             // Reset IVall and IVMCI click states
@@ -248,7 +248,7 @@ class DashboardActivity : ThemedActivity(),
                 fragment.arguments = bundle
                 val fragmentManager: FragmentManager = supportFragmentManager
                 val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.fragmentContainer, fragment)
+                transaction.replace(R.id.flFragmentContainer, fragment)
                 transaction.commit()
             }
             // Reset IVall and IVMTN click states
@@ -279,7 +279,7 @@ class DashboardActivity : ThemedActivity(),
             timeRemainingMillis = remainTime + 1800000
             AppRepository.sharedPreferences.edit().putLong("remainingTime", timeRemainingMillis).apply()
         }
-            startTimer()
+        startTimer()
     }
 
     private fun stopTimer() {
@@ -356,7 +356,7 @@ class DashboardActivity : ThemedActivity(),
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("currentState", stateTextView.text.toString())
-        outState.putBoolean("isFragmentVisible", findViewById<View>(R.id.fragmentContainer).visibility == View.VISIBLE)
+        outState.putBoolean("isFragmentVisible", findViewById<View>(R.id.flFragmentContainer).visibility == View.VISIBLE)
         outState.putBoolean("ivAllClicked", ivAllClicked)
         outState.putBoolean("ivMtnClicked", ivMtnClicked)
         outState.putBoolean("ivMciClicked", ivMciClicked)

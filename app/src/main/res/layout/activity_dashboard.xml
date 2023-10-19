@@ -8,7 +8,7 @@
 
 
     <ImageView
-        android:id="@+id/login_background"
+        android:id="@+id/loginBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
@@ -18,7 +18,7 @@
         app:srcCompat="@drawable/background_dashboard" />
 
     <LinearLayout
-        android:id="@+id/LLheader"
+        android:id="@+id/llHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -28,14 +28,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/NavMenuIcon"
+            android:id="@+id/ivNavMenuIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:src="@drawable/ic_menu_burger" />
 
         <TextView
-            android:id="@+id/TVapplicationName"
+            android:id="@+id/tvApplicationName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -46,7 +46,7 @@
             android:textSize="30sp" />
 
         <ImageView
-            android:id="@+id/TelegramIcon"
+            android:id="@+id/ivTelegramIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -62,10 +62,10 @@
         android:src="@drawable/connect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LLheader" />
+        app:layout_constraintTop_toBottomOf="@+id/llHeader" />
 
     <TextView
-        android:id="@+id/TVaddTime"
+        android:id="@+id/tvAddTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="invisible"
@@ -81,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="@+id/ivPowerIcon" />
 
     <TextView
-        android:id="@+id/TVtimer"
+        android:id="@+id/tvTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -97,19 +97,19 @@
         app:layout_constraintEnd_toEndOf="@+id/ivPowerIcon" />
 
     <TextView
-    android:id="@+id/PowerState"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/ivPowerIcon"
-    android:text="Connect"
-    android:fontFamily="@font/museo_san_rounded700"
-    android:layout_marginTop="10dp"
-    android:textSize="18sp"
-    android:textColor="@color/lightBlue"
-    android:textStyle="bold"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/ivPowerIcon" />
+        android:id="@+id/tvPowerState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivPowerIcon"
+        android:text="Connect"
+        android:fontFamily="@font/museo_san_rounded700"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/lightBlue"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivPowerIcon" />
 
     <TextView
         android:id="@+id/tvSelectedServer"
@@ -124,10 +124,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PowerState" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPowerState" />
 
     <LinearLayout
-        android:id="@+id/LLdatatransfer"
+        android:id="@+id/llDataTransfer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -139,7 +139,7 @@
         android:baselineAligned="false">
 
         <LinearLayout
-            android:id="@+id/LLsend"
+            android:id="@+id/llSend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
@@ -148,7 +148,7 @@
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:id="@+id/IVsend"
+                android:id="@+id/ivSend"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
@@ -156,7 +156,7 @@
                 app:srcCompat="@drawable/ic_up" />
 
             <TextView
-                android:id="@+id/tvsend"
+                android:id="@+id/tvSend"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -173,7 +173,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/LLreceive"
+            android:id="@+id/llReceive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -182,7 +182,7 @@
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:id="@+id/IVreceive"
+                android:id="@+id/ivReceive"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
@@ -190,7 +190,7 @@
                 app:srcCompat="@drawable/ic_down" />
 
             <TextView
-                android:id="@+id/tvreceive"
+                android:id="@+id/tvReceive"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -209,7 +209,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/LLservers"
+        android:id="@+id/llServers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -217,11 +217,11 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LLdatatransfer">
+        app:layout_constraintTop_toBottomOf="@+id/llDataTransfer">
 
 
         <ImageView
-            android:id="@+id/IVall"
+            android:id="@+id/ivAll"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
@@ -233,7 +233,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/IVMTN"
+            android:id="@+id/ivMtn"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="30dp"
@@ -241,11 +241,11 @@
             android:focusable="true"
             android:src="@drawable/ic_mtn_irancell_gray"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/IVall"
+            app:layout_constraintStart_toEndOf="@+id/ivAll"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/IVMCI"
+            android:id="@+id/ivMci"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="30dp"
@@ -253,85 +253,86 @@
             android:focusable="true"
             android:src="@drawable/ic_mci_hamrahe_aval_gray"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/IVMTN"
+            app:layout_constraintStart_toEndOf="@+id/ivMtn"
             app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clIconPing"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/background_enter_btn"
-                android:clickable="true"
-                android:focusable="true"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clIconPing"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/background_enter_btn"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivIconPing"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="2dp"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="Ping Icon"
+                android:src="@drawable/ic_ping_test"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/ivPing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded500"
+                android:text="Ping"
+                android:textColor="@color/darkGray"
+                android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivIconPing"
+                tools:ignore="SmallSp" />
 
-                <ImageView
-                    android:id="@+id/ivIconPing"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_gravity="center_vertical"
-                    android:contentDescription="Ping Icon"
-                    android:src="@drawable/ic_ping_test"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/ivPing"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/museo_san_rounded500"
-                    android:text="Ping"
-                    android:textColor="@color/darkGray"
-                    android:textSize="10sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivIconPing"
-                    tools:ignore="SmallSp" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/svServerList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LLservers">
+        app:layout_constraintTop_toBottomOf="@+id/llServers">
 
         <FrameLayout
-            android:id="@+id/fragmentContainer"
+            android:id="@+id/flFragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/navyBlue" />
     </ScrollView>
 
     <View
-        android:id="@+id/view4"
+        android:id="@+id/vHorizontalLine"
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:layout_weight="20"
         android:background="@color/lightBlue"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"/>
+        app:layout_constraintTop_toBottomOf="@+id/svServerList"/>
 
     <LinearLayout
+        android:id="@+id/llDashboardBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+        app:layout_constraintTop_toBottomOf="@+id/svServerList">
 
         <TextView
-            android:id="@+id/tvdataLeft"
+            android:id="@+id/tvDataLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
@@ -342,7 +343,7 @@
             android:text="10.00 GB Left" />
 
         <TextView
-            android:id="@+id/tvGetmoredata"
+            android:id="@+id/tvGetMoreData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
