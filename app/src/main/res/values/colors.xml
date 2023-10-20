@@ -299,5 +299,7 @@
     <color name="Blue">#055C9D</color>
     <color name="lightBlue">#12aeef</color>
     <color name="red">#FF0000</color>
+    <color name="darkPurple">#11001A</color>
+
 
 </resources>

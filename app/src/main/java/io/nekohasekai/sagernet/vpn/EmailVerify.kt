@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
+import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.databinding.ActivityEmailVerifyBinding
 import io.nekohasekai.sagernet.vpn.repositories.AuthRepository
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +20,12 @@ class EmailVerify : AppCompatActivity() {
         binding = ActivityEmailVerifyBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        // Change status bar color
+        window.statusBarColor = ContextCompat.getColor(this, R.color.navyBlue)
+
+        // Change navigation bar color
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
         binding.btnVerify.setOnClickListener {
             val verifyCode = binding.txtVerifyCode.text.toString()
