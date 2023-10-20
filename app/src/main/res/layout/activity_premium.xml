@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#11001A"
+    android:background="@color/darkPurple"
     tools:context=".vpn.PremiumActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clPremium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -172,9 +173,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl30Days"
-            android:layout_width="150dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/background_server_list"
             android:paddingLeft="30dp"
@@ -212,10 +213,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl90Days"
-            android:layout_width="150dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="30dp"
             android:background="@drawable/background_server_list"
             android:paddingLeft="30dp"
             android:paddingTop="10dp"
@@ -252,9 +253,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl180Days"
-            android:layout_width="150dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/background_server_list"
             android:paddingLeft="30dp"
@@ -292,10 +293,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl365Days"
-            android:layout_width="150dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginRight="30dp"
             android:background="@drawable/background_server_list"
             android:paddingLeft="30dp"
             android:paddingTop="10dp"
