@@ -14,6 +14,7 @@ import android.content.Context
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import android.os.Build
 import android.os.CountDownTimer
 import android.widget.TextView
 import android.widget.Toast
@@ -83,6 +84,12 @@ class DashboardActivity : ThemedActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        // Change status bar color
+        window.statusBarColor = ContextCompat.getColor(this, R.color.navyBlue)
+
+        // Change navigation bar color
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
