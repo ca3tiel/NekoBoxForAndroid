@@ -35,7 +35,7 @@ dependencies {
 
     implementation(fileTree("libs"))
 
-
+    implementation("com.airbnb.android:lottie:6.1.0")
     implementation("com.google.firebase:firebase-auth-ktx:22.1.0")
     implementation("com.facebook.android:facebook-android-sdk:latest.release")
     implementation("com.google.android.gms:play-services-auth:20.6.0")
