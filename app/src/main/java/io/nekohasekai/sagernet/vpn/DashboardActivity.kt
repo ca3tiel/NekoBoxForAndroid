@@ -502,7 +502,6 @@ class DashboardActivity : ThemedActivity(),
                             setServerStatus(profile, result, 1, null)
                             profile.status = 1
                             profile.ping = result
-                            // Delay for 1 second
                             if (result <= 600) {
                                 withContext(Dispatchers.Main) {
                                     dialogServerPing.setTextColor(ContextCompat.getColor(this@DashboardActivity, R.color.material_green_500))
