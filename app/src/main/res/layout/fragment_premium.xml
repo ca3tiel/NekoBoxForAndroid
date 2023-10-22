@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/llVip"
+            android:id="@+id/llPremium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -27,19 +27,19 @@
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:id="@+id/ivVipIconAngle"
+                android:id="@+id/ivPremiumIconAngle"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_angle_circle_left" />
 
             <TextView
-                android:id="@+id/tvVip"
+                android:id="@+id/tvPremium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/museo_san_rounded900"
                 android:gravity="center"
-                android:text="Vip"
+                android:text="Premium"
                 android:textColor="@color/white"
                 android:textSize="22sp" />
 
@@ -59,7 +59,7 @@
             android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llVip">
+            app:layout_constraintTop_toBottomOf="@+id/llPremium">
 
             <ImageView
                 android:id="@+id/iconGeneral"
