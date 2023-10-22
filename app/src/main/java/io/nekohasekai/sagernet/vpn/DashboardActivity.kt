@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.preference.PreferenceDataStore
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import io.nekohasekai.sagernet.Key
@@ -65,7 +66,7 @@ class DashboardActivity : ThemedActivity(),
     NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var binding: ActivityDashboardBinding
-    private lateinit var PowerIcon: ImageView
+    private lateinit var PowerIcon: LottieAnimationView
     private lateinit var ivAll: ImageView
     private lateinit var ivMtn: ImageView
     private lateinit var ivMci: ImageView
@@ -114,7 +115,7 @@ class DashboardActivity : ThemedActivity(),
         val pingBtn = findViewById<ConstraintLayout>(R.id.clIconPing)
         pingBtn.setOnClickListener {
             urlTest()
-            showNotConnectedStateForPingBtn()
+            showNotConnectedState()
             stopTimer()
         }
 
@@ -135,7 +136,7 @@ class DashboardActivity : ThemedActivity(),
             transaction.commit()
         }
 
-        PowerIcon = findViewById(R.id.ivPowerIcon)
+        PowerIcon = findViewById(R.id.laPulseButton)
         ivAll = findViewById(R.id.ivAll)
         ivMtn = findViewById(R.id.ivMtn)
         ivMci = findViewById(R.id.ivMci)
@@ -339,7 +340,8 @@ class DashboardActivity : ThemedActivity(),
     private fun showConnectingState() {
         timerTextView.visibility = View.INVISIBLE
         addTimeTextView.visibility = View.INVISIBLE
-        PowerIcon.setImageResource(R.drawable.connecting)
+        PowerIcon.setAnimation(R.raw.pulse_button_yellow)
+        PowerIcon.playAnimation()
         stateTextView.text = "Connecting..."
         PowerIcon.isEnabled = false
     }
@@ -347,7 +349,8 @@ class DashboardActivity : ThemedActivity(),
     private fun showConnectedState() {
         timerTextView.visibility = View.VISIBLE
         addTimeTextView.visibility = View.INVISIBLE
-        PowerIcon.setImageResource(R.drawable.connected)
+        PowerIcon.setAnimation(R.raw.pulse_button_green)
+        PowerIcon.playAnimation()
         stateTextView.text = "Connected"
         PowerIcon.isEnabled = true
     }
@@ -355,14 +358,8 @@ class DashboardActivity : ThemedActivity(),
     private fun showNotConnectedState() {
         timerTextView.visibility = View.INVISIBLE
         addTimeTextView.visibility = View.VISIBLE
-        PowerIcon.setImageResource(R.drawable.connect)
-        stateTextView.text = "Connect"
-    }
-
-    private fun showNotConnectedStateForPingBtn() {
-        timerTextView.visibility = View.INVISIBLE
-        addTimeTextView.visibility = View.INVISIBLE
-        PowerIcon.setImageResource(R.drawable.connect)
+        PowerIcon.setAnimation(R.raw.pulse_button_gray)
+        PowerIcon.playAnimation()
         stateTextView.text = "Connect"
     }
 
