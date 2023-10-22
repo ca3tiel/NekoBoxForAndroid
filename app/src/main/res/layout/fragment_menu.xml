@@ -177,11 +177,11 @@
         app:layout_constraintTop_toBottomOf="@+id/llConnection">
 
         <ImageView
-            android:id="@+id/ivVip"
+            android:id="@+id/ivPremium"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_vip" />
+            android:src="@drawable/ic_premium" />
 
         <TextView
             android:id="@+id/tvVip"
@@ -190,7 +190,7 @@
             android:layout_weight="20"
             android:layout_marginLeft="20dp"
             android:fontFamily="@font/museo_san_rounded700"
-            android:text="Vip"
+            android:text="Premium"
             android:textColor="@color/lightGray"
             android:textStyle="bold"
             android:textSize="16sp" />
