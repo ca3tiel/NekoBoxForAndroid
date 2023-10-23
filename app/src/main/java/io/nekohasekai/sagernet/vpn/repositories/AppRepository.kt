@@ -17,7 +17,7 @@ import okhttp3.Response
 import java.io.IOException
 
 object AppRepository {
-    public var appName: String = "UnitaVPN"
+    var appName: String = "UnitaVPN"
     private var subscriptionLink: String = "https://Apanel.holyip.workers.dev/link/9RTsfMryrGwgWZVb48eN?config=1"
     private var apiServersListUrl: String = "https://panel.miatel.xyz/api/servers"
     private var baseUrl: String = "https://panel.holyip.com/"
@@ -28,16 +28,17 @@ object AppRepository {
     private var userStateUrl: String = "https://panel.holyip.com/api/v2/client/stats"
     private var panelApiHeaderToken: String = "9f8a833ca1383c5449e1d8800b45fd54"
     private var panelSettingsUrl = "https://panel.miatel.xyz/api/settings"
-    public var selectedServerId: Long = -1
-    public var ShareCustomMessage: String = "$appName is the best vpn.please visit this link"
-    public var ShareApplicationLink: String = "https://play.google.com/store/apps/details?id=com.File.Manager.Filemanager&pcampaignid=web_share"
-    public var allServers: MutableList<ListItem> = mutableListOf()
-    public var allServersOriginal: MutableList<ListItem> = mutableListOf()
-    public lateinit var allServersRaw: JsonObject
-    public lateinit var recyclerView: RecyclerView
-    public var isBestServerSelected: Boolean = false
-    public lateinit var sharedPreferences: SharedPreferences
-    public var isConnected: Boolean = false
+    var selectedServerId: Long = -1
+    var ShareCustomMessage: String = "$appName is the best vpn.please visit this link"
+    var ShareApplicationLink: String = "https://play.google.com/store/apps/details?id=com.File.Manager.Filemanager&pcampaignid=web_share"
+    var allServers: MutableList<ListItem> = mutableListOf()
+    var allServersOriginal: MutableList<ListItem> = mutableListOf()
+    lateinit var allServersRaw: JsonObject
+    lateinit var recyclerView: RecyclerView
+    var isBestServerSelected: Boolean = false
+    lateinit var sharedPreferences: SharedPreferences
+    var isConnected: Boolean = false
+    var filterServersBy: String = "all"
 
     fun setBaseUrl(url: String) {
         baseUrl = url
@@ -46,6 +47,7 @@ object AppRepository {
     fun getAllServer(): MutableList<ListItem> {
         val allServersString = sharedPreferences.getString("allServers", null)
         if(allServersString === null) {
+            filterServersByTag(filterServersBy)
             return allServers
         }
         val gson = Gson()
@@ -287,8 +289,8 @@ object AppRepository {
     {
         var servers = allServersOriginal
         servers.forEach { item ->
-            item.dropdownItems.forEach { subIitem ->
-                subIitem.isSelected = false
+            item.dropdownItems.forEach { subItem ->
+                subItem.isSelected = false
             }
         }
         allServers = servers.filter { element -> element in allServers }.toMutableList()
@@ -296,6 +298,7 @@ object AppRepository {
 
     fun filterServersByTag(tag: String): Unit
     {
+        filterServersBy = tag
         var servers = allServersOriginal
         if(tag === "all") {
             allServers = servers
