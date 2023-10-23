@@ -199,12 +199,12 @@ class DashboardActivity : ThemedActivity(),
 
         // Set an OnClickListener for IVall
         ivAll.setOnClickListener {
-            AppRepository.filterServersByTag("all")
             ivAllClicked = !ivAllClicked // Toggle the IVall click state
             updateIVAllIcon() // Update the IVall icon
             // Show/hide the MyFragment based on the click state
             fragmentContainer.visibility = if (ivAllClicked) View.VISIBLE else View.INVISIBLE
             if (ivAllClicked) {
+                AppRepository.filterServersByTag("all")
                 val fragment = MyFragment()
                 val bundle = Bundle()
                 bundle.putString("iconClicked", "IVAll") // Pass the clicked icon value to the fragment
