@@ -5,6 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import io.nekohasekai.sagernet.GroupType
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.database.DataStore
@@ -28,13 +34,13 @@ import kotlinx.coroutines.launch
 
 class SplashActivity : ThemedActivity() {
 
+    private var mInterstitialAd: InterstitialAd? = null
     fun ProxyGroup.init() {
 //        DataStore.groupName = name ?: AppRepository.appName
         DataStore.groupName = "Ungrouped"
         DataStore.groupType = 1
         DataStore.groupOrder = order
         DataStore.groupIsSelector = isSelector
-
         DataStore.frontProxy = frontProxy
         DataStore.landingProxy = landingProxy
         DataStore.frontProxyTmp = if (frontProxy >= 0) 3 else 0
@@ -84,10 +90,14 @@ class SplashActivity : ThemedActivity() {
         // Change navigation bar color
         window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
+        //Show AdMob Interstitial
+        loadInterstitialAd()
+
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
         GlobalScope.launch(Dispatchers.Main) {
             getServers()
+            showInterstitialAd()
             startNewActivity()
         }
 
@@ -100,6 +110,46 @@ class SplashActivity : ThemedActivity() {
 //            }
 //            GroupUpdater.startUpdate(subscription, true)
 //        }
+    }
+    private fun showInterstitialAd() {
+        if (mInterstitialAd != null) {
+            mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+                override fun onAdClicked() {
+                    // Called when a click is recorded for an ad.
+                }
+                override fun onAdDismissedFullScreenContent() {
+                    // Called when ad is dismissed.
+                    mInterstitialAd = null
+                }
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    // Called when ad fails to show.
+                    mInterstitialAd = null
+                }
+                override fun onAdImpression() {
+                    // Called when an impression is recorded for an ad.
+                }
+                override fun onAdShowedFullScreenContent() {
+                    // Called when ad is shown.
+                }
+            }
+            mInterstitialAd?.show(this)
+        } else {
+            startNewActivity()
+        }
+    }
+
+    private fun loadInterstitialAd() {
+
+        var adRequest = AdRequest.Builder().build()
+
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                mInterstitialAd = null
+            }
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                mInterstitialAd = interstitialAd
+            }
+        })
     }
 
     private fun startNewActivity() {
