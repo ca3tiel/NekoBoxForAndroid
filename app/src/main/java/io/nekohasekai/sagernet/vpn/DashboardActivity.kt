@@ -24,6 +24,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.preference.PreferenceDataStore
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import io.nekohasekai.sagernet.Key
@@ -82,6 +85,7 @@ class DashboardActivity : ThemedActivity(),
     private lateinit var checkPingDialog: AlertDialog
     private var bestServer: ListItem? = null
     private var countDownTimer: CountDownTimer? = null
+    lateinit var mAdView : AdView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -91,6 +95,12 @@ class DashboardActivity : ThemedActivity(),
 
         // Change navigation bar color
         window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
+
+        //Show AdMob banner
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
