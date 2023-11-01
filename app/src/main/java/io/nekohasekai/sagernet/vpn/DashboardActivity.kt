@@ -296,6 +296,8 @@ class DashboardActivity : ThemedActivity(),
                     // Called when ad is dismissed.
                     // Set the ad reference to null so you don't show the ad a second time.
                     rewardedAd = null
+                    loadRewardedAd()
+                    println("HAMED_LOG_REWARDED_onAdDismissedFullScreenContent")
                 }
 
                 override fun onAdFailedToShowFullScreenContent(p0: AdError) {
@@ -312,7 +314,9 @@ class DashboardActivity : ThemedActivity(),
                 }
             }
             rewardedAd?.let { ad ->
+                println("HAMED_LOG_REWARDS_SHOW_1")
                 ad.show(this@DashboardActivity, OnUserEarnedRewardListener { rewardItem ->
+                    println("HAMED_LOG_REWARDS_SHOW_2")
                     // Handle the reward.
                     val rewardAmount = rewardItem.amount
                     val rewardType = rewardItem.type
@@ -330,6 +334,7 @@ class DashboardActivity : ThemedActivity(),
             }
             override fun onAdLoaded(ad: RewardedAd) {
                 rewardedAd = ad
+                println("HAMED_LOG_Rewards_onAdLoaded")
             }
         })
     }
@@ -496,6 +501,10 @@ class DashboardActivity : ThemedActivity(),
     ) {
         DataStore.serviceState = state
         if (state.toString() === "Connected") {
+            println("HAMED_LOG_CONNECT")
+            if(rewardedAd === null) {
+                loadRewardedAd()
+            }
             showRewardedAd()
             add30MinutesToTimer()
             AppRepository.isConnected = true
