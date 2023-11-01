@@ -39,6 +39,7 @@ object AppRepository {
     lateinit var sharedPreferences: SharedPreferences
     var isConnected: Boolean = false
     var filterServersBy: String = "all"
+    private var isInternetConnected = true
 
     fun setBaseUrl(url: String) {
         baseUrl = url
@@ -309,6 +310,14 @@ object AppRepository {
                 subItem.tags.contains(tag)
             }.toMutableList())
         }.toMutableList()
+    }
+
+    fun setLastInternetSatus(status: Boolean) {
+        isInternetConnected = status
+    }
+
+    fun isInternetAvailable(): Boolean {
+        return isInternetConnected
     }
 
 }
