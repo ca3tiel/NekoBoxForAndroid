@@ -24,9 +24,15 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.preference.PreferenceDataStore
 import com.airbnb.lottie.LottieAnimationView
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.OnUserEarnedRewardListener
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import io.nekohasekai.sagernet.Key
@@ -86,6 +92,7 @@ class DashboardActivity : ThemedActivity(),
     private var bestServer: ListItem? = null
     private var countDownTimer: CountDownTimer? = null
     lateinit var mAdView : AdView
+    private var rewardedAd: RewardedAd? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -96,11 +103,9 @@ class DashboardActivity : ThemedActivity(),
         // Change navigation bar color
         window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
-        //Show AdMob banner
-        MobileAds.initialize(this) {}
-        mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
+        //load BannerAd and RewardedAd
+        loadBannerAd()
+        loadRewardedAd()
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
@@ -280,6 +285,62 @@ class DashboardActivity : ThemedActivity(),
         }
     }
 
+    private fun showRewardedAd() {
+        if (rewardedAd != null) {
+            rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdClicked() {
+                    // Called when a click is recorded for an ad.
+                }
+
+                override fun onAdDismissedFullScreenContent() {
+                    // Called when ad is dismissed.
+                    // Set the ad reference to null so you don't show the ad a second time.
+                    rewardedAd = null
+                }
+
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    // Called when ad fails to show.
+                    rewardedAd = null
+                }
+
+                override fun onAdImpression() {
+                    // Called when an impression is recorded for an ad.
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    // Called when ad is shown.
+                }
+            }
+            rewardedAd?.let { ad ->
+                ad.show(this@DashboardActivity, OnUserEarnedRewardListener { rewardItem ->
+                    // Handle the reward.
+                    val rewardAmount = rewardItem.amount
+                    val rewardType = rewardItem.type
+                })
+            } ?: run {
+
+            }
+        }
+    }
+    private fun loadRewardedAd() {
+        var adRequest = AdRequest.Builder().build()
+        RewardedAd.load(this,"ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                rewardedAd = null
+            }
+            override fun onAdLoaded(ad: RewardedAd) {
+                rewardedAd = ad
+            }
+        })
+    }
+
+    private fun loadBannerAd() {
+        MobileAds.initialize(this) {}
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+    }
+
     private fun navigateToPremiumActivity() {
         val intent = Intent(this, PremiumActivity::class.java)
         startActivity(intent)
@@ -390,6 +451,7 @@ class DashboardActivity : ThemedActivity(),
         super.onResume()
         if(DataStore.serviceState.connected) {
             showConnectedState()
+            showRewardedAd()
         } else {
             showNotConnectedState()
         }
@@ -434,6 +496,7 @@ class DashboardActivity : ThemedActivity(),
     ) {
         DataStore.serviceState = state
         if (state.toString() === "Connected") {
+            showRewardedAd()
             add30MinutesToTimer()
             AppRepository.isConnected = true
             val profile = SagerDatabase.proxyDao.getById(DataStore.selectedProxy)
