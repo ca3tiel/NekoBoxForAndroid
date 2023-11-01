@@ -55,10 +55,13 @@ import io.nekohasekai.sagernet.ui.MainActivity
 import io.nekohasekai.sagernet.ui.ThemedActivity
 import io.nekohasekai.sagernet.ui.VpnRequestActivity
 import io.nekohasekai.sagernet.vpn.nav.MenuFragment
+import io.nekohasekai.sagernet.vpn.repositories.AdRepository
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
+import io.nekohasekai.sagernet.vpn.utils.InternetConnectionChecker
+import io.nekohasekai.sagernet.vpn.utils.Network
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -93,9 +96,12 @@ class DashboardActivity : ThemedActivity(),
     private var countDownTimer: CountDownTimer? = null
     lateinit var mAdView : AdView
     private var rewardedAd: RewardedAd? = null
+    private lateinit var internetChecker: InternetConnectionChecker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        AdRepository.internetChecker = InternetConnectionChecker(this)
 
         // Change status bar color
         window.statusBarColor = ContextCompat.getColor(this, R.color.navyBlue)
@@ -105,7 +111,7 @@ class DashboardActivity : ThemedActivity(),
 
         //load BannerAd and RewardedAd
         loadBannerAd()
-        loadRewardedAd()
+        AdRepository.loadRewardedAd(this)
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
@@ -285,60 +291,6 @@ class DashboardActivity : ThemedActivity(),
         }
     }
 
-    private fun showRewardedAd() {
-        if (rewardedAd != null) {
-            rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
-                override fun onAdClicked() {
-                    // Called when a click is recorded for an ad.
-                }
-
-                override fun onAdDismissedFullScreenContent() {
-                    // Called when ad is dismissed.
-                    // Set the ad reference to null so you don't show the ad a second time.
-                    rewardedAd = null
-                    loadRewardedAd()
-                    println("HAMED_LOG_REWARDED_onAdDismissedFullScreenContent")
-                }
-
-                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                    // Called when ad fails to show.
-                    rewardedAd = null
-                }
-
-                override fun onAdImpression() {
-                    // Called when an impression is recorded for an ad.
-                }
-
-                override fun onAdShowedFullScreenContent() {
-                    // Called when ad is shown.
-                }
-            }
-            rewardedAd?.let { ad ->
-                println("HAMED_LOG_REWARDS_SHOW_1")
-                ad.show(this@DashboardActivity, OnUserEarnedRewardListener { rewardItem ->
-                    println("HAMED_LOG_REWARDS_SHOW_2")
-                    // Handle the reward.
-                    val rewardAmount = rewardItem.amount
-                    val rewardType = rewardItem.type
-                })
-            } ?: run {
-
-            }
-        }
-    }
-    private fun loadRewardedAd() {
-        var adRequest = AdRequest.Builder().build()
-        RewardedAd.load(this,"ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                rewardedAd = null
-            }
-            override fun onAdLoaded(ad: RewardedAd) {
-                rewardedAd = ad
-                println("HAMED_LOG_Rewards_onAdLoaded")
-            }
-        })
-    }
-
     private fun loadBannerAd() {
         MobileAds.initialize(this) {}
         mAdView = findViewById(R.id.adView)
@@ -456,7 +408,7 @@ class DashboardActivity : ThemedActivity(),
         super.onResume()
         if(DataStore.serviceState.connected) {
             showConnectedState()
-            showRewardedAd()
+            AdRepository.showRewardedAd(this)
         } else {
             showNotConnectedState()
         }
@@ -503,9 +455,9 @@ class DashboardActivity : ThemedActivity(),
         if (state.toString() === "Connected") {
             println("HAMED_LOG_CONNECT")
             if(rewardedAd === null) {
-                loadRewardedAd()
+                AdRepository.loadRewardedAd(this)
             }
-            showRewardedAd()
+            AdRepository.showRewardedAd(this)
             add30MinutesToTimer()
             AppRepository.isConnected = true
             val profile = SagerDatabase.proxyDao.getById(DataStore.selectedProxy)
@@ -688,6 +640,14 @@ class DashboardActivity : ThemedActivity(),
             foundSubItem?.status = status
             foundSubItem?.ping = ping
             foundSubItem?.error = error
+        }
+    }
+
+    fun checkInternet() {
+        if (Network.checkConnectivity(this)) {
+            println("HAMED_LOG_HAS_INTERNET!")
+        }  else {
+            println("HAMED_LOG_NO_INTERNET")
         }
     }
 
