@@ -1,21 +1,21 @@
 package io.nekohasekai.sagernet.vpn
 
 import android.annotation.SuppressLint
-import kotlinx.coroutines.CoroutineScope
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.os.Handler
 import android.os.RemoteException
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import android.app.AlertDialog
-import android.content.Context
-import android.graphics.Color
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
-import android.os.Build
-import android.os.CountDownTimer
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -34,6 +34,7 @@ import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.navigation.NavigationView
+import com.google.android.ump.ConsentInformation
 import com.google.gson.Gson
 import io.nekohasekai.sagernet.Key
 import io.nekohasekai.sagernet.R
@@ -54,6 +55,7 @@ import io.nekohasekai.sagernet.ui.ConfigurationFragment
 import io.nekohasekai.sagernet.ui.MainActivity
 import io.nekohasekai.sagernet.ui.ThemedActivity
 import io.nekohasekai.sagernet.ui.VpnRequestActivity
+import io.nekohasekai.sagernet.vpn.ads.GoogleMobileAdsConsentManager
 import io.nekohasekai.sagernet.vpn.nav.MenuFragment
 import io.nekohasekai.sagernet.vpn.repositories.AdRepository
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
@@ -62,6 +64,7 @@ import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
 import io.nekohasekai.sagernet.vpn.utils.InternetConnectionChecker
 import io.nekohasekai.sagernet.vpn.utils.Network
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -71,7 +74,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.newFixedThreadPoolContext
 import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.atomic.AtomicBoolean
 
+const val AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917"
+const val COUNTER_TIME = 10L
+const val GAME_OVER_REWARD = 1
+const val TAG = "DashboardActivity"
 class DashboardActivity : ThemedActivity(),
     SagerConnection.Callback,
     OnPreferenceDataStoreChangeListener,
@@ -95,11 +103,48 @@ class DashboardActivity : ThemedActivity(),
     private var bestServer: ListItem? = null
     private var countDownTimer: CountDownTimer? = null
     lateinit var mAdView : AdView
-    private var rewardedAd: RewardedAd? = null
+//    private var rewardedAd: RewardedAd? = null
     private lateinit var internetChecker: InternetConnectionChecker
+    private lateinit var consentInformation: ConsentInformation
+
+    private val isMobileAdsInitializeCalled = AtomicBoolean(false)
+    private lateinit var googleMobileAdsConsentManager: GoogleMobileAdsConsentManager
+    private var coinCount: Int = 0
+    private var countdownTimer: CountDownTimer? = null
+    private var gameOver = false
+    private var gamePaused = false
+    private var isLoading = false
+    private var rewardedAd: RewardedAd? = null
+    private var timeRemaining: Long = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+
+        // EU Consent
+        googleMobileAdsConsentManager = GoogleMobileAdsConsentManager.getInstance(this)
+        googleMobileAdsConsentManager.gatherConsent(this) { error ->
+            if (error != null) {
+                // Consent not obtained in current session.
+                Log.d(TAG, "${error.errorCode}: ${error.message}")
+            }
+
+//            startGame()
+
+            if (googleMobileAdsConsentManager.canRequestAds) {
+                initializeMobileAdsSdk()
+            }
+
+            if (googleMobileAdsConsentManager.isPrivacyOptionsRequired) {
+                // Regenerate the options menu to include a privacy setting.
+                invalidateOptionsMenu()
+            }
+        }
+
+        // This sample attempts to load ads using consent obtained in the previous session.
+        if (googleMobileAdsConsentManager.canRequestAds) {
+            initializeMobileAdsSdk()
+        }
+
 
         AdRepository.internetChecker = InternetConnectionChecker(this)
 
@@ -109,9 +154,12 @@ class DashboardActivity : ThemedActivity(),
         // Change navigation bar color
         window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
+//        loadRewardedAd()
+        initializeMobileAdsSdk()
+
         //load BannerAd and RewardedAd
-        loadBannerAd()
-        AdRepository.loadRewardedAd(this)
+//        loadBannerAd()
+//        AdRepository.loadRewardedAd(this)
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
@@ -454,10 +502,11 @@ class DashboardActivity : ThemedActivity(),
         DataStore.serviceState = state
         if (state.toString() === "Connected") {
             println("HAMED_LOG_CONNECT")
-            if(rewardedAd === null) {
-                AdRepository.loadRewardedAd(this)
-            }
-            AdRepository.showRewardedAd(this)
+            showRewardedVideo()
+//            if(rewardedAd === null) {
+//                AdRepository.loadRewardedAd(this)
+//            }
+//            AdRepository.showRewardedAd(this)
             add30MinutesToTimer()
             AppRepository.isConnected = true
             val profile = SagerDatabase.proxyDao.getById(DataStore.selectedProxy)
@@ -657,6 +706,94 @@ class DashboardActivity : ThemedActivity(),
         } catch (e: Exception) {
             Logs.e(e)
             null
+        }
+    }
+
+    private fun initializeMobileAdsSdk() {
+        if (isMobileAdsInitializeCalled.getAndSet(true)) {
+            return
+        }
+
+        // Initialize the Mobile Ads SDK.
+        MobileAds.initialize(this) {}
+        // Load an ad.
+        loadRewardedAd()
+    }
+
+    private fun loadRewardedAd() {
+        if (rewardedAd == null) {
+            isLoading = true
+            var adRequest = AdRequest.Builder().build()
+
+            RewardedAd.load(
+                this,
+                AD_UNIT_ID,
+                adRequest,
+                object : RewardedAdLoadCallback() {
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        println("HAMED_LOG_EU_REWARD_AD_FAILED_ON_LOAD: " + adError.message)
+                        if (googleMobileAdsConsentManager.canRequestAds) {
+                            println("HAMED_LOG_EU_LOADED_NEW")
+                            Handler().postDelayed(
+                                Runnable { loadRewardedAd() },
+                                5000
+                            )
+
+                        }
+                        Log.d(TAG, adError.message)
+                        isLoading = false
+                        rewardedAd = null
+                    }
+
+                    override fun onAdLoaded(ad: RewardedAd) {
+                        println("HAMED_LOG_EU_REWARD_AD_LOADED")
+                        Log.d(TAG, "Ad was loaded.")
+                        rewardedAd = ad
+                        isLoading = false
+                    }
+                }
+            )
+        }
+    }
+
+    private fun showRewardedVideo() {
+//        binding.showVideoButton.visibility = View.INVISIBLE
+        if (rewardedAd != null) {
+            rewardedAd?.fullScreenContentCallback =
+                object : FullScreenContentCallback() {
+                    override fun onAdDismissedFullScreenContent() {
+                        Log.d(TAG, "Ad was dismissed.")
+                        // Don't forget to set the ad reference to null so you
+                        // don't show the ad a second time.
+                        rewardedAd = null
+                        if (googleMobileAdsConsentManager.canRequestAds) {
+                            loadRewardedAd()
+                        }
+                    }
+
+                    override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                        Log.d(TAG, "Ad failed to show.")
+                        // Don't forget to set the ad reference to null so you
+                        // don't show the ad a second time.
+                        rewardedAd = null
+                    }
+
+                    override fun onAdShowedFullScreenContent() {
+                        Log.d(TAG, "Ad showed fullscreen content.")
+                        // Called when ad is dismissed.
+                    }
+                }
+
+            rewardedAd?.show(
+                this,
+                OnUserEarnedRewardListener { rewardItem ->
+                    // Handle the reward.
+                    val rewardAmount = rewardItem.amount
+                    val rewardType = rewardItem.type
+//                    addCoins(rewardAmount)
+                    Log.d("TAG", "User earned the reward.")
+                }
+            )
         }
     }
 }
