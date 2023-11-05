@@ -3,6 +3,8 @@ package io.nekohasekai.sagernet.vpn.repositories
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.os.Handler
+import android.util.Log
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -12,6 +14,8 @@ import com.google.android.gms.ads.OnUserEarnedRewardListener
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import io.nekohasekai.sagernet.R
+import io.nekohasekai.sagernet.vpn.AD_REWARDED_UNIT_ID
+import io.nekohasekai.sagernet.vpn.TAG
 import io.nekohasekai.sagernet.vpn.utils.InternetConnectionChecker
 
 object AdRepository {
@@ -25,7 +29,7 @@ object AdRepository {
         RewardedAd.load(context,"ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 rewardedAd = null
-                println("HAMED_LOG_Rewards_onAdFailedToLoad")
+                println("HAMED_LOG_Rewards_onAdFailedToLoad: " + adError.message)
 //                checkInternet()
                 // Start periodic checks
                 internetChecker?.startChecking()
@@ -54,6 +58,7 @@ object AdRepository {
                     // Set the ad reference to null so you don't show the ad a second time.
                     rewardedAd = null
 //                    loadRewardedAd(context)
+                    loadRewardedAd(context)
                     println("HAMED_LOG_REWARDED_onAdDismissedFullScreenContent")
                 }
 
