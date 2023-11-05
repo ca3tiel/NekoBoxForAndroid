@@ -76,7 +76,7 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentLinkedQueue
 import java.util.concurrent.atomic.AtomicBoolean
 
-const val AD_UNIT_ID = "ca-app-pub-3940256099942544/5224354917"
+const val AD_REWARDED_UNIT_ID = "ca-app-pub-3940256099942544/5224354917"
 const val COUNTER_TIME = 10L
 const val GAME_OVER_REWARD = 1
 const val TAG = "DashboardActivity"
@@ -727,7 +727,7 @@ class DashboardActivity : ThemedActivity(),
 
             RewardedAd.load(
                 this,
-                AD_UNIT_ID,
+                AD_REWARDED_UNIT_ID,
                 adRequest,
                 object : RewardedAdLoadCallback() {
                     override fun onAdFailedToLoad(adError: LoadAdError) {
