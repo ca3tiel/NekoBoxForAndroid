@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
@@ -15,6 +16,7 @@ import com.google.android.ump.ConsentForm
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
+import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.vpn.utils.InternetConnectionChecker
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -23,6 +25,7 @@ object AdRepository {
     private var rewardedAdToken: String? = null
     private lateinit var consentInformation: ConsentInformation
     private var isMobileAdsInitializeCalled = AtomicBoolean(false)
+    lateinit var bannerAdView : AdView
 
     @SuppressLint("StaticFieldLeak")
     lateinit var internetChecker: InternetConnectionChecker
@@ -145,8 +148,9 @@ object AdRepository {
         // Initialize the Google Mobile Ads SDK.
         MobileAds.initialize(context)
 
-        // TODO: Request an ad.
-        // InterstitialAd.load(...)
+        // Request load ads after user granted consent
+        loadBannerAd(context as Activity)
+        loadRewardedAd(context)
     }
 
     fun checkInitializeMobileAdsSdk(context: Context) {
@@ -158,14 +162,16 @@ object AdRepository {
         }
     }
 
-    fun canRequestAds(): Boolean {
+    private fun canRequestAds(): Boolean {
         return consentInformation.canRequestAds()
     }
 
-//    fun loadBannerAd(context: Context) {
-//        MobileAds.initialize(context) {}
-//        mAdView = findViewById(R.id.adView)
-//        val adRequest = AdRequest.Builder().build()
-//        mAdView.loadAd(adRequest)
-//    }
+    fun loadBannerAd(activity: Activity) {
+        if(!canRequestAds()) {
+            return
+        }
+        MobileAds.initialize(activity) {}
+        val adRequest = AdRequest.Builder().build()
+        bannerAdView.loadAd(adRequest)
+    }
 }
