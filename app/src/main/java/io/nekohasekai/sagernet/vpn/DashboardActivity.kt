@@ -94,9 +94,6 @@ class DashboardActivity : ThemedActivity(),
     private lateinit var checkPingDialog: AlertDialog
     private var bestServer: ListItem? = null
     private var countDownTimer: CountDownTimer? = null
-    lateinit var mAdView : AdView
-    private var rewardedAd: RewardedAd? = null
-    private lateinit var internetChecker: InternetConnectionChecker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -109,13 +106,15 @@ class DashboardActivity : ThemedActivity(),
         // Change navigation bar color
         window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
+        // Find bannerAdView - Banner Placeholder
+        AdRepository.bannerAdView = findViewById(R.id.adView)
+
+        // Check Ad Consent
         AdRepository.checkAdConsent(this)
         AdRepository.checkInitializeMobileAdsSdk(this)
 
         // load BannerAd and RewardedAd
-        if(AdRepository.canRequestAds()) {
-            loadBannerAd()
-        }
+        AdRepository.loadBannerAd(this@DashboardActivity)
         AdRepository.loadRewardedAd(this)
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
@@ -294,13 +293,6 @@ class DashboardActivity : ThemedActivity(),
             updateIVAllIcon() // Update the IVall icon
             updateIVMtnIcon() // Update the IVMTN icon
         }
-    }
-
-    private fun loadBannerAd() {
-        MobileAds.initialize(this) {}
-        mAdView = findViewById(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
     }
 
     private fun navigateToPremiumActivity() {
@@ -642,14 +634,6 @@ class DashboardActivity : ThemedActivity(),
             foundSubItem?.status = status
             foundSubItem?.ping = ping
             foundSubItem?.error = error
-        }
-    }
-
-    fun checkInternet() {
-        if (Network.checkConnectivity(this)) {
-            println("HAMED_LOG_HAS_INTERNET!")
-        }  else {
-            println("HAMED_LOG_NO_INTERNET")
         }
     }
 
