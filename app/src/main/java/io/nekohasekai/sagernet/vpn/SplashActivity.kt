@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -23,16 +24,20 @@ import io.nekohasekai.sagernet.group.RawUpdater
 import io.nekohasekai.sagernet.ktx.applyDefaultValues
 import io.nekohasekai.sagernet.ktx.onMainDispatcher
 import io.nekohasekai.sagernet.ui.ThemedActivity
+import io.nekohasekai.sagernet.vpn.repositories.AdRepository
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentLinkedQueue
-import kotlinx.coroutines.launch
 
-class SplashActivity : ThemedActivity() {
+class SplashActivity : AppCompatActivity() {
 
     private var mInterstitialAd: InterstitialAd? = null
     fun ProxyGroup.init() {
@@ -91,14 +96,16 @@ class SplashActivity : ThemedActivity() {
         window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
         //Show AdMob Interstitial
-        loadInterstitialAd()
+//        loadInterstitialAd()
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
         GlobalScope.launch(Dispatchers.Main) {
+//             Check Ad Consent
+            AdRepository.checkAdConsent(this@SplashActivity)
             getServers()
-            showInterstitialAd()
-            startNewActivity()
+//            showInterstitialAd()
+//            startNewActivity()
         }
 
 //        runOnDefaultDispatcher {

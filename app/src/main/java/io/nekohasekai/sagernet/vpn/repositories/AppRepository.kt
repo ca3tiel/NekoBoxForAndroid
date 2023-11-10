@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
-import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
+import android.util.Log
 import io.nekohasekai.sagernet.vpn.serverlist.MyAdapter
 import okhttp3.Call
 import okhttp3.Callback
@@ -17,6 +17,7 @@ import okhttp3.Response
 import java.io.IOException
 
 object AppRepository {
+    var LogTag: String = "HAMED_LOG"
     var appName: String = "UnitaVPN"
     private var subscriptionLink: String = "https://Apanel.holyip.workers.dev/link/9RTsfMryrGwgWZVb48eN?config=1"
     private var apiServersListUrl: String = "https://panel.miatel.xyz/api/servers"
@@ -318,6 +319,10 @@ object AppRepository {
 
     fun isInternetAvailable(): Boolean {
         return isInternetConnected
+    }
+
+    fun DebugLog(message: String) {
+        Log.d(LogTag, message);
     }
 
 }

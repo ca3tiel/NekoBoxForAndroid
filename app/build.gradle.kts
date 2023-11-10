@@ -45,6 +45,10 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    implementation("androidx.lifecycle:lifecycle-process:2.3.1")
+    implementation("androidx.lifecycle:lifecycle-runtime:2.3.1")
+    annotationProcessor("androidx.lifecycle:lifecycle-compiler:2.3.1")
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.recyclerview:recyclerview:1.3.0")

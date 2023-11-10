@@ -1,6 +1,7 @@
 package io.nekohasekai.sagernet.vpn
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import kotlinx.coroutines.CoroutineScope
 import android.content.Intent
 import android.os.Bundle
@@ -106,12 +107,14 @@ class DashboardActivity : ThemedActivity(),
         // Change navigation bar color
         window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
-        // Find bannerAdView - Banner Placeholder
-        AdRepository.bannerAdView = findViewById(R.id.adView)
+        AdRepository.appOpenAdManager.showAdIfAvailable(this)
 
-        // Check Ad Consent
-        AdRepository.checkAdConsent(this)
-        AdRepository.checkInitializeMobileAdsSdk(this)
+//        // Find bannerAdView - Banner Placeholder
+        AdRepository.bannerAdView = findViewById(R.id.adView)
+//
+//        // Check Ad Consent
+//        AdRepository.checkAdConsent(this)
+//        AdRepository.checkInitializeMobileAdsSdk(this)
 
         // load BannerAd and RewardedAd
         AdRepository.loadBannerAd(this@DashboardActivity)
@@ -403,6 +406,7 @@ class DashboardActivity : ThemedActivity(),
 
     override fun onResume() {
         super.onResume()
+        AdRepository.showAppOpenAd(this)
         if(DataStore.serviceState.connected) {
             showConnectedState()
             AdRepository.showRewardedAd(this)
