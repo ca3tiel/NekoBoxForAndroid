@@ -287,7 +287,7 @@ class SagerNet : Application(),
             val request = AdRequest.Builder().build()
             println("HAMED_LOG_Start_Loading_AppOpen_Ad_1")
             AppOpenAd.load(
-                context, AdRepository.getAppOpenToken(), request,
+                context, AdRepository.getAppOpenAdUnitID(), request,
                 AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT,
                 object : AppOpenAd.AppOpenAdLoadCallback() {
 
