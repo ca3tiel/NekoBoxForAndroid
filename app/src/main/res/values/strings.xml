@@ -4,11 +4,7 @@
     <string name="facebook_app_id">266286379591311</string>
     <string name="fb_login_protocol_scheme">fb266286379591311</string>
     <string name="facebook_client_token">30d63da7ac404d3a92fe9c04a1baf590</string>
-    <!-- ADMOB -->
-    <string name="ads_APPLICATION_ID">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="banner_ad_unit_ID">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="Interstitial_ad_unit_ID">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="Rewarded_ad_unit_ID">ca-app-pub-3940256099942544/5224354917</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Nekobox -->
