@@ -26,10 +26,15 @@ import io.nekohasekai.sagernet.vpn.utils.InternetConnectionChecker
 import java.util.concurrent.atomic.AtomicBoolean
 
 object AdRepository {
+    //ADMOB unit ID
+    var ads_APPLICATION_ID: String = "ca-app-pub-3940256099942544~3347511713"
+    private var App_Open_Ad_Unit_ID : String = "ca-app-pub-3940256099942544/3419835294"
+    private var Banner_Ad_Unit_ID : String = "ca-app-pub-3940256099942544/6300978111"
+    private var Interstitial_Ad_Unit_ID : String = "ca-app-pub-3940256099942544/1033173712"
+    private var Rewarded_Ad_Unit_ID : String = "ca-app-pub-3940256099942544/5224354917"
+
     private var rewardedAd: RewardedAd? = null
     var appOpenAd: AppOpenAd? = null
-    private var rewardedAdToken: String = ""
-    private var appOpenAdToken: String = "ca-app-pub-3940256099942544/3419835294"
     lateinit var consentInformation: ConsentInformation
     private var isMobileAdsInitializeCalled = AtomicBoolean(false)
     lateinit var bannerAdView : AdView
@@ -38,12 +43,52 @@ object AdRepository {
     @SuppressLint("StaticFieldLeak")
     lateinit var internetChecker: InternetConnectionChecker
 
+    fun getAdsApplicationID(): String {
+        return ads_APPLICATION_ID
+    }
+
+    fun getAppOpenAdUnitID(): String {
+        return App_Open_Ad_Unit_ID
+    }
+
+    fun getBannerAdUnitID(): String {
+        return Banner_Ad_Unit_ID
+    }
+
+    fun getInterstitialAdUnitID(): String {
+        return Interstitial_Ad_Unit_ID
+    }
+
+    fun getRewardedAdUnitID(): String {
+        return Rewarded_Ad_Unit_ID
+    }
+
+    fun setAdsApplicationID(adUnitID: String) {
+        ads_APPLICATION_ID = adUnitID
+    }
+
+    fun setAppOpenAdUnitID(adUnitID: String) {
+        App_Open_Ad_Unit_ID = adUnitID
+    }
+
+    fun setBannerAdUnitID(adUnitID: String) {
+        Banner_Ad_Unit_ID = adUnitID
+    }
+
+    fun setInterstitialAdUnitID(adUnitID: String) {
+        Interstitial_Ad_Unit_ID = adUnitID
+    }
+
+    fun setRewardedAdUnitID(adUnitID: String) {
+        Rewarded_Ad_Unit_ID = adUnitID
+    }
+
     fun loadRewardedAd(context: Context) {
         if(!canRequestAds()) {
             return
         }
         var adRequest = AdRequest.Builder().build()
-        RewardedAd.load(context,"ca-app-pub-3940256099942544/5224354917", adRequest, object : RewardedAdLoadCallback() {
+        RewardedAd.load(context,getRewardedAdUnitID(), adRequest, object : RewardedAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 rewardedAd = null
                 println("HAMED_LOG_Rewards_onAdFailedToLoad: " + adError.message)
@@ -256,10 +301,6 @@ object AdRepository {
         MobileAds.initialize(activity) {}
         val adRequest = AdRequest.Builder().build()
         bannerAdView.loadAd(adRequest)
-    }
-
-    fun getAppOpenToken(): String {
-        return appOpenAdToken
     }
 
     fun showAppOpenAd(context: Context) {
