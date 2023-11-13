@@ -1,7 +1,6 @@
 package io.nekohasekai.sagernet.vpn
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import kotlinx.coroutines.CoroutineScope
 import android.content.Intent
 import android.os.Bundle
@@ -15,7 +14,6 @@ import android.content.Context
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.os.Build
 import android.os.CountDownTimer
 import android.widget.TextView
 import android.widget.Toast
@@ -25,15 +23,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.preference.PreferenceDataStore
 import com.airbnb.lottie.LottieAnimationView
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.OnUserEarnedRewardListener
-import com.google.android.gms.ads.rewarded.RewardedAd
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import io.nekohasekai.sagernet.Key
@@ -62,7 +51,6 @@ import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
 import io.nekohasekai.sagernet.vpn.utils.InternetConnectionChecker
-import io.nekohasekai.sagernet.vpn.utils.Network
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -108,13 +96,6 @@ class DashboardActivity : ThemedActivity(),
         window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
         AdRepository.appOpenAdManager.showAdIfAvailable(this)
-
-//        // Find bannerAdView - Banner Placeholder
-        AdRepository.bannerAdView = findViewById(R.id.adView)
-//
-//        // Check Ad Consent
-//        AdRepository.checkAdConsent(this)
-//        AdRepository.checkInitializeMobileAdsSdk(this)
 
         // load BannerAd and RewardedAd
         AdRepository.loadBannerAd(this@DashboardActivity)
