@@ -1,12 +1,12 @@
 package io.nekohasekai.sagernet.vpn.repositories
 
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
-import android.util.Log
 import io.nekohasekai.sagernet.vpn.serverlist.MyAdapter
 import okhttp3.Call
 import okhttp3.Callback
@@ -15,6 +15,9 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+
 
 object AppRepository {
     var LogTag: String = "HAMED_LOG"
@@ -324,5 +327,4 @@ object AppRepository {
     fun DebugLog(message: String) {
         Log.d(LogTag, message);
     }
-
 }
