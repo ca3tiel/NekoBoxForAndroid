@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.widget.FrameLayout
 import androidx.preference.PreferenceManager
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
@@ -19,15 +21,17 @@ import com.google.android.ump.ConsentDebugSettings
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
+import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.SagerNet
 import io.nekohasekai.sagernet.vpn.DashboardActivity
-import io.nekohasekai.sagernet.vpn.MyApplication
 import io.nekohasekai.sagernet.vpn.utils.InternetConnectionChecker
 import java.util.concurrent.atomic.AtomicBoolean
 
+
+@SuppressLint("StaticFieldLeak")
 object AdRepository {
     //ADMOB unit ID
-    var ads_APPLICATION_ID: String = "ca-app-pub-3940256099942544~3347511713"
+    private var ADS_APPLICATION_ID: String = "ca-app-pub-3940256099942544~3347511713"
     private var App_Open_Ad_Unit_ID : String = "ca-app-pub-3940256099942544/3419835294"
     private var Banner_Ad_Unit_ID : String = "ca-app-pub-3940256099942544/6300978111"
     private var Interstitial_Ad_Unit_ID : String = "ca-app-pub-3940256099942544/1033173712"
@@ -42,9 +46,10 @@ object AdRepository {
 
     @SuppressLint("StaticFieldLeak")
     lateinit var internetChecker: InternetConnectionChecker
+    lateinit var adContainerView : FrameLayout
 
     fun getAdsApplicationID(): String {
-        return ads_APPLICATION_ID
+        return ADS_APPLICATION_ID
     }
 
     fun getAppOpenAdUnitID(): String {
@@ -64,7 +69,7 @@ object AdRepository {
     }
 
     fun setAdsApplicationID(adUnitID: String) {
-        ads_APPLICATION_ID = adUnitID
+        ADS_APPLICATION_ID = adUnitID
     }
 
     fun setAppOpenAdUnitID(adUnitID: String) {
@@ -298,8 +303,17 @@ object AdRepository {
         if(!canRequestAds()) {
             return
         }
+        bannerAdView = AdView(activity)
+        adContainerView = activity.findViewById(R.id.bannerAdView)
+
+        adContainerView.addView(bannerAdView)
+        bannerAdView.setAdSize(AdSize.BANNER)
+        bannerAdView.adUnitId = getBannerAdUnitID()
+
         MobileAds.initialize(activity) {}
+
         val adRequest = AdRequest.Builder().build()
+
         bannerAdView.loadAd(adRequest)
     }
 
