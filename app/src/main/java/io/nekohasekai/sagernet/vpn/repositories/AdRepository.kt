@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 object AdRepository {
     //ADMOB unit ID
     private var ADS_APPLICATION_ID: String = "ca-app-pub-3940256099942544~3347511713"
-    private var App_Open_Ad_Unit_ID : String = "ca-app-pub-3940256099942544/3419835294"
+    private var APP_OPEN_AD_UNIT_ID : String = "ca-app-pub-3940256099942544/3419835294"
     private var Banner_Ad_Unit_ID : String = "ca-app-pub-3940256099942544/6300978111"
     private var Interstitial_Ad_Unit_ID : String = "ca-app-pub-3940256099942544/1033173712"
     private var Rewarded_Ad_Unit_ID : String = "ca-app-pub-3940256099942544/5224354917"
@@ -53,7 +53,7 @@ object AdRepository {
     }
 
     fun getAppOpenAdUnitID(): String {
-        return App_Open_Ad_Unit_ID
+        return APP_OPEN_AD_UNIT_ID
     }
 
     fun getBannerAdUnitID(): String {
@@ -73,7 +73,7 @@ object AdRepository {
     }
 
     fun setAppOpenAdUnitID(adUnitID: String) {
-        App_Open_Ad_Unit_ID = adUnitID
+        APP_OPEN_AD_UNIT_ID = adUnitID
     }
 
     fun setBannerAdUnitID(adUnitID: String) {
