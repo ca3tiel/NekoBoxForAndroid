@@ -436,4 +436,56 @@
     <string name="dns_network">نوع پرس و جو DNS</string>
     <string name="show_bottom_bar">نمایش نوار پایین مانند SagerNet</string>
     <string name="utls_fingerprint">اثر انگشت uTLS</string>
+
+    <!-- Unita VPN -->
+    <string name="unita_vpn">Unita VPN</string>
+    <string name="plus_thirty_minutes">+30 min</string>
+    <string name="dashboard_connect">اتصال</string>
+    <string name="premium">اشتراک ویژه</string>
+    <string name="ping">ping</string>
+    <string name="preferences">تنظیمات</string>
+    <string name="general">عمومی</string>
+    <string name="account">حساب کاربری</string>
+    <string name="comment">نظرات</string>
+    <string name="unita_vpn_telegram">تلگرام</string>
+    <string name="about">درباره ما</string>
+    <string name="ultra_fast_connection_speed">اتصال فوق العاده سریع</string>
+    <string name="access_to_premium_virtual_locations">دسترسی به مکان های مجازی اشتراک ویژه</string>
+    <string name="ad_free_experience">تجربه بدون آگهی</string>
+    <string name="no_time_limit">بدون محدودیت زمانی</string>
+    <string name="thirty_days">30 روزه</string>
+    <string name="ninety_days">90 روزه</string>
+    <string name="One_hundred_and_eighty_days">180 روزه</string>
+    <string name="Three_hundred_and_sixty_five_days">365 روزه</string>
+    <string name="pay">پرداخت</string>
+    <string name="verify">تأیید حساب کاربری</string>
+    <string name="verify_code">کد تأیید</string>
+    <string name="enter_your_verify_code">لطفا کد تأیید خود را وارد نمایید</string>
+    <string name="resend_verify_code">ارسال مجدد کد تأیید</string>
+    <string name="register">ثبت نام</string>
+    <string name="email">ایمیل:</string>
+    <string name="enter_your_email">لطفا ایمیل خود را وارد کنید</string>
+    <string name="password_">رمز عبور:</string>
+    <string name="enter_your_password">لطفا رمز عبور خود را وارد کنید</string>
+    <string name="already_have_account_login">حساب کاربری دارید؟ وارد شوید</string>
+    <string name="or_register_with">یا ثبت نام از طریق</string>
+    <string name="facebook">فیس بوک</string>
+    <string name="google">گوگل</string>
+    <string name="login">ورود</string>
+    <string name="forgot_password">رمز عبور خود را فراموش کرده اید؟</string>
+    <string name="new_user_signup">کاربر جدید هستید؟ ثبت نام</string>
+    <string name="or_login_with">یا ورود با</string>
+    <string name="welcome">خوش آمدید</string>
+    <string name="best_iranian_vpn">بهترین وی پی ان ایرانیان</string>
+    <string name="info">اطلاعات</string>
+    <string name="plan">پلن</string>
+    <string name="expiration_date">تاریخ انقضا:</string>
+    <string name="dataleft">حجم باقی مانده:</string>
+    <string name="title">موضوع</string>
+    <string name="enter_your_title">لطفا موضوع خود را بنوسید</string>
+    <string name="message">پیام</string>
+    <string name="enter_your_message">لطفا متن پیام خود را بنوسید</string>
+    <string name="send">ارسال</string>
+    <string name="exit_account">خروج از حساب کاربری</string>
+
 </resources>

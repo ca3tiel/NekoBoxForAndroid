@@ -9,58 +9,62 @@
     android:background="@color/navyBlue"
     tools:context="vpn.nav.AccountFragment">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="40dp"
         android:orientation="horizontal"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="UseCompoundDrawables">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/ivAccountIconAngle"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_angle_circle_left" />
+            android:layout_marginStart="25dp"
+            android:src="@drawable/ic_angle_circle_left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvAccount"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:fontFamily="@font/museo_san_rounded900"
             android:gravity="center"
-            android:text="Account"
+            android:text="@string/account"
             android:textColor="@color/white"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivAccountIconAngle"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/tvInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/museo_san_rounded700"
-        android:text="Info"
+        android:text="@string/info"
         android:textColor="@color/lightGray"
         android:textStyle="bold"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llAccount" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/background_nav_item"
         android:orientation="horizontal"
@@ -75,49 +79,51 @@
             android:id="@+id/tvEmailTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="2"
             android:fontFamily="@font/museo_san_rounded700"
-            android:text="Email"
+            android:text="@string/email"
             android:textColor="@color/white"
+            android:textSize="14sp"
             android:textStyle="bold"
-            android:textSize="14sp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="20"
             android:fontFamily="@font/museo_san_rounded700"
             android:gravity="end"
             android:text="UnitaVPN.com"
             android:textColor="@color/lightGray"
+            android:textSize="14sp"
             android:textStyle="normal"
-            android:textSize="14sp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/tvPlan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/museo_san_rounded700"
-        android:text="Plan"
+        android:text="@string/plan"
         android:textColor="@color/lightGray"
         android:textStyle="bold"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llEmail" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llPlan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/background_nav_item"
         android:orientation="horizontal"
@@ -132,34 +138,36 @@
             android:id="@+id/tvExpirationTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="2"
             android:fontFamily="@font/museo_san_rounded700"
-            android:text="Expiration date"
+            android:text="@string/expiration_date"
             android:textColor="@color/white"
+            android:textSize="14sp"
             android:textStyle="bold"
-            android:textSize="14sp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvExpiration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="20"
             android:fontFamily="@font/museo_san_rounded700"
             android:gravity="end"
             android:text="2023-10-12"
             android:textColor="@color/lightGray"
+            android:textSize="14sp"
             android:textStyle="normal"
-            android:textSize="14sp" />
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llDataLeft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/background_nav_item"
         android:orientation="horizontal"
@@ -174,27 +182,44 @@
             android:id="@+id/tvDataLeftTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="2"
             android:fontFamily="@font/museo_san_rounded700"
-            android:text="DataLeft"
+            android:text="@string/dataleft"
             android:textColor="@color/white"
+            android:textSize="14sp"
             android:textStyle="bold"
-            android:textSize="14sp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvDataLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="20"
             android:fontFamily="@font/museo_san_rounded700"
             android:gravity="end"
             android:text="10 GB"
             android:textColor="@color/lightGray"
+            android:textSize="14sp"
             android:textStyle="normal"
-            android:textSize="14sp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnExitAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:background="@drawable/background_nav_item_info"
+        android:fontFamily="@font/museo_san_rounded700"
+        android:text="@string/exit_account"
+        android:textColor="@color/material_red_500"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llDataLeft" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
