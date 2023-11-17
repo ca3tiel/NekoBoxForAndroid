@@ -105,7 +105,7 @@ class SplashActivity : AppCompatActivity() {
             AdRepository.checkAdConsent(this@SplashActivity)
             getServers()
 //            showInterstitialAd()
-//            startNewActivity()
+            startNewActivity()
         }
 
 //        runOnDefaultDispatcher {
@@ -160,7 +160,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun startNewActivity() {
-        val intent = Intent(this, DashboardActivity::class.java)
+        val intent = Intent(this, WelcomeActivity::class.java)
         startActivity(intent)
         finish()
     }
