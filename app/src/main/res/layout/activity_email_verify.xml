@@ -22,12 +22,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/museo_san_rounded900"
-        android:text="Verify"
-        android:textSize="50dp"
+        android:text="@string/verify"
+        android:textSize="50sp"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginTop="52dp"
-        android:layout_marginLeft="70dp"
+        android:layout_marginStart="70dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,10 +44,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/museo_san_rounded700"
-            android:text="Verify Code:"
+            android:text="@string/verify_code"
             android:layout_marginTop="100dp"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
@@ -58,11 +58,11 @@
             android:background="@drawable/background_edit_text"
             android:ems="10"
             android:fontFamily="@font/museo_san_rounded500"
-            android:hint="Enter Your Verify Code"
+            android:hint="@string/enter_your_verify_code"
             android:inputType="textEmailAddress"
             android:padding="12dp"
             android:textColor="#707070"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvResendVerifyCode"
@@ -70,9 +70,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/museo_san_rounded500"
-            android:text="Resend Verify Code"
+            android:text="@string/resend_verify_code"
             android:textColor="@color/white"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvValidationError"
@@ -84,19 +84,19 @@
             android:visibility="invisible"
             android:gravity="center"
             android:textColor="@color/red"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnVerify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/museo_san_rounded900"
-            android:textSize="26dp"
+            android:textSize="26sp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:background="@drawable/background_enter_btn"
             android:layout_marginTop="30dp"
-            android:text="Verify" />
+            android:text="@string/verify" />
 
     </LinearLayout>
 
