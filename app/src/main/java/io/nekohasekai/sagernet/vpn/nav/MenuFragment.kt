@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import io.nekohasekai.sagernet.databinding.FragmentMenuBinding
 import io.nekohasekai.sagernet.vpn.DashboardActivity
+import io.nekohasekai.sagernet.vpn.PremiumActivity
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 
 class MenuFragment : Fragment() {
@@ -38,14 +39,11 @@ class MenuFragment : Fragment() {
             loadFragment(AccountFragment())
         }
 
-        // Add click listener for llConnection
-        binding.llConnection.setOnClickListener {
-            loadFragment(ConnectionFragment())
-        }
 
-        // Add click listener for llVip
-        binding.llVip.setOnClickListener {
-            loadFragment(PremiumFragment())
+        // Add click listener for llPremium
+        binding.llPremium.setOnClickListener {
+            val premiumIntent = Intent(context, PremiumActivity::class.java)
+            startActivity(premiumIntent)
         }
 
         // Add click listener for llComment
@@ -53,10 +51,6 @@ class MenuFragment : Fragment() {
             loadFragment(CommentFragment())
         }
 
-        // Add click listener for llSettings
-        binding.llSettings.setOnClickListener {
-            loadFragment(SettingsFragment())
-        }
 
         // Add click listener Message for llShare
         binding.llShare.setOnClickListener {

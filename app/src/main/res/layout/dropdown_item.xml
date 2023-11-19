@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_nav_item"
-    android:layout_marginRight="10dp"
-    android:layout_marginLeft="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
     android:padding="10dp">
 
         <LinearLayout
@@ -26,7 +26,7 @@
             android:id="@+id/tvDropdownItemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:fontFamily="@font/museo_san_rounded500"
             android:text="Dropdown Item"
             android:textColor="@color/white"
@@ -39,7 +39,7 @@
             android:id="@+id/ivFastInternet"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginRight="75dp"
+            android:layout_marginEnd="75dp"
             android:src="@drawable/ic_fast_internet"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:orientation="horizontal"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:background="@color/lightGray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/navyBlue"
-    tools:context=".WelcomeActivity">
+    tools:context=".vpn.WelcomeActivity">
 
 
     <ImageView
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:fontFamily="@font/museo_san_rounded900"
-        android:text="Welcome"
+        android:text="@string/welcome"
         android:textColor="@color/white"
         android:textSize="50sp"
         android:textStyle="bold"
@@ -37,12 +37,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/museo_san_rounded700"
-        android:text="Best iranian VPN"
+        android:text="@string/welcome_title"
         android:textColor="@color/white"
         android:textSize="40sp"
         android:textStyle="bold"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/text_Welcome" />
@@ -54,7 +54,7 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/background_enter_btn"
         android:fontFamily="@font/museo_san_rounded900"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="@color/white"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -69,7 +69,7 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/background_enter_btn"
         android:fontFamily="@font/museo_san_rounded900"
-        android:text="Register"
+        android:text="@string/register"
         android:textColor="@color/white"
         android:textSize="26sp"
         android:textStyle="bold"
