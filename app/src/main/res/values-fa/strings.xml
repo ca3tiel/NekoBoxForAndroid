@@ -476,7 +476,7 @@
     <string name="new_user_signup">کاربر جدید هستید؟ ثبت نام</string>
     <string name="or_login_with">یا ورود با</string>
     <string name="welcome">خوش آمدید</string>
-    <string name="best_iranian_vpn">بهترین وی پی ان ایرانیان</string>
+    <string name="welcome_title">بهترین وی پی ان ایرانیان</string>
     <string name="info">اطلاعات</string>
     <string name="plan">پلن</string>
     <string name="expiration_date">تاریخ انقضا:</string>
@@ -487,5 +487,4 @@
     <string name="enter_your_message">لطفا متن پیام خود را بنوسید</string>
     <string name="send">ارسال</string>
     <string name="exit_account">خروج از حساب کاربری</string>
-
 </resources>
