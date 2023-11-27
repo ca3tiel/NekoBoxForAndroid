@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/background_dashboard" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,28 +30,40 @@
             android:id="@+id/ivNavMenuIcon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_menu_burger" />
+            android:src="@drawable/ic_menu_burger"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvApplicationName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
             android:fontFamily="@font/museo_san_rounded900"
             android:gravity="center"
             android:text="@string/unita_vpn"
             android:textColor="@color/lightBlue"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
-            android:id="@+id/ivTelegramIcon"
+            android:id="@+id/ivShareIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_telegram_background" />
+            android:padding="5dp"
+            android:background="@drawable/background_enter_btn"
+            android:src="@drawable/ic_share"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/laPulseButton"
@@ -170,6 +182,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/background_server_list_header"
         android:padding="10dp"
+        android:layoutDirection="ltr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clPremium">
@@ -258,6 +271,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="40dp"
+        android:layoutDirection="ltr"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -278,7 +292,7 @@
         android:background="@color/lightBlue"
         app:layout_constraintTop_toBottomOf="@+id/svServerList"/>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llDashboardBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -291,23 +305,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:layout_marginStart="20dp"
             android:fontFamily="@font/museo_san_rounded700"
-            android:textSize="14sp"
+            android:layout_marginStart="20dp"
+            android:text="10.00 GB Left"
             android:textColor="@color/white"
-            android:text="10.00 GB Left" />
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvGetMoreData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginEnd="20dp"
             android:fontFamily="@font/museo_san_rounded700"
-            android:textSize="14sp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/get_more_data"
             android:textColor="@color/lightGray"
-            android:text="Get more data" />
-    </LinearLayout>
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/bannerAdView"
