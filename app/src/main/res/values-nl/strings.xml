@@ -45,8 +45,8 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="new_user_signup">New User? Signup</string>
     <string name="or_login_with">Or Login With</string>
-    <string name="welcome">Welcome</string>
-    <string name="welcome_title">Best iranian VPN</string>
+    <string name="welcome">Welcome\nto</string>
+    <string name="welcome_title">A unique experience of\nspeed and security</string>
     <string name="info">Info</string>
     <string name="plan">Plan</string>
     <string name="expiration_date">Expiration date</string>
@@ -60,5 +60,5 @@
     <string name="get_more_data">Get more data</string>
     <string name="connect_state">Connect</string>
     <string name="connected_state">Connected</string>
-    <string name="connecting_state">Connecting...</string>
+    <string name="connecting_state">Connecting…</string>
 </resources>
