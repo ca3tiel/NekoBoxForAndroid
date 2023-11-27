@@ -149,4 +149,7 @@
     <string name="send">Send</string>
     <string name="exit_account">Exit Account</string>
     <string name="get_more_data">Get more data</string>
+    <string name="connect_state">Connect</string>
+    <string name="connected_state">Connected</string>
+    <string name="connecting_state">Connecting...</string>
 </resources>

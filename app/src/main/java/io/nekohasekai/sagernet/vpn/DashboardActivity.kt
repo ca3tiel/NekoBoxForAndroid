@@ -351,7 +351,7 @@ class DashboardActivity : ThemedActivity(),
         addTimeTextView.visibility = View.INVISIBLE
         PowerIcon.setAnimation(R.raw.pulse_button_yellow)
         PowerIcon.playAnimation()
-        stateTextView.text = "Connecting..."
+        stateTextView.text = getString(R.string.connecting_state)
         PowerIcon.isEnabled = false
     }
 
@@ -360,7 +360,7 @@ class DashboardActivity : ThemedActivity(),
         addTimeTextView.visibility = View.INVISIBLE
         PowerIcon.setAnimation(R.raw.pulse_button_green)
         PowerIcon.playAnimation()
-        stateTextView.text = "Connected"
+        stateTextView.text = getString(R.string.connected_state)
         PowerIcon.isEnabled = true
     }
 
@@ -369,7 +369,7 @@ class DashboardActivity : ThemedActivity(),
         addTimeTextView.visibility = View.VISIBLE
         PowerIcon.setAnimation(R.raw.pulse_button_gray)
         PowerIcon.playAnimation()
-        stateTextView.text = "Connect"
+        stateTextView.text = getString(R.string.connect_state)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
