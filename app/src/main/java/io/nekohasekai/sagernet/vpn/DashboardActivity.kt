@@ -103,7 +103,7 @@ class DashboardActivity : ThemedActivity(),
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
-        val telegramIcon = findViewById<ImageView>(R.id.ivTelegramIcon)
+        val telegramIcon = findViewById<ImageView>(R.id.ivShareIcon)
         val connection = SagerConnection(SagerConnection.CONNECTION_ID_MAIN_ACTIVITY_FOREGROUND, true)
 
         val clPremium = findViewById<ConstraintLayout>(R.id.clPremium)

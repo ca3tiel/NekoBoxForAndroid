@@ -57,6 +57,7 @@
         android:inputType="textEmailAddress"
         android:textColor="@color/darkGray"
         android:textSize="18sp"
+        android:layoutDirection="ltr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
@@ -89,6 +90,7 @@
         android:inputType="textPassword"
         android:textColor="@color/darkGray"
         android:textSize="18sp"
+        android:layoutDirection="ltr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
@@ -101,6 +103,7 @@
         android:src="@drawable/ic_password_hide"
         android:clickable="true"
         android:focusable="true"
+        android:layoutDirection="ltr"
         app:layout_constraintTop_toTopOf="@+id/txtPassword"
         app:layout_constraintBottom_toBottomOf="@+id/txtPassword"
         app:layout_constraintEnd_toEndOf="@+id/txtPassword" />

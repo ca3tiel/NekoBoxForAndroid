@@ -50,7 +50,7 @@ class DropdownAdapter(
 
             0 -> {
                 profileStatusText = holder.itemView.context.getString(R.string.connection_test_testing)
-                profileStatusColor = holder.itemView.context.getColorAttr(android.R.attr.textColorSecondary)
+                profileStatusColor = holder.itemView.context.getColour(R.color.material_light_white)
             }
 
             1 -> {
