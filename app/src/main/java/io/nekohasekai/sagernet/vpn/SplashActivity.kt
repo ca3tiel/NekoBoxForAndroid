@@ -26,6 +26,7 @@ import io.nekohasekai.sagernet.ktx.onMainDispatcher
 import io.nekohasekai.sagernet.ui.ThemedActivity
 import io.nekohasekai.sagernet.vpn.repositories.AdRepository
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
+import io.nekohasekai.sagernet.vpn.repositories.AuthRepository
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import kotlinx.coroutines.Dispatchers
@@ -101,11 +102,10 @@ class SplashActivity : AppCompatActivity() {
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
         GlobalScope.launch(Dispatchers.Main) {
-//             Check Ad Consent
-            AdRepository.checkAdConsent(this@SplashActivity)
+            // Check Ad Consent
             getServers()
+//              startWelcomeActivity()
 //            showInterstitialAd()
-            // startNewActivity()
         }
 
 //        runOnDefaultDispatcher {
@@ -141,7 +141,7 @@ class SplashActivity : AppCompatActivity() {
             }
             mInterstitialAd?.show(this)
         } else {
-            startNewActivity()
+//            startNewActivity()
         }
     }
 
@@ -159,10 +159,16 @@ class SplashActivity : AppCompatActivity() {
         })
     }
 
-    private fun startNewActivity() {
-        val intent = Intent(this, WelcomeActivity::class.java)
-        startActivity(intent)
-        finish()
+    private fun startWelcomeActivity() {
+        if (AuthRepository.getUserToken() === null) {
+            val intent = Intent(this, WelcomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private suspend fun getServers(): String {
@@ -185,6 +191,11 @@ class SplashActivity : AppCompatActivity() {
         val targetId = DataStore.selectedGroupForImport()
         var counter = 0
         AppRepository.allServers = mutableListOf()
+        AppRepository.allServers.clear()
+        AppRepository.allServersOriginal = mutableListOf()
+        AppRepository.allServersOriginal.clear()
+        AppRepository.setAllServer(AppRepository.allServers)
+        AppRepository.debugLog(AppRepository.allServersRaw.toString())
         AppRepository.allServersRaw.entrySet().forEach { entry ->
             val serverSubItems: MutableList<ListSubItem> = mutableListOf()
             val countryCode = entry.key
@@ -210,6 +221,7 @@ class SplashActivity : AppCompatActivity() {
         }
         AppRepository.allServersOriginal = AppRepository.allServers
         AppRepository.setAllServer(AppRepository.allServers)
+        AdRepository.checkAdConsent(this@SplashActivity)
 
         onMainDispatcher {
             DataStore.editingGroup = targetId

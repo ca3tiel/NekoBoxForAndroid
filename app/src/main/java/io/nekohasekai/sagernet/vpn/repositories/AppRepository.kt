@@ -19,7 +19,6 @@ import java.io.IOException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
-
 object AppRepository {
     var LogTag: String = "HAMED_LOG"
     var appName: String = "UnitaVPN"
@@ -202,25 +201,12 @@ object AppRepository {
                 val responseBody = response.body?.string()
                 val gson = Gson()
                 val serversObject = gson.fromJson(responseBody, JsonObject::class.java)
-//                println("HAMED_LOG_SERVERS_LIST1: " + serversObject.toString());
                 val servers = serversObject.get("servers").asJsonObject
                 allServersRaw = servers
-//                println("HAMED_LOG_SERVERS_LIST2: " + servers.toString());
-//                servers.entrySet().forEach { it ->
-//                    println("HAMED_LOG_SERVER_ITEM: " + it.key)
-//                    println("HAMED_LOG_SERVER_ITEM_VAL: " + it.value)
-//                    it.value.asJsonArray.forEach { it ->
-//                        println("HAMED_LOG_SERVER_SUB_ITEM: " + it.asJsonObject.get("name"))
-//                    }
-//                    it.value.asJsonObject.entrySet().forEach { it ->
-//                        println("HAMED_LOG_SERVER_SUB_ITEM: " + it.toString())
-//                    }
-//                }
-
             }
             return response.code;
         } catch (e: Exception) {
-            println("Request failed: ${e.message}")
+            debugLog("Get_Servers_Request_Failed: ${e.message}")
             return -1;
         }
     }
