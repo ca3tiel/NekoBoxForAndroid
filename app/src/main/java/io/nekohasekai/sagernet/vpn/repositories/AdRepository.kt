@@ -318,7 +318,6 @@ object AdRepository {
     }
 
     fun showAppOpenAd(context: Context) {
-        AppRepository.DebugLog("showAppOpenAd Called: " + appOpenAd.toString())
         appOpenAdManager.showAdIfAvailable(context as Activity)
     }
 }

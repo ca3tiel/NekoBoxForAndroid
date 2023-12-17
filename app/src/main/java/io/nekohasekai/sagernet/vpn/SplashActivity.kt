@@ -105,7 +105,7 @@ class SplashActivity : AppCompatActivity() {
             AdRepository.checkAdConsent(this@SplashActivity)
             getServers()
 //            showInterstitialAd()
-            startNewActivity()
+            // startNewActivity()
         }
 
 //        runOnDefaultDispatcher {
