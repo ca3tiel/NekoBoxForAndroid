@@ -24,6 +24,7 @@ import com.google.android.ump.UserMessagingPlatform
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.SagerNet
 import io.nekohasekai.sagernet.vpn.DashboardActivity
+import io.nekohasekai.sagernet.vpn.WelcomeActivity
 import io.nekohasekai.sagernet.vpn.utils.InternetConnectionChecker
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -282,8 +283,14 @@ object AdRepository {
         MobileAds.initialize(context)
 
         // Request load ads after user granted consent
-        val intent = Intent(context, DashboardActivity::class.java)
-        context.startActivity(intent)
+        if (AuthRepository.getUserToken() === null) {
+            val intent = Intent(context, WelcomeActivity::class.java)
+            context.startActivity(intent)
+        } else {
+            val intent = Intent(context, DashboardActivity::class.java)
+            context.startActivity(intent)
+        }
+
     }
 
     fun checkInitializeMobileAdsSdk(context: Context) {
