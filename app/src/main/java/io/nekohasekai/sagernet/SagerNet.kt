@@ -370,7 +370,6 @@ class SagerNet : Application(),
                         // Set the reference to null so isAdAvailable() returns false.
                         AdRepository.appOpenAd = null
                         isShowingAd = false
-                        AppRepository.DebugLog("onAdDismissedFullScreenContent.")
                         Toast.makeText(activity, "onAdDismissedFullScreenContent", Toast.LENGTH_SHORT).show()
 
                         onShowAdCompleteListener.onShowAdComplete()

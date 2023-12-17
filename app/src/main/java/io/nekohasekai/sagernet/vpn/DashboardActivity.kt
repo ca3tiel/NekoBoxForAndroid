@@ -511,6 +511,8 @@ class DashboardActivity : ThemedActivity(),
                         }
 
                         try {
+                            var countryCode = ""
+                            var serverName = ""
                             val result = urlTest.doTest(profile)
                             setServerStatus(profile, result, 1, null)
                             profile.status = 1
@@ -526,17 +528,10 @@ class DashboardActivity : ThemedActivity(),
                                     dialogServerPing.text = result.toString() + "ms"
                                 }
                             }
+                            var bestServerInfo = AppRepository.setServerPing(profile.id, result, 1)
+                            countryCode = bestServerInfo["countryCode"].toString()
+                            serverName = bestServerInfo["serverName"].toString()
                             if (result < bestPing) {
-                                var countryCode = ""
-                                var serverName = ""
-                                AppRepository.allServers.forEach { item ->
-                                    item.dropdownItems.forEach{
-                                        if(it.id == profile.id) {
-                                            countryCode = AppRepository.countryCodeMapper(item.name)
-                                            serverName = it.name
-                                        }
-                                    }
-                                }
                                 val emptyList: MutableList<ListSubItem> = mutableListOf()
                                 val resourceName = "ic_${countryCode}_flag"
                                 val iconResId = resources.getIdentifier(
@@ -559,6 +554,7 @@ class DashboardActivity : ThemedActivity(),
                             setServerStatus(profile, 0, 2, e.readableMessage)
                             profile.status = 2
                             profile.error = e.readableMessage
+                            AppRepository.setServerPing(profile.id, 99999, 2)
                             withContext(Dispatchers.Main) {
                                 dialogServerPing.setTextColor(Color.RED)
                                 dialogServerPing.text = "Unavailable!"
@@ -567,6 +563,7 @@ class DashboardActivity : ThemedActivity(),
                             setServerStatus(profile, 0, 3, e.readableMessage)
                             profile.status = 3
                             profile.error = e.readableMessage
+                            AppRepository.setServerPing(profile.id, 99999, 3)
                             withContext(Dispatchers.Main) {
                                 dialogServerPing.setTextColor(Color.RED)
                                 dialogServerPing.text = "Unavailable!"
@@ -586,6 +583,7 @@ class DashboardActivity : ThemedActivity(),
                 }
 
                 AppRepository.allServers.add(0, it)
+                AppRepository.setAllServer(AppRepository.allServers)
                 AppRepository.refreshServersListView()
             }
 
