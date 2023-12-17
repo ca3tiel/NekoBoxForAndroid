@@ -1,6 +1,7 @@
 package io.nekohasekai.sagernet.vpn.repositories
 
 import android.content.SharedPreferences
+import android.util.ArrayMap
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -267,7 +268,8 @@ object AppRepository {
             "tr" to "Turkey",
             "bg" to "Bulgaria",
             "fr" to "France",
-            "nl" to "Netherlands"
+            "nl" to "Netherlands",
+            "ro" to "Romania",
         )
         return countries[countryCode].toString()
     }
@@ -279,7 +281,8 @@ object AppRepository {
             "Turkey" to "tr",
             "Bulgaria" to "bg",
             "France" to "fr",
-            "Netherlands" to "nl"
+            "Netherlands" to "nl",
+            "Romania" to "ro",
         )
         return countries[countryName].toString()
     }
@@ -324,7 +327,25 @@ object AppRepository {
         return isInternetConnected
     }
 
-    fun DebugLog(message: String) {
+    fun debugLog(message: String) {
         Log.d(LogTag, message);
+    }
+
+    fun setServerPing(serverId: Long, ping: Int, status: Int): ArrayMap<String, String> {
+        val arrayMap: ArrayMap<String, String> = ArrayMap()
+        arrayMap["countryCode"] = ""
+        arrayMap["serverName"] = ""
+        allServers.forEach { item ->
+            item.dropdownItems.forEach{
+                if(it.id == serverId) {
+                    arrayMap["countryCode"] = countryCodeMapper(item.name)
+                    arrayMap["serverName"] = it.name
+                    it.ping = ping
+                    it.status = status
+                    return arrayMap
+                }
+            }
+        }
+        return arrayMap
     }
 }

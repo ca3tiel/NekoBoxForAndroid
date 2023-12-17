@@ -3,7 +3,7 @@
     <!-- VPN -->
     <string name="facebook_app_id">266286379591311</string>
     <string name="fb_login_protocol_scheme">fb266286379591311</string>
-    <string name="facebook_client_token">30d63da7ac404d3a92fe9c04a1baf590</string>
+    <string name="facebook_client_token">c707fb6a5daadbedbb4b1cb77b566de0</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
