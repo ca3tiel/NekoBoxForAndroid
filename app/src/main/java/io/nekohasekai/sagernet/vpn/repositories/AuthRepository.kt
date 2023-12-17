@@ -14,6 +14,7 @@ object AuthRepository {
     private lateinit var lastValidationError: String
 
     private fun setUserToken(data: String) {
+        AppRepository.sharedPreferences.edit().putString("userToken", data).apply()
         token = data
     }
     private fun setLastValidationError(data: String) {
@@ -24,7 +25,7 @@ object AuthRepository {
     }
 
     fun getUserToken(): String? {
-        return token
+        return AppRepository.sharedPreferences.getString("userToken", null)
     }
     fun getLastValidationError(): String? {
         return lastValidationError
