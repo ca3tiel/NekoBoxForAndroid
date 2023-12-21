@@ -160,6 +160,7 @@ class LoginActivity : AppCompatActivity() {
                         200 -> {
                             runOnUiThread {
                                 binding.tvValidationError.visibility = View.GONE
+                                AuthRepository.setUserEmail(email)
                                 navigateToDashboardActivity()
                             }
                         }

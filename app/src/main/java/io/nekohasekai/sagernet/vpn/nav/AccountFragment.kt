@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import io.nekohasekai.sagernet.R
+import io.nekohasekai.sagernet.vpn.repositories.AuthRepository
 
 class AccountFragment : Fragment() {
     override fun onCreateView(
@@ -23,6 +25,13 @@ class AccountFragment : Fragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-        return view
+    // Retrieve user's email and set it to tvEmail
+    val userEmail = AuthRepository.getUserEmail()
+    if (userEmail != null) {
+        val tvEmail = view.findViewById<TextView>(R.id.tvEmail)
+        tvEmail.text = userEmail
+    }
+
+    return view
     }
 }
