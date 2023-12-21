@@ -17,6 +17,12 @@ object AuthRepository {
         AppRepository.sharedPreferences.edit().putString("userToken", data).apply()
         token = data
     }
+
+    fun clearUserToken() {
+        AppRepository.sharedPreferences.edit().remove("userToken").apply()
+        token = null
+    }
+
     private fun setLastValidationError(data: String) {
         lastValidationError = data
     }
