@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.vpn.WelcomeActivity
 import io.nekohasekai.sagernet.vpn.repositories.AuthRepository
+import io.nekohasekai.sagernet.vpn.repositories.SocialAuthRepository
 
 class AccountFragment : Fragment() {
     override fun onCreateView(
@@ -35,7 +36,11 @@ class AccountFragment : Fragment() {
 
         // ExitAccountButton
         ExitAccountButton.setOnClickListener {
+            SocialAuthRepository.facebookLoginManager.logOut()
+            SocialAuthRepository.firebaseAuth.signOut()
+            SocialAuthRepository.googleSignInClient.signOut()
             AuthRepository.clearUserToken()
+
             val intent = Intent(requireContext(), WelcomeActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
