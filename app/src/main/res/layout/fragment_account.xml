@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/museo_san_rounded700"
             android:gravity="end"
-            android:text="UnitaVPN.com"
+            android:text=""
             android:textColor="@color/lightGray"
             android:textSize="14sp"
             android:textStyle="normal"
