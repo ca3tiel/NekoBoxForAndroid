@@ -93,16 +93,15 @@ class DropdownAdapter(
 
             // Update the last selected position
             lastSelectedPosition = holder.adapterPosition
-
             // Handle item click by calling the lambda function
             subItemClickListener(subItem)
 
             AppRepository.isBestServerSelected = false
-            AppRepository.refreshServersListView()
+//            AppRepository.refreshServersListView()
         }
-
+        subItem.isSelected = false
         // Set the initial visibility of selectedView
-        if (lastSelectedPosition == position || subItem.isSelected) {
+        if (lastSelectedPosition == position) {
             holder.selectedView.visibility = View.VISIBLE
         } else {
             holder.selectedView.visibility = View.INVISIBLE
