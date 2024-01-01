@@ -47,6 +47,7 @@ import io.nekohasekai.sagernet.ui.VpnRequestActivity
 import io.nekohasekai.sagernet.vpn.nav.MenuFragment
 import io.nekohasekai.sagernet.vpn.repositories.AdRepository
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
+import io.nekohasekai.sagernet.vpn.repositories.BillingRepository
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
@@ -94,6 +95,9 @@ class DashboardActivity : ThemedActivity(),
 
         // Change navigation bar color
         window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
+
+        // Initialize Google Billing
+        initializeGoogleBilling()
 
         AdRepository.appOpenAdManager.showAdIfAvailable(this)
 
@@ -627,5 +631,11 @@ class DashboardActivity : ThemedActivity(),
             Logs.e(e)
             null
         }
+    }
+
+    fun initializeGoogleBilling()
+    {
+        BillingRepository.initialize(this)
+        BillingRepository.startConnection()
     }
 }

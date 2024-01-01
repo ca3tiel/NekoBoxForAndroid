@@ -35,6 +35,9 @@ dependencies {
 
     implementation(fileTree("libs"))
 
+    val billing_version = "6.1.0"
+    implementation("com.android.billingclient:billing-ktx:$billing_version")
+
     implementation("com.google.android.gms:play-services-ads:22.4.0")
     implementation("com.google.android.ump:user-messaging-platform:2.1.0")
     implementation("com.airbnb.android:lottie:6.1.0")
