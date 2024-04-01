@@ -12,6 +12,8 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import io.nekohasekai.sagernet.GroupType
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.database.DataStore
@@ -96,6 +98,7 @@ class SplashActivity : AppCompatActivity() {
         // Change navigation bar color
         window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
+        loadFcmToken()
         //Show AdMob Interstitial
 //        loadInterstitialAd()
 
@@ -118,6 +121,20 @@ class SplashActivity : AppCompatActivity() {
 //            GroupUpdater.startUpdate(subscription, true)
 //        }
     }
+
+    private fun loadFcmToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                AppRepository.debugLog("Fetching FCM registration token failed")
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            AppRepository.debugLog("FCM token: $token")
+        })
+    }
+
     private fun showInterstitialAd() {
         if (mInterstitialAd != null) {
             mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
