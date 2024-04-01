@@ -21,7 +21,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         binding.webView.webViewClient = WebViewClient()
 
         // Load a web page
-        val url = "https://panel.miatel.xyz/password/reset"
+        val url = "https://api.unitavpn.com/password/reset"
         binding.webView.loadUrl(url)
     }
 }
