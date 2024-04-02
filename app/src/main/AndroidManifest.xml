@@ -23,7 +23,7 @@
         tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <uses-feature
         android:name="android.software.leanback"
@@ -68,10 +68,19 @@
             android:name=".vpn.EmailVerify"
             android:exported="false" />
 
+        <activity
+            android:name=".vpn.NotificationActivity"
+            android:launchMode="standard"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="NotificationActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
-
+            android:value="ca-app-pub-3940256099942544~3347511713" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -96,8 +105,14 @@
             android:exported="false" />
         <activity
             android:name=".vpn.DashboardActivity"
+            android:directBootAware="true"
             android:exported="false"
-            android:launchMode="standard" />
+            android:launchMode="standard">
+            <intent-filter>
+                <action android:name="DashboardActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".vpn.ForgotPasswordActivity"
             android:exported="false" />
@@ -210,10 +225,10 @@
             android:name=".ui.profile.TrojanGoSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.MieruSettingsActivity"
+            android:name=".ui.profile.MieruSettingsActivity"
             android:configChanges="uiMode" />
         <activity
-            android:name="io.nekohasekai.sagernet.ui.profile.NaiveSettingsActivity"
+            android:name=".ui.profile.NaiveSettingsActivity"
             android:configChanges="uiMode" />
         <activity
             android:name=".ui.profile.HysteriaSettingsActivity"

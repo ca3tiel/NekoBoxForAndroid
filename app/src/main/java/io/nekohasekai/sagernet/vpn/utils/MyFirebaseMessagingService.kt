@@ -13,6 +13,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             AppRepository.debugLog("Message Notification Body: ${it.body}")
             // You can handle the notification here, e.g., show it in a notification bar.
         }
+        remoteMessage.data.isNotEmpty().let {
+            AppRepository.debugLog("Message data payload: " + remoteMessage.data)
+            // Handle the data payload of the FCM message.
+        }
     }
 
     override fun onNewToken(token: String) {
