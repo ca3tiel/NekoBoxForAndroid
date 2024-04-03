@@ -1,9 +1,10 @@
 package io.nekohasekai.sagernet.vpn
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
 import io.nekohasekai.sagernet.databinding.ActivityNotificationBinding
+
 
 class NotificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationBinding
@@ -13,6 +14,9 @@ class NotificationActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        val intent = intent
+        val url = intent.getStringExtra("link")
+
         // Enable JavaScript (if needed)
         binding.notificationWebView.settings.javaScriptEnabled = true
         binding.notificationWebView.settings.domStorageEnabled = true
@@ -21,7 +25,8 @@ class NotificationActivity : AppCompatActivity() {
         binding.notificationWebView.webViewClient = WebViewClient()
 
         // Load a web page
-        val url = "https://google.com"
-        binding.notificationWebView.loadUrl(url)
+        if (url != null) {
+            binding.notificationWebView.loadUrl(url)
+        }
     }
 }
