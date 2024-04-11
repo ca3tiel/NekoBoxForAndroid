@@ -607,6 +607,7 @@
     <string name="resend_verify_code">Resend Verify Code</string>
     <string name="pay">PAY</string>
     <string name="register">Register</string>
+    <string name="update_now">Update Now</string>
     <string name="email">Email:</string>
     <string name="enter_your_email">Enter Your Email</string>
     <string name="password_">Password:</string>

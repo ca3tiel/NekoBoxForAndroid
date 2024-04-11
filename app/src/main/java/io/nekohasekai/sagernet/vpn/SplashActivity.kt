@@ -1,10 +1,17 @@
 package io.nekohasekai.sagernet.vpn
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -106,7 +113,7 @@ class SplashActivity : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.Main) {
             // Check Ad Consent
-            getServers()
+//            getServers()
 //              startWelcomeActivity()
 //            showInterstitialAd()
         }
@@ -120,6 +127,48 @@ class SplashActivity : AppCompatActivity() {
 //            }
 //            GroupUpdater.startUpdate(subscription, true)
 //        }
+
+        checkForUpdate()
+    }
+
+    private fun checkForUpdate() {
+        // This is where you would implement logic to check for updates from your server.
+        // You can compare the current version of the app with the version available on the server.
+
+        val currentVersionCode = 9
+        val latestVersionCode = 10 // Example: Get the latest version code from server
+
+        if (latestVersionCode > currentVersionCode) {
+            showForceUpdateDialog()
+        }
+    }
+
+    private fun showForceUpdateDialog() {
+
+//        val btnUpdate = findViewById<Button>(R.id.btnUpdate)
+//        btnUpdate.setOnClickListener {
+//            redirectToPlayStore()
+//        }
+
+        val dialogView = layoutInflater.inflate(R.layout.force_update_dialog, null)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setView(dialogView)
+        builder.setCancelable(false)
+        builder.show()
+
+
+
+    }
+
+    private fun redirectToPlayStore() {
+        val appPackageName = packageName
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+        } catch (e: ActivityNotFoundException) {
+            // Play Store app is not installed, open the website.
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+        }
     }
 
     private fun loadFcmToken() {
