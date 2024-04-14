@@ -43,7 +43,7 @@
             android:fontFamily="@font/museo_san_rounded900"
             android:gravity="center"
             android:text="@string/unita_vpn"
-            android:textColor="@color/lightBlue"
+            android:textColor="@color/UnitaYellow"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
