@@ -1,28 +1,31 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/darkGray"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent"
+    android:background="@drawable/background_dashboard"
+    tools:context=".vpn.ForceUpdateActivity">
 
     <TextView
-        android:id="@+id/dialog_title"
+        android:id="@+id/forceUpdateTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="A new version of the app is available. Please update to continue."
         android:fontFamily="@font/museo_san_rounded700"
+        android:gravity="center"
+        android:text="A new version of the app is available.\n Please update to continue."
+        android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@color/lightGray"
+        android:lineSpacingExtra="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnUpdate"
+    <Button
+        android:id="@+id/btnForceUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -34,9 +37,8 @@
         android:textColor="@color/white"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:enabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_title" />
+        app:layout_constraintTop_toBottomOf="@+id/forceUpdateTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

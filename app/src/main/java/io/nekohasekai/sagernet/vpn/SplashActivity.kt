@@ -6,12 +6,15 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -21,6 +24,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import io.nekohasekai.sagernet.BuildConfig
 import io.nekohasekai.sagernet.GroupType
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.database.DataStore
@@ -28,11 +32,14 @@ import io.nekohasekai.sagernet.database.ProfileManager
 import io.nekohasekai.sagernet.database.ProxyGroup
 import io.nekohasekai.sagernet.database.SagerDatabase
 import io.nekohasekai.sagernet.database.SubscriptionBean
+import io.nekohasekai.sagernet.databinding.ForceUpdateDialogBinding
+import io.nekohasekai.sagernet.databinding.LayoutMainBinding
 import io.nekohasekai.sagernet.fmt.AbstractBean
 import io.nekohasekai.sagernet.group.RawUpdater
 import io.nekohasekai.sagernet.ktx.applyDefaultValues
 import io.nekohasekai.sagernet.ktx.onMainDispatcher
 import io.nekohasekai.sagernet.ui.ThemedActivity
+import io.nekohasekai.sagernet.vpn.components.ForceUpdateDialog
 import io.nekohasekai.sagernet.vpn.repositories.AdRepository
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 import io.nekohasekai.sagernet.vpn.repositories.AuthRepository
@@ -50,6 +57,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
 class SplashActivity : AppCompatActivity() {
 
     private var mInterstitialAd: InterstitialAd? = null
+    private lateinit var checkUpdate: AlertDialog
     fun ProxyGroup.init() {
 //        DataStore.groupName = name ?: AppRepository.appName
         DataStore.groupName = "Ungrouped"
@@ -113,7 +121,12 @@ class SplashActivity : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.Main) {
             // Check Ad Consent
-//            getServers()
+            getSettings()
+            checkForUpdate()
+
+            if (!AppRepository.appShouldForceUpdate) {
+                getServers()
+            }
 //              startWelcomeActivity()
 //            showInterstitialAd()
         }
@@ -128,47 +141,19 @@ class SplashActivity : AppCompatActivity() {
 //            GroupUpdater.startUpdate(subscription, true)
 //        }
 
-        checkForUpdate()
+
     }
 
     private fun checkForUpdate() {
-        // This is where you would implement logic to check for updates from your server.
-        // You can compare the current version of the app with the version available on the server.
-
-        val currentVersionCode = 9
-        val latestVersionCode = 10 // Example: Get the latest version code from server
-
-        if (latestVersionCode > currentVersionCode) {
+        if (AppRepository.appShouldForceUpdate) {
             showForceUpdateDialog()
         }
     }
 
     private fun showForceUpdateDialog() {
-
-//        val btnUpdate = findViewById<Button>(R.id.btnUpdate)
-//        btnUpdate.setOnClickListener {
-//            redirectToPlayStore()
-//        }
-
-        val dialogView = layoutInflater.inflate(R.layout.force_update_dialog, null)
-
-        val builder = AlertDialog.Builder(this)
-        builder.setView(dialogView)
-        builder.setCancelable(false)
-        builder.show()
-
-
-
-    }
-
-    private fun redirectToPlayStore() {
-        val appPackageName = packageName
-        try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
-        } catch (e: ActivityNotFoundException) {
-            // Play Store app is not installed, open the website.
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
-        }
+        val intent = Intent(this, ForceUpdateActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun loadFcmToken() {
@@ -247,6 +232,13 @@ class SplashActivity : AppCompatActivity() {
                     import(proxies)
                 }
             }
+            "Finished"
+        }
+    }
+
+    private suspend fun getSettings(): String {
+        return withContext(Dispatchers.IO) {
+            AppRepository.getSettingsSync()
             "Finished"
         }
     }
