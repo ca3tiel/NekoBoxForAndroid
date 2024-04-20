@@ -52,7 +52,7 @@ object AuthRepository {
 
         val request = Request.Builder()
             .url(url)
-            .header("XMPus-API-Token", AppRepository.getPanelApiHeaderToken())
+            .header("xmplus-authorization", AppRepository.getPanelApiHeaderToken())
             .header("Content-Type", "application/json")
             .header("Accept", "application/json")
             .post(formBody)

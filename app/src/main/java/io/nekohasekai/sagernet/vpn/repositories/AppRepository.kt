@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import io.nekohasekai.sagernet.BuildConfig
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import io.nekohasekai.sagernet.vpn.serverlist.MyAdapter
 import okhttp3.Call
@@ -25,11 +26,11 @@ object AppRepository {
     private var subscriptionLink: String = "https://Apanel.holyip.workers.dev/link/9RTsfMryrGwgWZVb48eN?config=1"
     private var apiServersListUrl: String = "https://api.unitavpn.com/api/servers"
     private var baseUrl: String = "https://api.unitavpn.com/"
-    private var userLoginUrl: String = "https://panel.holyip.com/api/v2/client/token"
+    private var userLoginUrl: String = "https://unitavpn.com/api/client/token"
     private var userRegisterUrl: String = "https://api.unitavpn.com/api/auth/register"
     private var userVerifyUrl: String = "https://api.unitavpn.com/api/auth/verify"
     private var userResetPasswordUrl: String = "https://api.unitavpn.com/api/auth/reset"
-    private var userStateUrl: String = "https://panel.holyip.com/api/v2/client/stats"
+    private var userStateUrl: String = "https://unitavpn.com/api/client/stats"
     private var panelApiHeaderToken: String = "9f8a833ca1383c5449e1d8800b45fd54"
     private var panelSettingsUrl = "https://api.unitavpn.com/api/settings"
     var selectedServerId: Long = -1
@@ -43,6 +44,8 @@ object AppRepository {
     lateinit var sharedPreferences: SharedPreferences
     var isConnected: Boolean = false
     var filterServersBy: String = "all"
+    var appVersionCode: Int = 0
+    var appShouldForceUpdate: Boolean = false
     private var isInternetConnected = true
 
     fun setBaseUrl(url: String) {
@@ -149,15 +152,62 @@ object AppRepository {
                     val userRegisterUrl = jsonObject.get("userRegisterUrl").asString
                     val userStateUrl = jsonObject.get("userStateUrl").asString
                     val panelApiHeaderToken = jsonObject.get("panelApiHeaderToken").asString
+                    val versionCode = jsonObject.get("versionCode").asInt
+                    val forceUnder = jsonObject.get("forceUnder").asInt
 
                     setBaseUrl(baseUrl)
                     setUserLoginUrl(userLoginUrl)
                     setUserRegisterUrl(userRegisterUrl)
                     setUserStateUrl(userStateUrl)
                     setPanelApiHeaderToken(panelApiHeaderToken)
+                    setVersionCode(versionCode, forceUnder)
                 }
             }
         })
+    }
+
+    fun getSettingsSync(): Int {
+        val client = OkHttpClient()
+        val url = panelSettingsUrl
+
+        val request = Request.Builder()
+            .url(url)
+            .header("Content-Type", "application/json")
+            .header("Accept", "application/json")
+            .get()
+            .build()
+
+        try {
+            val response: Response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val responseBody = response.body?.string()
+                val gson = Gson()
+                val jsonObject = gson.fromJson(responseBody, JsonObject::class.java)
+                val baseUrl = jsonObject.get("baseUrl").asString
+                val userLoginUrl = jsonObject.get("userLoginUrl").asString
+                val userRegisterUrl = jsonObject.get("userRegisterUrl").asString
+                val userStateUrl = jsonObject.get("userStateUrl").asString
+                val panelApiHeaderToken = jsonObject.get("panelApiHeaderToken").asString
+                val versionCode = jsonObject.get("versionCode").asInt
+                val forceUnder = jsonObject.get("forceUnder").asInt
+
+                setBaseUrl(baseUrl)
+                setUserLoginUrl(userLoginUrl)
+                setUserRegisterUrl(userRegisterUrl)
+                setUserStateUrl(userStateUrl)
+                setPanelApiHeaderToken(panelApiHeaderToken)
+                setVersionCode(versionCode, forceUnder)
+            }
+            return response.code
+        } catch (e: Exception) {
+            debugLog("Get_Settings_Request_Failed: ${e.message}")
+            return -1
+        }
+    }
+
+    private fun setVersionCode(versionCodeParam: Int, forceUnderParam: Int) {
+        appVersionCode = versionCodeParam
+        appShouldForceUpdate = BuildConfig.VERSION_CODE <= forceUnderParam
     }
 
     fun getServersListAsync() {
@@ -183,13 +233,14 @@ object AppRepository {
             }
         })
     }
+
     fun getServersListSync(): Int {
         val client = OkHttpClient()
         val url = apiServersListUrl
 
         val request = Request.Builder()
             .url(url)
-            .header("XMPus-API-Token", getPanelApiHeaderToken())
+            .header("xmplus-authorization", getPanelApiHeaderToken())
             .header("Content-Type", "application/json")
             .header("Accept", "application/json")
             .get()
@@ -204,10 +255,10 @@ object AppRepository {
                 val servers = serversObject.get("servers").asJsonObject
                 allServersRaw = servers
             }
-            return response.code;
+            return response.code
         } catch (e: Exception) {
             debugLog("Get_Servers_Request_Failed: ${e.message}")
-            return -1;
+            return -1
         }
     }
 
@@ -233,7 +284,7 @@ object AppRepository {
         val formBody = requestBuilder.build()
 
         val request = Request.Builder()
-            .header("XMPus-API-Token", getPanelApiHeaderToken())
+            .header("xmplus-authorization", getPanelApiHeaderToken())
             .header("Content-Type", "application/json")
             .header("Accept", "application/json")
             .url(url)

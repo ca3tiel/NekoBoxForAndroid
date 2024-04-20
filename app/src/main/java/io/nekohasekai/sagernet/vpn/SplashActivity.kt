@@ -1,10 +1,20 @@
 package io.nekohasekai.sagernet.vpn
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -14,6 +24,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import io.nekohasekai.sagernet.BuildConfig
 import io.nekohasekai.sagernet.GroupType
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.database.DataStore
@@ -21,11 +32,14 @@ import io.nekohasekai.sagernet.database.ProfileManager
 import io.nekohasekai.sagernet.database.ProxyGroup
 import io.nekohasekai.sagernet.database.SagerDatabase
 import io.nekohasekai.sagernet.database.SubscriptionBean
+import io.nekohasekai.sagernet.databinding.ForceUpdateDialogBinding
+import io.nekohasekai.sagernet.databinding.LayoutMainBinding
 import io.nekohasekai.sagernet.fmt.AbstractBean
 import io.nekohasekai.sagernet.group.RawUpdater
 import io.nekohasekai.sagernet.ktx.applyDefaultValues
 import io.nekohasekai.sagernet.ktx.onMainDispatcher
 import io.nekohasekai.sagernet.ui.ThemedActivity
+import io.nekohasekai.sagernet.vpn.components.ForceUpdateDialog
 import io.nekohasekai.sagernet.vpn.repositories.AdRepository
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 import io.nekohasekai.sagernet.vpn.repositories.AuthRepository
@@ -43,6 +57,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
 class SplashActivity : AppCompatActivity() {
 
     private var mInterstitialAd: InterstitialAd? = null
+    private lateinit var checkUpdate: AlertDialog
     fun ProxyGroup.init() {
 //        DataStore.groupName = name ?: AppRepository.appName
         DataStore.groupName = "Ungrouped"
@@ -106,7 +121,12 @@ class SplashActivity : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.Main) {
             // Check Ad Consent
-            getServers()
+            getSettings()
+            checkForUpdate()
+
+            if (!AppRepository.appShouldForceUpdate) {
+                getServers()
+            }
 //              startWelcomeActivity()
 //            showInterstitialAd()
         }
@@ -120,6 +140,20 @@ class SplashActivity : AppCompatActivity() {
 //            }
 //            GroupUpdater.startUpdate(subscription, true)
 //        }
+
+
+    }
+
+    private fun checkForUpdate() {
+        if (AppRepository.appShouldForceUpdate) {
+            showForceUpdateDialog()
+        }
+    }
+
+    private fun showForceUpdateDialog() {
+        val intent = Intent(this, ForceUpdateActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun loadFcmToken() {
@@ -198,6 +232,13 @@ class SplashActivity : AppCompatActivity() {
                     import(proxies)
                 }
             }
+            "Finished"
+        }
+    }
+
+    private suspend fun getSettings(): String {
+        return withContext(Dispatchers.IO) {
+            AppRepository.getSettingsSync()
             "Finished"
         }
     }

@@ -62,18 +62,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Start">
         <activity
+            android:name=".vpn.ForceUpdateActivity"
+            android:exported="false" />
+        <activity
             android:name=".vpn.PremiumActivity"
             android:exported="false" />
         <activity
             android:name=".vpn.EmailVerify"
             android:exported="false" />
-
         <activity
             android:name=".vpn.NotificationActivity"
-            android:launchMode="standard"
-            android:exported="false">
+            android:exported="false"
+            android:launchMode="standard">
             <intent-filter>
                 <action android:name="NotificationActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -110,6 +113,7 @@
             android:launchMode="standard">
             <intent-filter>
                 <action android:name="DashboardActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
