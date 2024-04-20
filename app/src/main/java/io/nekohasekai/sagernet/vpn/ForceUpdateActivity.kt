@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.databinding.ActivityForceUpdateBinding
 import io.nekohasekai.sagernet.ui.ThemedActivity
