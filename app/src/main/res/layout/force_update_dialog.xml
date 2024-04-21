@@ -8,7 +8,7 @@
     tools:context=".vpn.WelcomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/dialog_box"
+        android:id="@+id/DialogBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/background_premium"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/dialog_title"
+            android:id="@+id/DialogTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/museo_san_rounded700"
@@ -32,9 +32,9 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:padding="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/dialog_box"
-            app:layout_constraintStart_toStartOf="@+id/dialog_box"
-            app:layout_constraintTop_toTopOf="@+id/dialog_box" />
+            app:layout_constraintEnd_toEndOf="@+id/DialogBox"
+            app:layout_constraintStart_toStartOf="@+id/DialogBox"
+            app:layout_constraintTop_toTopOf="@+id/DialogBox" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnUpdate"
@@ -50,10 +50,10 @@
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_marginTop="30dp"
-            app:layout_constraintBottom_toBottomOf="@+id/dialog_box"
-            app:layout_constraintEnd_toEndOf="@+id/dialog_box"
-            app:layout_constraintStart_toStartOf="@+id/dialog_box"
-            app:layout_constraintTop_toBottomOf="@+id/dialog_title" />
+            app:layout_constraintBottom_toBottomOf="@+id/DialogBox"
+            app:layout_constraintEnd_toEndOf="@+id/DialogBox"
+            app:layout_constraintStart_toStartOf="@+id/DialogBox"
+            app:layout_constraintTop_toBottomOf="@+id/DialogTitle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
