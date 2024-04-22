@@ -6,9 +6,8 @@ import android.net.Uri
 import android.os.Bundle
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.databinding.ActivityForceUpdateBinding
-import io.nekohasekai.sagernet.ui.ThemedActivity
 
-class ForceUpdateActivity : ThemedActivity() {
+class ForceUpdateActivity : BaseThemeActivity() {
     lateinit var binding: ActivityForceUpdateBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
