@@ -166,7 +166,7 @@
         android:focusable="true"
         android:fontFamily="@font/museo_san_rounded500"
         android:text="@string/new_user_signup"
-        android:textColor="@color/white"
+        android:textColor="@drawable/text_color_selector"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
