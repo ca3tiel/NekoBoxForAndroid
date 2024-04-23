@@ -42,7 +42,6 @@ import io.nekohasekai.sagernet.ktx.readableMessage
 import io.nekohasekai.sagernet.plugin.PluginManager
 import io.nekohasekai.sagernet.ui.ConfigurationFragment
 import io.nekohasekai.sagernet.ui.MainActivity
-import io.nekohasekai.sagernet.ui.ThemedActivity
 import io.nekohasekai.sagernet.ui.VpnRequestActivity
 import io.nekohasekai.sagernet.vpn.nav.MenuFragment
 import io.nekohasekai.sagernet.vpn.repositories.AdRepository
@@ -61,7 +60,7 @@ import kotlinx.coroutines.newFixedThreadPoolContext
 import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentLinkedQueue
 
-class DashboardActivity : ThemedActivity(),
+class DashboardActivity : BaseThemeActivity(),
     SagerConnection.Callback,
     OnPreferenceDataStoreChangeListener,
     NavigationView.OnNavigationItemSelectedListener {
@@ -88,12 +87,6 @@ class DashboardActivity : ThemedActivity(),
         setContentView(R.layout.activity_dashboard)
 
         AdRepository.internetChecker = InternetConnectionChecker(this)
-
-        // Change status bar color
-        window.statusBarColor = ContextCompat.getColor(this, R.color.navyBlue)
-
-        // Change navigation bar color
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
         AdRepository.appOpenAdManager.showAdIfAvailable(this)
 

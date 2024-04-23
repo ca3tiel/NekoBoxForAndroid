@@ -1,11 +1,11 @@
 package io.nekohasekai.sagernet.vpn
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import io.nekohasekai.sagernet.R
+import io.nekohasekai.sagernet.ui.ThemedActivity
 
-open class BaseThemeActivity : AppCompatActivity() {
+open class BaseThemeActivity : ThemedActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
