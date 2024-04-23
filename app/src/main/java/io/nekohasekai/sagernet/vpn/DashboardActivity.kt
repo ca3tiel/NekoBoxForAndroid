@@ -137,8 +137,7 @@ class DashboardActivity : ThemedActivity(),
         ShareIcon.setOnClickListener {
             shareLinkWithMessage(AppRepository.ShareCustomMessage)
         }
-
-
+        
         // Initialize the fragment container
         val fragmentContainer = findViewById<View>(R.id.flFragmentContainer)
 
