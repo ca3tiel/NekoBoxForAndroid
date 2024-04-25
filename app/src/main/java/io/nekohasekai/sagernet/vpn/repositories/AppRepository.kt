@@ -36,6 +36,7 @@ object AppRepository {
     var selectedServerId: Long = -1
     var ShareCustomMessage: String = "Share $appName whit your friends and family"
     var ShareApplicationLink: String = "https://play.google.com/store/apps/details?id=com.File.Manager.Filemanager&pcampaignid=web_share"
+    var telegramLink: String = "https://t.me/unitavpn"
     var allServers: MutableList<ListItem> = mutableListOf()
     var allServersOriginal: MutableList<ListItem> = mutableListOf()
     lateinit var allServersRaw: JsonObject
