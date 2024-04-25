@@ -96,20 +96,41 @@ class DashboardActivity : BaseThemeActivity(),
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 
-        val telegramIcon = findViewById<ImageView>(R.id.ivShareIcon)
+        val ShareIcon = findViewById<ImageView>(R.id.ivShareIcon)
         val connection = SagerConnection(SagerConnection.CONNECTION_ID_MAIN_ACTIVITY_FOREGROUND, true)
 
         val clPremium = findViewById<ConstraintLayout>(R.id.clPremium)
         clPremium.setOnClickListener {navigateToPremiumActivity()}
 
-        // Set an OnClickListener to MainActivity
-        telegramIcon.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                // Start the MainActivity
-                val intent = Intent(this@DashboardActivity, MainActivity::class.java)
-                startActivity(intent)
+//<DO NOT DELETE THIS COMMENT CODES>
+//        // Set an OnClickListener to MainActivity
+//        ShareIcon.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(v: View) {
+//                // Start the MainActivity
+//                val intent = Intent(this@DashboardActivity, MainActivity::class.java)
+//                startActivity(intent)
+//            }
+//        })
+
+        // Define shareLinkWithMessage function outside of OnClickListener
+        fun shareLinkWithMessage(message: String) {
+            // Create an Intent with ACTION_SEND
+            val sendIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    "$message\n" + AppRepository.ShareApplicationLink
+                )
             }
-        })
+            // Start the system's chooser to share the content
+            startActivity(Intent.createChooser(sendIntent, "Share link with:"))
+        }
+        // Set onClickListener for ShareIcon
+        ShareIcon.setOnClickListener {
+            shareLinkWithMessage(AppRepository.ShareCustomMessage)
+        }
+
 
         // Initialize the fragment container
         val fragmentContainer = findViewById<View>(R.id.flFragmentContainer)

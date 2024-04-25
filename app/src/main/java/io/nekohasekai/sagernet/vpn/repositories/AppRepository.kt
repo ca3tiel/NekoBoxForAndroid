@@ -34,7 +34,7 @@ object AppRepository {
     private var panelApiHeaderToken: String = "9f8a833ca1383c5449e1d8800b45fd54"
     private var panelSettingsUrl = "https://api.unitavpn.com/api/settings"
     var selectedServerId: Long = -1
-    var ShareCustomMessage: String = "$appName is the best vpn.please visit this link"
+    var ShareCustomMessage: String = "Share $appName whit your friends and family"
     var ShareApplicationLink: String = "https://play.google.com/store/apps/details?id=com.File.Manager.Filemanager&pcampaignid=web_share"
     var allServers: MutableList<ListItem> = mutableListOf()
     var allServersOriginal: MutableList<ListItem> = mutableListOf()
