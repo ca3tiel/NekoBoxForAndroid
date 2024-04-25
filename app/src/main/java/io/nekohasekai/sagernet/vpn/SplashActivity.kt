@@ -12,7 +12,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -54,7 +53,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentLinkedQueue
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseThemeActivity() {
 
     private var mInterstitialAd: InterstitialAd? = null
     private lateinit var checkUpdate: AlertDialog
@@ -106,12 +105,6 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-
-        // Change status bar color
-        window.statusBarColor = ContextCompat.getColor(this, R.color.navyBlue)
-
-        // Change navigation bar color
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
         loadFcmToken()
         //Show AdMob Interstitial

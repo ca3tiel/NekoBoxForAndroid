@@ -1,22 +1,14 @@
 package io.nekohasekai.sagernet.vpn
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.core.content.ContextCompat
 import io.nekohasekai.sagernet.R
 
-class WelcomeActivity : AppCompatActivity() {
+class WelcomeActivity : BaseThemeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_welcome)
-
-        // Change status bar color
-        window.statusBarColor = ContextCompat.getColor(this, R.color.navyBlue)
-
-        // Change navigation bar color
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.navyBlue)
 
         // get init app settings from api server
         //AppRepository.getSettings()

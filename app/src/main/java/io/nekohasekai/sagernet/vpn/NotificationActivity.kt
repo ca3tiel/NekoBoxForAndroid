@@ -2,11 +2,10 @@ package io.nekohasekai.sagernet.vpn
 
 import android.os.Bundle
 import android.webkit.WebViewClient
-import androidx.appcompat.app.AppCompatActivity
 import io.nekohasekai.sagernet.databinding.ActivityNotificationBinding
 
 
-class NotificationActivity : AppCompatActivity() {
+class NotificationActivity : BaseThemeActivity() {
     private lateinit var binding: ActivityNotificationBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

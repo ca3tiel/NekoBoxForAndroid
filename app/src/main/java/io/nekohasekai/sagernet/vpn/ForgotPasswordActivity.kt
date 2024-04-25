@@ -1,11 +1,10 @@
 package io.nekohasekai.sagernet.vpn
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.WebViewClient
 import io.nekohasekai.sagernet.databinding.ActivityForgotPasswordBinding
 
-class ForgotPasswordActivity : AppCompatActivity() {
+class ForgotPasswordActivity : BaseThemeActivity() {
     private lateinit var binding: ActivityForgotPasswordBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
