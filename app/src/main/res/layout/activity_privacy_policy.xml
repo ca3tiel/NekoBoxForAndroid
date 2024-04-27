@@ -107,7 +107,8 @@
                 android:paddingTop="10dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="Welcome to UnitaVPN, your trusted VPN solution for secure and private internet browsing. This Privacy Policy outlines how we collect, use, disclose, and protect your personal information when you use our application."
+                android:text="Personal Information: When you sign up for UnitaVPN, we collect personal information such as your name, email address, and payment details to create and manage your account.
+Usage Data: We may collect information about your device, IP address, connection timestamps, and data usage to optimize our services and provide technical support."
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold"
