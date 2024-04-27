@@ -63,11 +63,11 @@ class MenuFragment : Fragment() {
             val telegramIntent = Intent(Intent.ACTION_VIEW, telegramUri)
             startActivity(telegramIntent)
         }
-
-        // Add click listener for llAbout
-        binding.llAbout.setOnClickListener {
-            loadFragment(AboutFragment())
-        }
+//<DO NOT DELETE THIS COMMENT CODE.IT WILL ADD IN FUTURE>
+//        // Add click listener for llAbout
+//        binding.llAbout.setOnClickListener {
+//            loadFragment(AboutFragment())
+//        }
 
         // Add click listener for llPrivacyPolicy
         binding.llPrivacyPolicy.setOnClickListener {
