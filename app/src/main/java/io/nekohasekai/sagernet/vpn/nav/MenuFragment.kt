@@ -69,6 +69,20 @@ class MenuFragment : Fragment() {
             loadFragment(AboutFragment())
         }
 
+        // Add click listener for llPrivacyPolicy
+        binding.llPrivacyPolicy.setOnClickListener {
+            val intent = Intent(requireContext(), PrivacyPolicyActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
+        // Add click listener for llTermsofService
+        binding.llTermsofService.setOnClickListener {
+            val intent = Intent(requireContext(), TermsofServiceActivity::class.java)
+            startActivity(intent)
+        }
+
         // Handle back button press
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

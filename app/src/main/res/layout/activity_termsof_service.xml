@@ -1,10 +1,523 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/navyBlue"
     tools:context=".vpn.nav.TermsofServiceActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/llTermsofService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/ivTermsofServiceIconAngle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_angle_circle_left" />
+
+            <TextView
+                android:id="@+id/tvTermsofService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/museo_san_rounded900"
+                android:gravity="center"
+                android:text="Terms of Service"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llTermsofServicetext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/llTermsofService">
+
+            <TextView
+                android:id="@+id/tvTermsofService1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:paddingTop="40dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="UnitaVPN Terms of Service"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/llTermsofServicetext" />
+
+            <TextView
+                android:id="@+id/tvTermsofService2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="Welcome to UnitaVPN! These Terms of Service (Terms) govern your use of the UnitaVPN mobile application (App) and the services provided through it. By downloading, installing, or using the App, you agree to be bound by these Terms. If you do not agree with any part of these Terms, please do not use the App."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService1" />
+
+            <TextView
+                android:id="@+id/tvTermsofService3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="1. Description of Service"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService2" />
+
+            <TextView
+                android:id="@+id/tvTermsofService4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="UnitaVPN provides virtual private network (VPN) services through the App. These services include but are not limited to providing access to a secure network, encryption of internet traffic, and bypassing geographical restrictions."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService3" />
+
+            <TextView
+                android:id="@+id/tvTermsofService5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="2. User Accounts"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService4" />
+
+            <TextView
+                android:id="@+id/tvTermsofService5a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="20dp"
+                android:text="a. Free Account"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService5" />
+
+            <TextView
+                android:id="@+id/tvTermsofService6a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="50dp"
+                android:paddingEnd="20dp"
+                android:text="Users may sign up for a free account to access basic VPN services. Free accounts are supported by displaying advertisements within the App."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService5a" />
+
+            <TextView
+                android:id="@+id/tvTermsofService5b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="20dp"
+                android:text="b. Premium Account"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService6a" />
+
+            <TextView
+                android:id="@+id/tvTermsofService6b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="50dp"
+                android:paddingEnd="20dp"
+                android:text="Users may opt for a premium account to access additional features and services. Premium accounts are subject to subscription fees as outlined in the App."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService5b" />
+
+            <TextView
+                android:id="@+id/tvTermsofService7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="3. User Conduct"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService6b" />
+
+            <TextView
+                android:id="@+id/tvTermsofService7a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="20dp"
+                android:text="a.User Responsibility"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService7" />
+
+            <TextView
+                android:id="@+id/tvTermsofService8a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="50dp"
+                android:paddingEnd="20dp"
+                android:text="Users are responsible for maintaining the confidentiality of their account credentials and are solely responsible for any activities that occur under their account."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService7a" />
+
+            <TextView
+                android:id="@+id/tvTermsofService7b"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="20dp"
+                android:text="b. Users agree not to use the App for any unlawful or prohibited activities, including but not limited to:"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService8a" />
+
+            <TextView
+                android:id="@+id/tvTermsofService8b1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="50dp"
+                android:paddingEnd="20dp"
+                android:text="- Violating any local, state, national, or international laws or regulations."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService7b" />
+
+            <TextView
+                android:id="@+id/tvTermsofService8b2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="50dp"
+                android:paddingEnd="20dp"
+                android:text="- Transmitting any material that is unlawful, defamatory, abusive, harassing, threatening, or otherwise objectionable."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService8b1" />
+
+            <TextView
+                android:id="@+id/tvTermsofService8b3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="50dp"
+                android:paddingEnd="20dp"
+                android:text="- Interfering with or disrupting the networks connected to the App."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService8b2" />
+
+            <TextView
+                android:id="@+id/tvTermsofService9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="4. Privacy Policy"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService8b3" />
+
+            <TextView
+                android:id="@+id/tvTermsofService10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:text="By using the App, you agree to the terms of our Privacy Policy, which outlines how we collect, use, and disclose your personal information."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService9" />
+
+            <TextView
+                android:id="@+id/tvTermsofService11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="5. Intellectual Property"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService10" />
+
+            <TextView
+                android:id="@+id/tvTermsofService12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="The App and its original content, features, and functionality are owned by UnitaVPN and are protected by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService11" />
+
+            <TextView
+                android:id="@+id/tvTermsofService13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="6. Modifications to Service"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService12" />
+
+            <TextView
+                android:id="@+id/tvTermsofService14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="UnitaVPN reserves the right to modify or discontinue, temporarily or permanently, the App or any part of it with or without notice. We shall not be liable to you or any third party for any modification, suspension, or discontinuance of the App.
+"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService13" />
+
+            <TextView
+                android:id="@+id/tvTermsofService15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="7. Limitation of Liability"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService14" />
+
+            <TextView
+                android:id="@+id/tvTermsofService16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="In no event shall UnitaVPN, its officers, directors, employees, or agents, be liable to you for any direct, indirect, incidental, special, punitive, or consequential damages whatsoever resulting from your use of the App."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService15" />
+
+            <TextView
+                android:id="@+id/tvTermsofService17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="8. Governing Law"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService16" />
+
+            <TextView
+                android:id="@+id/tvTermsofService18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="These Terms shall be governed by and construed in accordance with the laws of [Jurisdiction], without regard to its conflict of law provisions."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService17" />
+
+            <TextView
+                android:id="@+id/tvTermsofService19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="9. Contact Us"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService18" />
+
+            <TextView
+                android:id="@+id/tvTermsofService20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="If you have any questions about these Terms, please contact us at [Unitavpn@gmail.com]."
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService19" />
+
+            <TextView
+                android:id="@+id/tvTermsofService21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/museo_san_rounded700"
+                android:paddingTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="50dp"
+                android:text="By using the UnitaVPN App, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service."
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService20" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
