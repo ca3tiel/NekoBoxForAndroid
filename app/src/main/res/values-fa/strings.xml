@@ -463,6 +463,7 @@
     <string name="enter_your_verify_code">لطفا کد تأیید خود را وارد نمایید</string>
     <string name="resend_verify_code">ارسال مجدد کد تأیید</string>
     <string name="register">ثبت نام</string>
+    <string name="Registering">در حال ثبت نام…</string>
     <string name="email">ایمیل:</string>
     <string name="enter_your_email">لطفا ایمیل خود را وارد کنید</string>
     <string name="password_">رمز عبور:</string>
@@ -472,6 +473,7 @@
     <string name="facebook">فیس بوک</string>
     <string name="google">گوگل</string>
     <string name="login">ورود</string>
+    <string name="Logging_in">در حال ورود…</string>
     <string name="forgot_password">رمز عبور خود را فراموش کرده اید؟</string>
     <string name="new_user_signup">کاربر جدید هستید؟ ثبت نام</string>
     <string name="or_login_with">یا ورود با</string>

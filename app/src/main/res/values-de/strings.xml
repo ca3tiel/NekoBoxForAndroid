@@ -59,6 +59,7 @@
     <string name="resend_verify_code">Resend Verify Code</string>
     <string name="pay">PAY</string>
     <string name="register">Register</string>
+    <string name="Registering">Registering…</string>
     <string name="email">Email:</string>
     <string name="enter_your_email">Enter Your Email</string>
     <string name="password_">Password:</string>
@@ -68,6 +69,7 @@
     <string name="facebook">Facebook</string>
     <string name="google">Google</string>
     <string name="login">Login</string>
+    <string name="Logging_in">Logging in…</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="new_user_signup">New User? Signup</string>
     <string name="or_login_with">Or Login With</string>

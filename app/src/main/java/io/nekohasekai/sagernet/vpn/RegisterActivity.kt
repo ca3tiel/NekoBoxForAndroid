@@ -2,6 +2,7 @@ package io.nekohasekai.sagernet.vpn
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
@@ -101,6 +102,19 @@ class RegisterActivity : BaseThemeActivity() {
         binding.btnRegister.setOnClickListener {
             val email = binding.txtEmail.text.toString()
             val password = binding.txtPassword.text.toString()
+
+            // Change button text
+            binding.btnRegister.text = getString(R.string.Registering)
+            Handler().postDelayed({
+                binding.btnRegister.text = getString(R.string.register)
+            }, 3000) // 3000 milliseconds delay (3 seconds)
+
+            // Show progress bar
+            binding.progressBarLogin.visibility = View.VISIBLE
+            Handler().postDelayed({
+                binding.progressBarLogin.visibility = View.GONE
+            }, 3000) // 3000 milliseconds delay (3 seconds)
+
             performRegister(email, password)
         }
 
