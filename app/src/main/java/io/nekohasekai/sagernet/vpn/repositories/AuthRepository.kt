@@ -1,7 +1,10 @@
 package io.nekohasekai.sagernet.vpn.repositories
 
+import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.google.gson.annotations.SerializedName
+import io.nekohasekai.sagernet.vpn.models.InfoApiResponse
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -12,14 +15,25 @@ object AuthRepository {
     private var token: String? = null
     private lateinit var email: String
     private lateinit var lastValidationError: String
+    private lateinit var userAccountInfo: InfoApiResponse
 
     private fun setUserToken(data: String) {
         AppRepository.sharedPreferences.edit().putString("userToken", data).apply()
         token = data
     }
 
+    fun isUserAlreadyLogin(): Boolean {
+        val userAccountDataString = AppRepository.sharedPreferences.getString("userAccountInfo", null)
+        return userAccountDataString !== null
+    }
+
     fun clearUserToken() {
         AppRepository.sharedPreferences.edit().remove("userToken").apply()
+        token = null
+    }
+
+    fun clearUserInfo() {
+        AppRepository.sharedPreferences.edit().remove("userAccountInfo").apply()
         token = null
     }
 
@@ -37,8 +51,50 @@ object AuthRepository {
         return lastValidationError
     }
 
+    private fun setUserAccountInfo(userAccountInfoPram: InfoApiResponse) {
+        userAccountInfo = userAccountInfoPram
+       val userAccountInfoJsonString : String = Gson().toJson(userAccountInfoPram)
+        AppRepository.sharedPreferences.edit().putString("userAccountInfo", userAccountInfoJsonString).apply()
+    }
+
+    fun getUserAccountInfo() {
+        val userAccountDataString = AppRepository.sharedPreferences.getString("userAccountInfo", null)
+        userAccountDataString?.let {
+            userAccountInfo = Gson().fromJson(userAccountDataString, InfoApiResponse::class.java)
+        }
+    }
+
     fun getUserEmail(): String {
-        return email
+        return userAccountInfo.data.email
+    }
+
+    fun token(): Int {
+        val client = OkHttpClient()
+        val url = AppRepository.getUserLoginUrl()
+
+        val request = Request.Builder()
+            .url(url)
+            .header("xmplus-authorization", AppRepository.getPanelApiHeaderToken())
+            .header("Content-Type", "application/json")
+            .header("Accept", "application/json")
+            .build()
+
+        try {
+            val response: Response = client.newCall(request).execute()
+            if (response.isSuccessful) {
+                val responseBody = response.body?.string()
+                val gson = Gson()
+                val jsonObject = gson.fromJson(responseBody, JsonObject::class.java)
+                val dataJsonObject = gson.fromJson(jsonObject.get("data").asJsonObject, JsonObject::class.java)
+                val token = dataJsonObject.get("token").asString
+                setUserToken(token)
+
+            }
+            return response.code;
+        } catch (e: Exception) {
+            println("Request failed: ${e.message}")
+            return -1;
+        }
     }
 
     fun login(email: String, password: String): Int {
@@ -63,10 +119,13 @@ object AuthRepository {
             if (response.isSuccessful) {
                 val responseBody = response.body?.string()
                 val gson = Gson()
-                val jsonObject = gson.fromJson(responseBody, JsonObject::class.java)
-                val dataJsonObject = gson.fromJson(jsonObject.get("data").asJsonObject, JsonObject::class.java)
-                val token = dataJsonObject.get("token").asString
-                setUserToken(token)
+                val apiResponse = gson.fromJson(responseBody, InfoApiResponse::class.java)
+                setUserAccountInfo(apiResponse)
+
+//                val jsonObject = gson.fromJson(responseBody, JsonObject::class.java)
+//                val dataJsonObject = gson.fromJson(jsonObject.get("data").asJsonObject, JsonObject::class.java)
+//                val token = dataJsonObject.get("token").asString
+//                setUserToken(token)
 
             }
             return response.code;

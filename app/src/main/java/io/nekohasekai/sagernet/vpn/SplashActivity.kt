@@ -42,6 +42,7 @@ import io.nekohasekai.sagernet.vpn.components.ForceUpdateDialog
 import io.nekohasekai.sagernet.vpn.repositories.AdRepository
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 import io.nekohasekai.sagernet.vpn.repositories.AuthRepository
+import io.nekohasekai.sagernet.vpn.repositories.SocialAuthRepository
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import kotlinx.coroutines.Dispatchers

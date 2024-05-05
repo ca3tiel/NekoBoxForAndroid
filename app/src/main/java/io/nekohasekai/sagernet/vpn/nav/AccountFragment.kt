@@ -20,7 +20,7 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_account, container, false)
         val iconAngle = view.findViewById<ImageView>(R.id.ivAccountIconAngle)
-        val ExitAccountButton = view.findViewById<AppCompatButton>(R.id.btnExitAccount)
+        val exitAccountButton = view.findViewById<AppCompatButton>(R.id.btnExitAccount)
 
 
         // iconAngle click listener
@@ -35,11 +35,11 @@ class AccountFragment : Fragment() {
         tvEmail.text = userEmail
 
         // ExitAccountButton
-        ExitAccountButton.setOnClickListener {
+        exitAccountButton.setOnClickListener {
             SocialAuthRepository.facebookLoginManager.logOut()
-            SocialAuthRepository.firebaseAuth.signOut()
-            SocialAuthRepository.googleSignInClient.signOut()
-            AuthRepository.clearUserToken()
+//            SocialAuthRepository.firebaseAuth.signOut()
+//            SocialAuthRepository.googleSignInClient.signOut()
+            AuthRepository.clearUserInfo()
 
             val intent = Intent(requireContext(), WelcomeActivity::class.java)
             startActivity(intent)
