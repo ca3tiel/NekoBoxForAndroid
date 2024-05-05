@@ -1,12 +1,17 @@
 package io.nekohasekai.sagernet.vpn
 
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -99,11 +104,25 @@ class LoginActivity : BaseThemeActivity() {
             val password = binding.txtPassword.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
+
+                // Change button text
+                binding.btnLogin.text = getString(R.string.Logging_in)
+                Handler().postDelayed({
+                    binding.btnLogin.text = getString(R.string.login)
+                }, 3000) // 3000 milliseconds delay (3 seconds)
+
+                // Show progress bar
+                binding.progressBarLogin.visibility = View.VISIBLE
+                Handler().postDelayed({
+                    binding.progressBarLogin.visibility = View.GONE
+                }, 3000) // 3000 milliseconds delay (3 seconds)
+
                 performLogin(email, password)
             } else {
                 Toast.makeText(this, "Please enter email and password.", Toast.LENGTH_LONG).show()
             }
         }
+
 
         //Forgot Password link
         binding.tvForgetPassword.setOnClickListener {
