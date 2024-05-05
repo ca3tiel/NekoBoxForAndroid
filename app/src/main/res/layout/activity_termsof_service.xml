@@ -7,14 +7,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/navyBlue"
-    tools:context=".vpn.nav.TermsofServiceActivity">
+    tools:context=".vpn.nav.TermsOfServiceActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/llTermsofService"
+            android:id="@+id/llTermsOfService"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -27,13 +27,13 @@
             tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:id="@+id/ivTermsofServiceIconAngle"
+                android:id="@+id/ivTermsOfServiceIconAngle"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_angle_circle_left" />
 
             <TextView
-                android:id="@+id/tvTermsofService"
+                android:id="@+id/tvTermsOfService"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -46,13 +46,13 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/llTermsofServicetext"
+            android:id="@+id/llTermsOfServicetext"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/llTermsofService">
+            app:layout_constraintTop_toBottomOf="@+id/llTermsOfService">
 
             <TextView
-                android:id="@+id/tvTermsofService1"
+                android:id="@+id/tvTermsOfService1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -65,10 +65,10 @@
                 android:text="UnitaVPN Terms of Service"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/llTermsofServicetext" />
+                app:layout_constraintTop_toTopOf="@+id/llTermsOfServicetext" />
 
             <TextView
-                android:id="@+id/tvTermsofService2"
+                android:id="@+id/tvTermsOfService2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -81,10 +81,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService1" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService1" />
 
             <TextView
-                android:id="@+id/tvTermsofService3"
+                android:id="@+id/tvTermsOfService3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -97,10 +97,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService2" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService2" />
 
             <TextView
-                android:id="@+id/tvTermsofService4"
+                android:id="@+id/tvTermsOfService4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -113,10 +113,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService3" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService3" />
 
             <TextView
-                android:id="@+id/tvTermsofService5"
+                android:id="@+id/tvTermsOfService5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -129,10 +129,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService4" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService4" />
 
             <TextView
-                android:id="@+id/tvTermsofService5a"
+                android:id="@+id/tvTermsOfService5a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -145,10 +145,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService5" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService5" />
 
             <TextView
-                android:id="@+id/tvTermsofService6a"
+                android:id="@+id/tvTermsOfService6a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -161,10 +161,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService5a" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService5a" />
 
             <TextView
-                android:id="@+id/tvTermsofService5b"
+                android:id="@+id/tvTermsOfService5b"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -177,10 +177,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService6a" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService6a" />
 
             <TextView
-                android:id="@+id/tvTermsofService6b"
+                android:id="@+id/tvTermsOfService6b"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -193,10 +193,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService5b" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService5b" />
 
             <TextView
-                android:id="@+id/tvTermsofService7"
+                android:id="@+id/tvTermsOfService7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -209,10 +209,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService6b" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService6b" />
 
             <TextView
-                android:id="@+id/tvTermsofService7a"
+                android:id="@+id/tvTermsOfService7a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -225,10 +225,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService7" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService7" />
 
             <TextView
-                android:id="@+id/tvTermsofService8a"
+                android:id="@+id/tvTermsOfService8a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -241,10 +241,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService7a" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService7a" />
 
             <TextView
-                android:id="@+id/tvTermsofService7b"
+                android:id="@+id/tvTermsOfService7b"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -257,10 +257,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService8a" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService8a" />
 
             <TextView
-                android:id="@+id/tvTermsofService8b1"
+                android:id="@+id/tvTermsOfService8b1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -273,10 +273,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService7b" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService7b" />
 
             <TextView
-                android:id="@+id/tvTermsofService8b2"
+                android:id="@+id/tvTermsOfService8b2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -289,10 +289,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService8b1" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService8b1" />
 
             <TextView
-                android:id="@+id/tvTermsofService8b3"
+                android:id="@+id/tvTermsOfService8b3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -305,10 +305,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService8b2" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService8b2" />
 
             <TextView
-                android:id="@+id/tvTermsofService9"
+                android:id="@+id/tvTermsOfService9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -321,10 +321,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService8b3" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService8b3" />
 
             <TextView
-                android:id="@+id/tvTermsofService10"
+                android:id="@+id/tvTermsOfService10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -338,10 +338,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService9" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService9" />
 
             <TextView
-                android:id="@+id/tvTermsofService11"
+                android:id="@+id/tvTermsOfService11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -354,10 +354,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService10" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService10" />
 
             <TextView
-                android:id="@+id/tvTermsofService12"
+                android:id="@+id/tvTermsOfService12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -370,10 +370,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService11" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService11" />
 
             <TextView
-                android:id="@+id/tvTermsofService13"
+                android:id="@+id/tvTermsOfService13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -386,10 +386,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService12" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService12" />
 
             <TextView
-                android:id="@+id/tvTermsofService14"
+                android:id="@+id/tvTermsOfService14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -403,10 +403,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService13" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService13" />
 
             <TextView
-                android:id="@+id/tvTermsofService15"
+                android:id="@+id/tvTermsOfService15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -419,10 +419,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService14" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService14" />
 
             <TextView
-                android:id="@+id/tvTermsofService16"
+                android:id="@+id/tvTermsOfService16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -435,10 +435,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService15" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService15" />
 
             <TextView
-                android:id="@+id/tvTermsofService17"
+                android:id="@+id/tvTermsOfService17"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -451,10 +451,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService16" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService16" />
 
             <TextView
-                android:id="@+id/tvTermsofService18"
+                android:id="@+id/tvTermsOfService18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -467,10 +467,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService17" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService17" />
 
             <TextView
-                android:id="@+id/tvTermsofService19"
+                android:id="@+id/tvTermsOfService19"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -483,10 +483,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService18" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService18" />
 
             <TextView
-                android:id="@+id/tvTermsofService20"
+                android:id="@+id/tvTermsOfService20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -499,10 +499,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService19" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService19" />
 
             <TextView
-                android:id="@+id/tvTermsofService21"
+                android:id="@+id/tvTermsOfService21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/museo_san_rounded700"
@@ -516,7 +516,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvTermsofService20" />
+                app:layout_constraintTop_toBottomOf="@+id/tvTermsOfService20" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

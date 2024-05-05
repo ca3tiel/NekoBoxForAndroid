@@ -77,9 +77,9 @@ class MenuFragment : Fragment() {
 
 
 
-        // Add click listener for llTermsofService
-        binding.llTermsofService.setOnClickListener {
-            val intent = Intent(requireContext(), TermsofServiceActivity::class.java)
+        // Add click listener for llTermsOfService
+        binding.llTermsOfService.setOnClickListener {
+            val intent = Intent(requireContext(), TermsOfServiceActivity::class.java)
             startActivity(intent)
         }
 

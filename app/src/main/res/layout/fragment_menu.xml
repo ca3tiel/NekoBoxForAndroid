@@ -435,7 +435,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/llTermsofService"
+        android:id="@+id/llTermsOfService"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -450,7 +450,7 @@
         app:layout_constraintTop_toBottomOf="@+id/llPrivacyPolicy">
 
         <ImageView
-            android:id="@+id/ivTermsofService"
+            android:id="@+id/ivTermsOfService"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_terms_of_service"
@@ -459,7 +459,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvTermsofService"
+            android:id="@+id/tvTermsOfService"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -469,11 +469,11 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivTermsofService"
+            app:layout_constraintStart_toEndOf="@+id/ivTermsOfService"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/ivTermsofServiceAngle"
+            android:id="@+id/ivTermsOfServiceAngle"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/ic_angle_right"
