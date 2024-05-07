@@ -7,6 +7,7 @@ import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -26,6 +27,8 @@ import io.nekohasekai.sagernet.databinding.ActivityRegisterBinding
 import io.nekohasekai.sagernet.vpn.repositories.AuthRepository
 import io.nekohasekai.sagernet.vpn.repositories.SocialAuthRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
@@ -103,19 +106,28 @@ class RegisterActivity : BaseThemeActivity() {
             val email = binding.txtEmail.text.toString()
             val password = binding.txtPassword.text.toString()
 
-            // Change button text
-            binding.btnRegister.text = getString(R.string.Registering)
-            Handler().postDelayed({
-                binding.btnRegister.text = getString(R.string.register)
-            }, 3000) // 3000 milliseconds delay (3 seconds)
+            if (email.isNotEmpty() && password.isNotEmpty()) {
 
-            // Show progress bar
-            binding.progressBarLogin.visibility = View.VISIBLE
-            Handler().postDelayed({
-                binding.progressBarLogin.visibility = View.GONE
-            }, 3000) // 3000 milliseconds delay (3 seconds)
+                // Change button text
+                binding.btnRegister.text = getString(R.string.Registering)
+                // Show progress bar
+                binding.progressBarLogin.visibility = View.VISIBLE
 
-            performRegister(email, password)
+                // Perform register asynchronously
+                GlobalScope.launch(Dispatchers.IO) {
+                    // Call performRegister
+                    performRegister(email, password)
+
+                    // Update UI on the main thread after login completes
+                    withContext(Dispatchers.Main) {
+                        // Revert button text and hide progress bar
+                        binding.btnRegister.text = getString(R.string.register)
+                        binding.progressBarLogin.visibility = View.GONE
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Please enter email and password.", Toast.LENGTH_LONG).show()
+            }
         }
 
         // Initialize passwordEditText and passwordToggle

@@ -31,6 +31,8 @@ import io.nekohasekai.sagernet.databinding.ActivityLoginBinding
 import io.nekohasekai.sagernet.vpn.repositories.AuthRepository
 import io.nekohasekai.sagernet.vpn.repositories.SocialAuthRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
@@ -107,21 +109,26 @@ class LoginActivity : BaseThemeActivity() {
 
                 // Change button text
                 binding.btnLogin.text = getString(R.string.Logging_in)
-                Handler().postDelayed({
-                    binding.btnLogin.text = getString(R.string.login)
-                }, 3000) // 3000 milliseconds delay (3 seconds)
-
                 // Show progress bar
                 binding.progressBarLogin.visibility = View.VISIBLE
-                Handler().postDelayed({
-                    binding.progressBarLogin.visibility = View.GONE
-                }, 3000) // 3000 milliseconds delay (3 seconds)
 
-                performLogin(email, password)
+                // Perform login asynchronously
+                GlobalScope.launch(Dispatchers.IO) {
+                    // Call performLogin
+                    performLogin(email, password)
+
+                    // Update UI on the main thread after login completes
+                    withContext(Dispatchers.Main) {
+                        // Revert button text and hide progress bar
+                        binding.btnLogin.text = getString(R.string.login)
+                        binding.progressBarLogin.visibility = View.GONE
+                    }
+                }
             } else {
                 Toast.makeText(this, "Please enter email and password.", Toast.LENGTH_LONG).show()
             }
         }
+
 
 
         //Forgot Password link
