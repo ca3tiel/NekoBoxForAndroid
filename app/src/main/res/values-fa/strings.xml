@@ -449,6 +449,8 @@
     <string name="comment">نظرات</string>
     <string name="unita_vpn_telegram">تلگرام</string>
     <string name="about">درباره ما</string>
+    <string name="Privacy_Policy">سیاست حفظ حریم خصوصی</string>
+    <string name="Terms_of_Service">شرایط استفاده از خدمات</string>
     <string name="ultra_fast_connection_speed">اتصال فوق العاده سریع</string>
     <string name="access_to_premium_virtual_locations">دسترسی به مکان های مجازی اشتراک ویژه</string>
     <string name="ad_free_experience">تجربه بدون آگهی</string>

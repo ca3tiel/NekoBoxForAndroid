@@ -28,11 +28,11 @@ class MenuFragment : Fragment() {
         binding.ivPreferencesIconAngle.setOnClickListener {
             startActivity(Intent(activity, DashboardActivity::class.java))
         }
-
-        // Add click listener for llGeneral
-        binding.llGeneral.setOnClickListener {
-            loadFragment(GeneralFragment())
-        }
+//<DO NOT DELETE THIS COMMENT CODE.IT WILL ADD IN FUTURE>
+//        // Add click listener for llGeneral
+//        binding.llGeneral.setOnClickListener {
+//            loadFragment(GeneralFragment())
+//        }
 
         // Add click listener for llAccount
         binding.llAccount.setOnClickListener {
@@ -45,11 +45,11 @@ class MenuFragment : Fragment() {
             val premiumIntent = Intent(context, PremiumActivity::class.java)
             startActivity(premiumIntent)
         }
-
-        // Add click listener for llComment
-        binding.llComment.setOnClickListener {
-            loadFragment(CommentFragment())
-        }
+//<DO NOT DELETE THIS COMMENT CODE.IT WILL ADD IN FUTURE>
+//        // Add click listener for llComment
+//        binding.llComment.setOnClickListener {
+//            loadFragment(CommentFragment())
+//        }
 
 
         // Add click listener Message for llShare
@@ -59,14 +59,28 @@ class MenuFragment : Fragment() {
 
         // Add click listener for llTelegram
         binding.llTelegram.setOnClickListener {
-            val telegramUri = Uri.parse("https://t.me/holyproxy")
+            val telegramUri = Uri.parse(AppRepository.telegramLink)
             val telegramIntent = Intent(Intent.ACTION_VIEW, telegramUri)
             startActivity(telegramIntent)
         }
+//<DO NOT DELETE THIS COMMENT CODE.IT WILL ADD IN FUTURE>
+//        // Add click listener for llAbout
+//        binding.llAbout.setOnClickListener {
+//            loadFragment(AboutFragment())
+//        }
 
-        // Add click listener for llAbout
-        binding.llAbout.setOnClickListener {
-            loadFragment(AboutFragment())
+        // Add click listener for llPrivacyPolicy
+        binding.llPrivacyPolicy.setOnClickListener {
+            val intent = Intent(requireContext(), PrivacyPolicyActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
+        // Add click listener for llTermsOfService
+        binding.llTermsOfService.setOnClickListener {
+            val intent = Intent(requireContext(), TermsOfServiceActivity::class.java)
+            startActivity(intent)
         }
 
         // Handle back button press

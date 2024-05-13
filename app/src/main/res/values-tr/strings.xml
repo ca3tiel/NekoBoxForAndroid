@@ -397,6 +397,8 @@
     <string name="comment">Comment</string>
     <string name="unita_vpn_telegram">Telegram</string>
     <string name="about">About</string>
+    <string name="Privacy_Policy">Privacy Policy</string>
+    <string name="Terms_of_Service">Terms of Service</string>
     <string name="ultra_fast_connection_speed">Ultra-fast connection speed</string>
     <string name="access_to_premium_virtual_locations">Access to premium virtual locations</string>
     <string name="ad_free_experience">Ad-free experience</string>
