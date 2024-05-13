@@ -36,7 +36,7 @@ class AccountFragment : Fragment() {
 
         // ExitAccountButton
         exitAccountButton.setOnClickListener {
-            SocialAuthRepository.facebookLoginManager.logOut()
+//            SocialAuthRepository.facebookLoginManager.logOut()
 //            SocialAuthRepository.firebaseAuth.signOut()
 //            SocialAuthRepository.googleSignInClient.signOut()
             AuthRepository.clearUserInfo()
