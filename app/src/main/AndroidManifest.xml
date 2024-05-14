@@ -62,6 +62,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Start">
         <activity
+            android:name=".vpn.RegistrationEmailCodeActivity"
+            android:exported="false" />
+        <activity
             android:name=".vpn.nav.TermsOfServiceActivity"
             android:exported="false" />
         <activity

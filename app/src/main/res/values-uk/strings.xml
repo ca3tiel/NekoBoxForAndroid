@@ -184,4 +184,7 @@
     <string name="connect_state">Connect</string>
     <string name="connected_state">Connected</string>
     <string name="connecting_state">Connecting…</string>
+    <string name="verification_code">Verification Code:</string>
+    <string name="enter_the_verification_code_sent_to_you_via_email">Enter the verification code sent to you via email</string>
+    <string name="send_verification_code">Send Verification Code</string>
 </resources>

@@ -495,4 +495,7 @@
     <string name="connect_state">اتصال</string>
     <string name="connected_state">متصل شدید</string>
     <string name="connecting_state">در حال اتصال…</string>
+    <string name="verification_code">کد تایید:</string>
+    <string name="enter_the_verification_code_sent_to_you_via_email">کد تایید ارسال شده از طریق ایمیل</string>
+    <string name="send_verification_code">ارسال کد تایید</string>
 </resources>

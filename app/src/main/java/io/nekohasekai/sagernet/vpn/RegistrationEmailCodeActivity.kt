@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class RegisterActivity : BaseThemeActivity() {
+class RegistrationEmailCodeActivity : BaseThemeActivity() {
 
     private lateinit var callbackManager: CallbackManager
     private lateinit var binding: ActivityRegisterBinding
@@ -51,9 +51,6 @@ class RegisterActivity : BaseThemeActivity() {
 
         // Initialize the Facebook SDK
         FacebookSdk.sdkInitialize(applicationContext)
-
-        binding.txtEmail.setText("1mytestuser@gmail.com")
-        binding.txtPassword.setText("12345678")
 
         SocialAuthRepository.firebaseAuth = FirebaseAuth.getInstance()
 

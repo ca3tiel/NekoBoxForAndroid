@@ -30,13 +30,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvEmail"
+        android:id="@+id/tvVerificationCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
         android:layout_marginStart="20dp"
         android:fontFamily="@font/museo_san_rounded700"
-        android:text="@string/email"
+        android:text="@string/verification_code"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -44,7 +44,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/txtEmail"
+        android:id="@+id/txtVerificationCode"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -53,60 +53,14 @@
         android:paddingStart="20dp"
         android:background="@drawable/background_edit_text"
         android:fontFamily="@font/museo_san_rounded500"
-        android:hint="@string/enter_your_email"
+        android:hint="@string/enter_the_verification_code_sent_to_you_via_email"
         android:inputType="textEmailAddress"
         android:textColor="@color/darkGray"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:layoutDirection="ltr"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
-
-    <TextView
-        android:id="@+id/tvPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:fontFamily="@font/museo_san_rounded700"
-        android:text="@string/password_"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
-
-    <EditText
-        android:id="@+id/txtPassword"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingStart="20dp"
-        android:background="@drawable/background_edit_text"
-        android:fontFamily="@font/museo_san_rounded500"
-        android:hint="@string/enter_your_password"
-        android:inputType="textPassword"
-        android:textColor="@color/darkGray"
-        android:textSize="18sp"
-        android:layoutDirection="ltr"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPassword" />
-
-    <ImageView
-        android:id="@+id/passwordToggle"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_password_hide"
-        android:clickable="true"
-        android:focusable="true"
-        android:layoutDirection="ltr"
-        app:layout_constraintTop_toTopOf="@+id/txtPassword"
-        app:layout_constraintBottom_toBottomOf="@+id/txtPassword"
-        app:layout_constraintEnd_toEndOf="@+id/txtPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/tvVerificationCode" />
 
     <TextView
         android:id="@+id/tvValidationError"
@@ -122,10 +76,10 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtVerificationCode" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSendVerificationCode"
+        android:id="@+id/btnRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
@@ -133,13 +87,13 @@
         android:paddingEnd="60dp"
         android:background="@drawable/background_enter_btn"
         android:fontFamily="@font/museo_san_rounded900"
-        android:text="@string/send_verification_code"
+        android:text="@string/register"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/txtVerificationCode" />
 
     <ProgressBar
         android:id="@+id/progressBarLogin"
@@ -151,9 +105,9 @@
         android:max="100"
         android:visibility="gone"
         android:elevation="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnSendVerificationCode"
-        app:layout_constraintEnd_toEndOf="@+id/btnSendVerificationCode"
-        app:layout_constraintTop_toTopOf="@+id/btnSendVerificationCode" />
+        app:layout_constraintBottom_toBottomOf="@+id/btnRegister"
+        app:layout_constraintEnd_toEndOf="@+id/btnRegister"
+        app:layout_constraintTop_toTopOf="@+id/btnRegister" />
 
     <TextView
         android:id="@+id/tvLogin"
@@ -168,7 +122,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSendVerificationCode" />
+        app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
     <LinearLayout
         android:layout_width="match_parent"
