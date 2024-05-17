@@ -167,9 +167,72 @@ object AuthRepository {
         }
     }
 
-    fun verify(email: String, verifyCode: String): Int {
+    fun checkEmailAvailabilityAndSendCode(email: String): Int {
         val requestBuilder = FormBody.Builder()
         requestBuilder.add("email", email)
+        val formBody = requestBuilder.build()
+
+        val client = OkHttpClient()
+        val url = AppRepository.getUserCheckEmailAvailabilityUrl()
+
+        val request = Request.Builder()
+            .url(url)
+            .header("Content-Type", "application/json")
+            .header("Accept", "application/json")
+            .post(formBody)
+            .build()
+
+        try {
+            val response: Response = client.newCall(request).execute()
+            if(response.code == 422) {
+                val responseBody = response.body?.string()
+                val gson = Gson()
+                val jsonObject = gson.fromJson(responseBody, JsonObject::class.java)
+                val errors = gson.fromJson(jsonObject.get("errors").asJsonObject, JsonObject::class.java)
+                setLastValidationError(errors.asJsonObject.entrySet().first().value.asString)
+            }
+            return response.code
+        } catch (e: Exception) {
+            println("Check email availability request failed: ${e.message}")
+            return -1
+        }
+    }
+
+    fun sendEmailVerificationCode(email: String): Int {
+        val requestBuilder = FormBody.Builder()
+        requestBuilder.add("email", email)
+        val formBody = requestBuilder.build()
+
+        val client = OkHttpClient()
+        val url = AppRepository.getUserCheckEmailAvailabilityUrl()
+
+        val request = Request.Builder()
+            .url(url)
+            .header("Content-Type", "application/json")
+            .header("Accept", "application/json")
+            .post(formBody)
+            .build()
+
+        try {
+            val response: Response = client.newCall(request).execute()
+            if(response.code == 422) {
+                val responseBody = response.body?.string()
+                val gson = Gson()
+                val jsonObject = gson.fromJson(responseBody, JsonObject::class.java)
+                val errors = gson.fromJson(jsonObject.get("errors").asJsonObject, JsonObject::class.java)
+                setLastValidationError(errors.asJsonObject.entrySet().first().value.asString)
+            }
+            return response.code
+        } catch (e: Exception) {
+            println("Check email availability request failed: ${e.message}")
+            return -1
+        }
+    }
+
+    fun verify(email: String, password: String, verifyCode: String): Int {
+        val requestBuilder = FormBody.Builder()
+        requestBuilder.add("email", email)
+        requestBuilder.add("passwd", password)
         requestBuilder.add("code", verifyCode)
         val formBody = requestBuilder.build()
 
@@ -185,13 +248,10 @@ object AuthRepository {
 
         try {
             val response: Response = client.newCall(request).execute()
-            if(response.isSuccessful) {
-                val responseBody = response.body?.string()
-                val gson = Gson()
-                val jsonObject = gson.fromJson(responseBody, JsonObject::class.java)
-                val token = jsonObject.get("token").asString
-                setUserToken(token)
-            }
+            val responseBody = response.body?.string()
+            val gson = Gson()
+            val apiResponse = gson.fromJson(responseBody, InfoApiResponse::class.java)
+            setUserAccountInfo(apiResponse)
             return response.code
         } catch (e: Exception) {
             println("Request failed: ${e.message}")

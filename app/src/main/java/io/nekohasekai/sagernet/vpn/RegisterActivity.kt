@@ -109,14 +109,14 @@ class RegisterActivity : BaseThemeActivity() {
             if (email.isNotEmpty() && password.isNotEmpty()) {
 
                 // Change button text
-                binding.btnRegister.text = getString(R.string.Registering)
+                binding.btnRegister.text = getString(R.string.Checking)
                 // Show progress bar
                 binding.progressBarLogin.visibility = View.VISIBLE
 
                 // Perform register asynchronously
                 GlobalScope.launch(Dispatchers.IO) {
-                    // Call performRegister
-                    performRegister(email, password)
+                    // Check if Email is available
+                    checkEmailAvailability(email, password)
 
                     // Update UI on the main thread after login completes
                     withContext(Dispatchers.Main) {
@@ -183,12 +183,50 @@ class RegisterActivity : BaseThemeActivity() {
                         200 -> {
                             runOnUiThread {
                                 binding.tvValidationError.visibility = View.INVISIBLE
-                                navigateToVerifyActivity(email)
+                                navigateToVerifyActivity(email, password)
                             }
                         }
                         409 -> {
                             runOnUiThread {
                                 binding.tvValidationError.text = "This Email is already registered"
+                                binding.tvValidationError.visibility = View.VISIBLE
+                            }
+                        }
+                        422 -> {
+                            runOnUiThread {
+                                binding.tvValidationError.text = AuthRepository.getLastValidationError()
+                                binding.tvValidationError.visibility = View.VISIBLE
+                            }
+                        }
+                        else -> {
+                            runOnUiThread {
+                                binding.tvValidationError.text = "Something is wrong!"
+                                binding.tvValidationError.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                println("Request failed: ${e.message}")
+            }
+        }
+    }
+
+    private fun checkEmailAvailability(email: String, password: String) {
+        runBlocking {
+            try {
+                withContext(Dispatchers.IO) {
+                    val responseCode = AuthRepository.checkEmailAvailabilityAndSendCode(email)
+                    when (responseCode) {
+                        200 -> {
+                            runOnUiThread {
+                                binding.tvValidationError.visibility = View.INVISIBLE
+                                navigateToVerifyActivity(email, password)
+                            }
+                        }
+                        409 -> {
+                            runOnUiThread {
+                                binding.tvValidationError.text = "Email is not available!"
                                 binding.tvValidationError.visibility = View.VISIBLE
                             }
                         }
@@ -250,9 +288,11 @@ class RegisterActivity : BaseThemeActivity() {
             }
     }
 
-    private fun navigateToVerifyActivity(email: String) {
+    private fun navigateToVerifyActivity(email: String, password: String) {
         val intent = Intent(this, EmailVerify::class.java)
         AuthRepository.setUserEmail(email)
+        intent.putExtra("email", email)
+        intent.putExtra("password", password)
         startActivity(intent)
         finish()
     }

@@ -29,8 +29,9 @@ object AppRepository {
 //    private var userLoginUrl: String = "https://unitavpn.com/api/client/token"
     private var userLoginUrl: String = "https://api.unitavpn.com/api/auth/login"
     private var userRegisterUrl: String = "https://api.unitavpn.com/api/client/register"
+    private var userCheckEmailAvailability: String = "https://api.unitavpn.com/api/auth/register/check"
     private var userVerifyUrl: String = "https://api.unitavpn.com/api/auth/verify"
-    private var userResetPasswordUrl: String = "https://api.unitavpn.com/api/auth/reset"
+    private var userResetPasswordUrl: String = "https://api.unitavpn.com/password/reset"
     private var userStateUrl: String = "https://unitavpn.com/api/client/account/info"
     private var panelApiHeaderToken: String = "9f8a833ca1383c5449e1d8800b45fd54"
     private var panelSettingsUrl = "https://api.unitavpn.com/api/settings"
@@ -106,6 +107,10 @@ object AppRepository {
         return userRegisterUrl
     }
 
+    fun getUserCheckEmailAvailabilityUrl(): String {
+        return userCheckEmailAvailability
+    }
+
     fun getUserStateUrl(): String? {
         return userStateUrl
     }
@@ -124,6 +129,10 @@ object AppRepository {
 
     fun setUserRegisterUrl(path: String) {
         userRegisterUrl = path
+    }
+
+    fun setUserCheckEmailAvailability(path: String) {
+        userCheckEmailAvailability = path
     }
 
     fun setUserStateUrl(path: String) {
@@ -152,6 +161,8 @@ object AppRepository {
                     val baseUrl = jsonObject.get("baseUrl").asString
                     val userLoginUrl = jsonObject.get("userLoginUrl").asString
                     val userRegisterUrl = jsonObject.get("userRegisterUrl").asString
+                    val userCheckEmailAvailability = jsonObject.get("userCheckEmailAvailability").asString
+                    val userResetPasswordUrl = jsonObject.get("userResetPasswordUrl").asString
                     val userStateUrl = jsonObject.get("userStateUrl").asString
                     val panelApiHeaderToken = jsonObject.get("panelApiHeaderToken").asString
                     val versionCode = jsonObject.get("versionCode").asInt
@@ -160,6 +171,8 @@ object AppRepository {
                     setBaseUrl(baseUrl)
                     setUserLoginUrl(userLoginUrl)
                     setUserRegisterUrl(userRegisterUrl)
+                    setUserCheckEmailAvailability(userCheckEmailAvailability)
+                    setUserResetPasswordUrl(userResetPasswordUrl)
                     setUserStateUrl(userStateUrl)
                     setPanelApiHeaderToken(panelApiHeaderToken)
                     setVersionCode(versionCode, forceUnder)

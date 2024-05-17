@@ -1,11 +1,14 @@
 package io.nekohasekai.sagernet.vpn
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.webkit.WebViewClient
 import io.nekohasekai.sagernet.databinding.ActivityForgotPasswordBinding
+import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 
 class ForgotPasswordActivity : BaseThemeActivity() {
     private lateinit var binding: ActivityForgotPasswordBinding
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
@@ -20,7 +23,7 @@ class ForgotPasswordActivity : BaseThemeActivity() {
         binding.webView.webViewClient = WebViewClient()
 
         // Load a web page
-        val url = "https://api.unitavpn.com/password/reset"
+        val url = AppRepository.getUserResetPasswordUrl()
         binding.webView.loadUrl(url)
     }
 }

@@ -182,9 +182,9 @@ class LoginActivity : BaseThemeActivity() {
                                 navigateToDashboardActivity()
                             }
                         }
-                        500 -> {
+                        500,404 -> {
                             runOnUiThread {
-                                binding.tvValidationError.text = "User or Password is wrong!"
+                                binding.tvValidationError.text = "Email or Password is wrong!"
                                 binding.tvValidationError.visibility = View.VISIBLE
                             }
                         }
