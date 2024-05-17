@@ -604,12 +604,15 @@
     <string name="One_hundred_and_eighty_days">180 Days</string>
     <string name="Three_hundred_and_sixty_five_days">365 Days</string>
     <string name="verify">Verify</string>
+    <string name="verifying">Verifying…</string>
     <string name="verify_code">Verify Code:</string>
     <string name="enter_your_verify_code">Enter Your Verify Code</string>
     <string name="resend_verify_code">Resend Verify Code</string>
+    <string name="resending_verify_code">Resending Verify Code…</string>
     <string name="pay">PAY</string>
     <string name="register">Register</string>
     <string name="Registering">Registering…</string>
+    <string name="Checking">Checking…</string>
     <string name="update_now">Update Now</string>
     <string name="email">Email:</string>
     <string name="enter_your_email">Enter Your Email</string>

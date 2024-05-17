@@ -282,12 +282,14 @@ object AdRepository {
         // Initialize the Google Mobile Ads SDK.
         MobileAds.initialize(context)
 
+        AuthRepository.getUserAccountInfo()
+
         // Request load ads after user granted consent
-        if (AuthRepository.getUserToken() === null) {
-            val intent = Intent(context, WelcomeActivity::class.java)
+        if (AuthRepository.isUserAlreadyLogin()) {
+            val intent = Intent(context, DashboardActivity::class.java)
             context.startActivity(intent)
         } else {
-            val intent = Intent(context, DashboardActivity::class.java)
+            val intent = Intent(context, WelcomeActivity::class.java)
             context.startActivity(intent)
         }
 
