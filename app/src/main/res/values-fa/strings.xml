@@ -495,4 +495,5 @@
     <string name="connect_state">اتصال</string>
     <string name="connected_state">متصل شدید</string>
     <string name="connecting_state">در حال اتصال…</string>
+    <string name="Try_Again">Try Again</string>
 </resources>

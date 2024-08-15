@@ -4,15 +4,19 @@ import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import kotlinx.coroutines.withTimeoutOrNull
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdError
@@ -56,6 +60,8 @@ import java.util.concurrent.ConcurrentLinkedQueue
 
 class SplashActivity : BaseThemeActivity() {
 
+    private lateinit var progressBar: ProgressBar
+    private lateinit var tryAgainButton: AppCompatButton
     private var mInterstitialAd: InterstitialAd? = null
     private lateinit var checkUpdate: AlertDialog
     fun ProxyGroup.init() {
@@ -106,6 +112,18 @@ class SplashActivity : BaseThemeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        // Initialize the ProgressBar and Try Again Button
+        progressBar = findViewById(R.id.progressBar)
+        tryAgainButton = findViewById(R.id.btn_Try_Again)
+
+        // Set the Try Again button click listener
+        tryAgainButton.setOnClickListener {
+            retryLoading()
+        }
+
+        // Start the loading process
+        startLoading()
 
         loadFcmToken()
         //Show AdMob Interstitial
@@ -204,16 +222,57 @@ class SplashActivity : BaseThemeActivity() {
         })
     }
 
-    private fun startWelcomeActivity() {
-        if (AuthRepository.getUserToken() === null) {
-            val intent = Intent(this, WelcomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        } else {
-            val intent = Intent(this, DashboardActivity::class.java)
-            startActivity(intent)
-            finish()
+    private fun startLoading() {
+        // Show the progress bar and hide the Try Again button
+        progressBar.visibility = View.VISIBLE
+        tryAgainButton.visibility = View.GONE
+
+        // Launch a coroutine to handle loading
+        GlobalScope.launch(Dispatchers.Main) {
+            val result = withTimeoutOrNull(15000) { // 15 seconds timeout
+                try {
+                    getSettings()
+                    // Update progress bar to 50% after getSettings() completes successfully
+                    progressBar.progress = 50
+
+                    if (!AppRepository.appShouldForceUpdate) {
+                        getServers()
+                        // Update progress bar to 80% after getServers() completes successfully
+                        progressBar.progress = 80
+                    }
+                    true // Indicate success
+                } catch (e: Exception) {
+                    false // Indicate failure
+                }
+            }
+
+            if (result == true) {
+                startWelcomeActivity() // Start next activity if loading is successful
+            } else {
+                showRetryOption() // Show the Try Again button if loading fails or times out
+            }
         }
+    }
+
+    private fun retryLoading() {
+        startLoading() // Restart the loading process when Try Again is clicked
+    }
+
+    private fun showRetryOption() {
+        // Hide the progress bar and show the Try Again button
+        progressBar.visibility = View.GONE
+        tryAgainButton.visibility = View.VISIBLE
+    }
+
+    private fun startWelcomeActivity() {
+        // Determine which activity to start based on user authentication status
+        val intent = if (AuthRepository.getUserToken() == null) {
+            Intent(this, WelcomeActivity::class.java)
+        } else {
+            Intent(this, DashboardActivity::class.java)
+        }
+        startActivity(intent)
+        finish() // Finish the SplashActivity
     }
 
     private suspend fun getServers(): String {

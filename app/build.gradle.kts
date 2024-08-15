@@ -35,6 +35,9 @@ dependencies {
 
     implementation(fileTree("libs"))
 
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+
     implementation("com.google.android.gms:play-services-ads:22.4.0")
     implementation("com.google.android.ump:user-messaging-platform:2.1.0")
     implementation("com.airbnb.android:lottie:6.1.0")
