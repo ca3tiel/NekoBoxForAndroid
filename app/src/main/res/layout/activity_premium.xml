@@ -69,6 +69,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/tvPremiumAccountNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/museo_san_rounded700"
+            android:text="Get Exclusive Premium Privileges"
+            android:textColor="@color/UnitaYellow"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clPremium" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clPremiumTable"
         android:layout_width="match_parent"
@@ -78,7 +91,7 @@
         android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clPremium">
+        app:layout_constraintTop_toBottomOf="@+id/tvPremiumAccountNote">
 
         <TableLayout
             android:id="@+id/TlPremiumTable"
