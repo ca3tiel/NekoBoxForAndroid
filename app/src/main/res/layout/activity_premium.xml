@@ -1576,6 +1576,7 @@
             android:id="@+id/btnPremiumPay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
             android:background="@drawable/background_enter_btn"
             android:fontFamily="@font/museo_san_rounded700"
             android:text="@string/pay"
