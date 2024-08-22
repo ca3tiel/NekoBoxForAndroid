@@ -215,12 +215,14 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="40dp"
+        android:baselineAligned="false"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/register_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
+            android:id="@+id/LLFacebookRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
@@ -229,7 +231,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageFacebook"
+                android:id="@+id/imageFacebookRegister"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="8dp"
@@ -237,7 +239,7 @@
                 app:srcCompat="@drawable/ic_facebook" />
 
             <TextView
-                android:id="@+id/tvFacebookSignIn"
+                android:id="@+id/tvFacebookRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -251,6 +253,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/LLGoogleRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
@@ -259,14 +262,14 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageGoogle"
+                android:id="@+id/imageGoogleRegister"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="8dp"
                 app:srcCompat="@drawable/ic_google" />
 
             <TextView
-                android:id="@+id/tvGoogleSignIn"
+                android:id="@+id/tvGoogleRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
