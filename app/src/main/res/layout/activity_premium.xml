@@ -74,34 +74,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clPremium">
 
-        <ImageView
-            android:id="@+id/ivCheckMark_1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="50dp"
-            android:src="@drawable/ic_checkmark"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvTitle1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:fontFamily="@font/museo_san_rounded700"
-            android:text="@string/ultra_fast_connection_speed"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/ivCheckMark_1"
-            app:layout_constraintStart_toStartOf="@+id/ivCheckMark_1"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/background_premium"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle1">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -110,17 +91,16 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="7"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="7">
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:paddingBottom="5dp"></androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="2"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="2">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/tvFree"
@@ -141,10 +121,10 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table">
+                    android:background="@drawable/background_premium_table"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/tvPremium"
@@ -162,12 +142,14 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </TableRow>
+
             <View
                 android:id="@+id/view"
                 android:layout_width="wrap_content"
                 android:layout_height="0.5dp"
                 android:layout_gravity="center_vertical"
                 android:background="@color/lightGray" />
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -175,9 +157,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="7"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="7">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/tvFree"
@@ -197,27 +179,28 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="2"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="2">
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:paddingBottom="5dp"></androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table">
+                    android:background="@drawable/background_premium_table"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </TableRow>
+
             <View
                 android:id="@+id/view"
                 android:layout_width="wrap_content"
                 android:layout_height="0.5dp"
                 android:layout_gravity="center_vertical"
                 android:background="@color/lightGray" />
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -225,9 +208,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="7"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="7">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/tvFree"
@@ -247,9 +230,10 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="2"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="2">
+                    android:paddingBottom="5dp">
+
                     <TextView
                         android:id="@+id/tvFree"
                         android:layout_width="wrap_content"
@@ -268,10 +252,10 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table">
+                    android:background="@drawable/background_premium_table"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/tvFree"
@@ -289,12 +273,14 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </TableRow>
+
             <View
                 android:id="@+id/view"
                 android:layout_width="wrap_content"
                 android:layout_height="0.5dp"
                 android:layout_gravity="center_vertical"
                 android:background="@color/lightGray" />
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -302,9 +288,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="7"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="7">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/tvFree"
@@ -312,7 +298,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/museo_san_rounded500"
-                        android:text="Speed"
+                        android:text="Location"
                         android:textColor="@color/lightGray"
                         android:textSize="16sp"
                         android:textStyle="normal"
@@ -324,15 +310,16 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="2"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="2">
+                    android:paddingBottom="5dp">
+
                     <TextView
                         android:id="@+id/tvFree"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/museo_san_rounded500"
-                        android:text="1 x"
+                        android:text="Random"
                         android:textColor="@color/lightGray"
                         android:textSize="16sp"
                         android:textStyle="normal"
@@ -345,17 +332,17 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table">
+                    android:background="@drawable/background_premium_table"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/tvFree"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/museo_san_rounded500"
-                        android:text="10 x"
+                        android:text="+30"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:textStyle="normal"
@@ -366,12 +353,14 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </TableRow>
+
             <View
                 android:id="@+id/view"
                 android:layout_width="wrap_content"
                 android:layout_height="0.5dp"
                 android:layout_gravity="center_vertical"
                 android:background="@color/lightGray" />
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -379,9 +368,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="7"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="7">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/tvFree"
@@ -389,7 +378,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/museo_san_rounded500"
-                        android:text="Speed"
+                        android:text="Data Session"
                         android:textColor="@color/lightGray"
                         android:textSize="16sp"
                         android:textStyle="normal"
@@ -401,41 +390,35 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="2"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="2">
-                    <TextView
-                        android:id="@+id/tvFree"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/museo_san_rounded500"
-                        android:text="1 x"
-                        android:textColor="@color/lightGray"
-                        android:textSize="16sp"
-                        android:textStyle="normal"
+                    android:paddingBottom="5dp">
+
+                    <ImageView
+                        android:id="@+id/ivCheckMark_1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_checkmark_gray"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table">
+                    android:background="@drawable/background_premium_table"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
 
-                    <TextView
-                        android:id="@+id/tvFree"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/museo_san_rounded500"
-                        android:text="10 x"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="normal"
+                    <ImageView
+                        android:id="@+id/ivCheckMark_1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_cross_mark_gold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -443,12 +426,14 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </TableRow>
+
             <View
                 android:id="@+id/view"
                 android:layout_width="wrap_content"
                 android:layout_height="0.5dp"
                 android:layout_gravity="center_vertical"
                 android:background="@color/lightGray" />
+
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -456,9 +441,9 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="7"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="7">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/tvFree"
@@ -466,7 +451,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/museo_san_rounded500"
-                        android:text="Speed"
+                        android:text="Watch ads"
                         android:textColor="@color/lightGray"
                         android:textSize="16sp"
                         android:textStyle="normal"
@@ -478,9 +463,146 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="2"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:layout_weight="2">
+                    android:paddingBottom="5dp">
+
+                    <ImageView
+                        android:id="@+id/ivCheckMark_1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_checkmark_gray"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_premium_table"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <ImageView
+                        android:id="@+id/ivCheckMark_1"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_cross_mark_gold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </TableRow>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/lightGray" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/tvFree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/museo_san_rounded500"
+                        android:text="Unic Protocol"
+                        android:textColor="@color/lightGray"
+                        android:textSize="16sp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_premium_table"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <ImageView
+                        android:id="@+id/ivCheckMark_1"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_checkmark_gold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </TableRow>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/lightGray" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/tvFree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/museo_san_rounded500"
+                        android:text="Watch ads"
+                        android:textColor="@color/lightGray"
+                        android:textSize="16sp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
                     <TextView
                         android:id="@+id/tvFree"
                         android:layout_width="wrap_content"
@@ -499,10 +621,10 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table">
+                    android:background="@drawable/background_premium_table"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/tvFree"
@@ -521,6 +643,85 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </TableRow>
 
+            <View
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/lightGray" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/tvFree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/museo_san_rounded500"
+                        android:text="Watch ads"
+                        android:textColor="@color/lightGray"
+                        android:textSize="16sp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/tvFree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/museo_san_rounded500"
+                        android:text="1 x"
+                        android:textColor="@color/lightGray"
+                        android:textSize="16sp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_premium_table"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <TextView
+                        android:id="@+id/tvFree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/museo_san_rounded500"
+                        android:text="10 x"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="normal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </TableRow>
         </TableLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
