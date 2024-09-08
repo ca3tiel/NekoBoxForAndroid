@@ -30,7 +30,7 @@
         tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_Try_Again"
+        android:id="@+id/btnTryAgain"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/background_enter_btn"
