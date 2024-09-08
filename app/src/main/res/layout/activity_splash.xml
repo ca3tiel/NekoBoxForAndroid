@@ -9,6 +9,7 @@
     tools:context=".vpn.SplashActivity">
 
     <ImageView
+        android:id="@+id/imageView3"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:src="@mipmap/unitavpn_ic_hq"
@@ -16,5 +17,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:progressDrawable="@drawable/custom_progress_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnTryAgain"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_enter_btn"
+        android:fontFamily="@font/museo_san_rounded900"
+        android:text="@string/Try_Again"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

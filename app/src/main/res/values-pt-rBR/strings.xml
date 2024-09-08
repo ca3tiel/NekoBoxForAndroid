@@ -74,4 +74,5 @@
     <string name="connect_state">Connect</string>
     <string name="connected_state">Connected</string>
     <string name="connecting_state">Connecting…</string>
+    <string name="Try_Again">Try Again</string>
 </resources>
