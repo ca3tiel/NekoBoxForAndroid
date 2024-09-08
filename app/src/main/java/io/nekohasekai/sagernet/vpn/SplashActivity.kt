@@ -115,7 +115,7 @@ class SplashActivity : BaseThemeActivity() {
 
         // Initialize the ProgressBar and Try Again Button
         progressBar = findViewById(R.id.progressBar)
-        tryAgainButton = findViewById(R.id.btn_Try_Again)
+        tryAgainButton = findViewById(R.id.btnTryAgain)
 
         // Set the Try Again button click listener
         tryAgainButton.setOnClickListener {
