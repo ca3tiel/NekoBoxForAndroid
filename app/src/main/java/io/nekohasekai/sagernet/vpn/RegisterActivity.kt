@@ -87,14 +87,22 @@ class RegisterActivity : BaseThemeActivity() {
 
         SocialAuthRepository.googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
 
-        binding.tvGoogleSignIn.setOnClickListener {
+        binding.LLGoogleRegister.setOnClickListener {
             val signInIntent = SocialAuthRepository.googleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
 
-        binding.tvFacebookSignIn.setOnClickListener {
+        binding.tvGoogleRegister.setOnClickListener {
+            binding.LLGoogleRegister.performClick()
+        }
+
+        binding.LLFacebookRegister.setOnClickListener {
             AccessToken.setCurrentAccessToken(null)
             SocialAuthRepository.facebookLoginManager.logInWithReadPermissions(this, listOf("email", "public_profile"))
+        }
+
+        binding.tvFacebookRegister.setOnClickListener {
+            binding.LLFacebookRegister.performClick()
         }
 
         binding.tvLogin.setOnClickListener {

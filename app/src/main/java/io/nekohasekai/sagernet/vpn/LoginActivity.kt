@@ -88,14 +88,20 @@ class LoginActivity : BaseThemeActivity() {
 
         SocialAuthRepository.googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
 
-        binding.tvGoogleSignIn.setOnClickListener {
+        binding.LLGoogleSignIn.setOnClickListener {
             val signInIntent = SocialAuthRepository.googleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
+        binding.tvGoogleSignIn.setOnClickListener {
+            binding.LLGoogleSignIn.performClick()
+        }
 
-        binding.tvFacebookSignIn.setOnClickListener {
+        binding.LLFacebookSignIn.setOnClickListener {
             AccessToken.setCurrentAccessToken(null)
             SocialAuthRepository.facebookLoginManager.logInWithReadPermissions(this, listOf("email", "public_profile"))
+        }
+        binding.tvFacebookSignIn.setOnClickListener {
+            binding.LLFacebookSignIn.performClick()
         }
 
         binding.txtEmail.setText("ahmad246@gmail.com")
