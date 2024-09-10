@@ -249,8 +249,7 @@ class SplashActivity : BaseThemeActivity() {
             if (result == true) {
                 startWelcomeActivity() // Start next activity if loading is successful
             } else {
-                startWelcomeActivity()
-                //showRetryOption() // Show the Try Again button if loading fails or times out
+                showRetryOption() // Show the Try Again button if loading fails or times out
             }
         }
     }
@@ -268,7 +267,7 @@ class SplashActivity : BaseThemeActivity() {
     private fun startWelcomeActivity() {
         // Determine which activity to start based on user authentication status
         val intent = if (AuthRepository.getUserToken() == null) {
-            Intent(this, MainActivity::class.java)
+            Intent(this, WelcomeActivity::class.java)
         } else {
             Intent(this, DashboardActivity::class.java)
         }
@@ -307,16 +306,12 @@ class SplashActivity : BaseThemeActivity() {
         AppRepository.allServersOriginal = mutableListOf()
         AppRepository.allServersOriginal.clear()
         AppRepository.setAllServer(AppRepository.allServers)
-        AppRepository.debugLog(AppRepository.allServersRaw.toString())
-        AppRepository.debugLog("Size: " + AppRepository.allServersRaw.entrySet().size.toString())
         AppRepository.allServersRaw.entrySet().forEach { entry ->
             val serverSubItems: MutableList<ListSubItem> = mutableListOf()
             val countryCode = entry.key
             val resourceName = "ic_${countryCode}_flag"
             val countryName = AppRepository.flagNameMapper(countryCode)
             entry.value.asJsonArray.forEach { it ->
-                AppRepository.debugLog(countryCode + ": " + counter.toString() + " in " + proxies.size)
-                AppRepository.debugLog("Proxy: " + proxies[counter].name)
                 var profile = ProfileManager.createProfile(targetId, proxies[counter])
                 var serverId = it.asJsonObject.get("id").asInt
                 val tagsArray = it.asJsonObject.getAsJsonArray("tags")
