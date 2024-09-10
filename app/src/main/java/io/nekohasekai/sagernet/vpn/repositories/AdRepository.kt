@@ -23,6 +23,7 @@ import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.SagerNet
+import io.nekohasekai.sagernet.ui.MainActivity
 import io.nekohasekai.sagernet.vpn.DashboardActivity
 import io.nekohasekai.sagernet.vpn.WelcomeActivity
 import io.nekohasekai.sagernet.vpn.utils.InternetConnectionChecker
@@ -289,7 +290,7 @@ object AdRepository {
             val intent = Intent(context, DashboardActivity::class.java)
             context.startActivity(intent)
         } else {
-            val intent = Intent(context, WelcomeActivity::class.java)
+            val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)
         }
 
