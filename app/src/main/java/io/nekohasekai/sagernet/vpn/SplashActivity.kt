@@ -41,6 +41,7 @@ import io.nekohasekai.sagernet.fmt.AbstractBean
 import io.nekohasekai.sagernet.group.RawUpdater
 import io.nekohasekai.sagernet.ktx.applyDefaultValues
 import io.nekohasekai.sagernet.ktx.onMainDispatcher
+import io.nekohasekai.sagernet.ui.MainActivity
 import io.nekohasekai.sagernet.ui.ThemedActivity
 import io.nekohasekai.sagernet.vpn.components.ForceUpdateDialog
 import io.nekohasekai.sagernet.vpn.repositories.AdRepository
@@ -133,12 +134,7 @@ class SplashActivity : BaseThemeActivity() {
 
         GlobalScope.launch(Dispatchers.Main) {
             // Check Ad Consent
-            getSettings()
-            checkForUpdate()
 
-            if (!AppRepository.appShouldForceUpdate) {
-                getServers()
-            }
 //              startWelcomeActivity()
 //            showInterstitialAd()
         }
@@ -233,7 +229,11 @@ class SplashActivity : BaseThemeActivity() {
                 try {
                     getSettings()
                     // Update progress bar to 50% after getSettings() completes successfully
-                    progressBar.progress = 50
+                    progressBar.progress = 40
+
+                    checkForUpdate()
+
+                    progressBar.progress = 60
 
                     if (!AppRepository.appShouldForceUpdate) {
                         getServers()
@@ -306,7 +306,6 @@ class SplashActivity : BaseThemeActivity() {
         AppRepository.allServersOriginal = mutableListOf()
         AppRepository.allServersOriginal.clear()
         AppRepository.setAllServer(AppRepository.allServers)
-        AppRepository.debugLog(AppRepository.allServersRaw.toString())
         AppRepository.allServersRaw.entrySet().forEach { entry ->
             val serverSubItems: MutableList<ListSubItem> = mutableListOf()
             val countryCode = entry.key
