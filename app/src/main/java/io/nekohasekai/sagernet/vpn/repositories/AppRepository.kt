@@ -540,7 +540,18 @@ object AppRepository {
             "other" to "Others"
         )
 
-        return countries[countryCode].toString()
+//        return countries[countryCode].toString()
+        val name = countries[countryCode] ?: "Unknown"
+
+        // Don't add flag if country name is "Other"
+        return if (name == "Others" || name == "Unknown") {
+            name
+        } else {
+            val flag = countryCode.uppercase().map { char -> 0x1F1E6 - 'A'.code + char.code }
+                .map { String(Character.toChars(it)) }
+                .joinToString("")
+            "$flag $name"
+        }
     }
 
     fun countryCodeMapper(countryName: String): String
