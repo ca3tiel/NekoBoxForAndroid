@@ -131,7 +131,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table_top_edge"
+                    android:background="@drawable/background_premium_table_top_edge_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -139,7 +139,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table_top_edge"
+                    android:background="@drawable/background_premium_table_top_edge_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -186,7 +186,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -204,7 +204,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/museo_san_rounded500"
-                        android:text="Premium"
+                        android:text="Golden"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -218,7 +218,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -236,7 +236,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/museo_san_rounded500"
-                        android:text="Premium"
+                        android:text="Titanium"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -294,7 +294,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -302,7 +302,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -370,7 +370,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -394,7 +394,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -475,7 +475,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -499,7 +499,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -577,7 +577,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -597,7 +597,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -676,7 +676,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -696,7 +696,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -765,7 +765,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -785,7 +785,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -854,7 +854,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -864,7 +864,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -946,7 +946,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -970,7 +970,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1052,7 +1052,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1076,7 +1076,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1154,7 +1154,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1174,7 +1174,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1243,7 +1243,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1263,7 +1263,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1332,7 +1332,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1352,7 +1352,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1421,7 +1421,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1431,7 +1431,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1500,7 +1500,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1520,7 +1520,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1589,7 +1589,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1609,7 +1609,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1678,7 +1678,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1698,7 +1698,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1768,7 +1768,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1788,7 +1788,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table"
+                    android:background="@drawable/background_premium_table_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1839,7 +1839,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table_bottom_edge"
+                    android:background="@drawable/background_premium_table_bottom_edge_golden"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
@@ -1849,7 +1849,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/background_premium_table_bottom_edge"
+                    android:background="@drawable/background_premium_table_bottom_edge_titanium"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp">
 
