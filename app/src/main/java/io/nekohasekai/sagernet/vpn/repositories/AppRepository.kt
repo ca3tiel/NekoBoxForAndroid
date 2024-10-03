@@ -24,7 +24,7 @@ object AppRepository {
     var LogTag: String = "HAMED_LOG"
     var appName: String = "UnitaVPN"
     private var subscriptionLink: String = "https://Apanel.holyip.workers.dev/link/9RTsfMryrGwgWZVb48eN?config=1"
-    private var apiServersListUrl: String = "https://api.unitavpn.com/api/servers"
+    private var apiServersListUrl: String = "https://api.unitavpn.com/api/user/servers"
     private var baseUrl: String = "https://api.unitavpn.com/"
 //    private var userLoginUrl: String = "https://unitavpn.com/api/client/token"
     private var userLoginUrl: String = "https://api.unitavpn.com/api/auth/login"
@@ -258,6 +258,7 @@ object AppRepository {
             .header("xmplus-authorization", getPanelApiHeaderToken())
             .header("Content-Type", "application/json")
             .header("Accept", "application/json")
+            .header("Authorization", "Bearer " + AuthRepository.getUserAccountInfo().data.token)
             .get()
             .build()
 
@@ -550,7 +551,7 @@ object AppRepository {
             val flag = countryCode.uppercase().map { char -> 0x1F1E6 - 'A'.code + char.code }
                 .map { String(Character.toChars(it)) }
                 .joinToString("")
-            "$flag $name"
+            "$flag   $name"
         }
     }
 

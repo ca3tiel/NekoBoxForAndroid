@@ -266,7 +266,7 @@ class SplashActivity : BaseThemeActivity() {
 
     private fun startWelcomeActivity() {
         // Determine which activity to start based on user authentication status
-        val intent = if (AuthRepository.getUserToken() == null) {
+        val intent = if (!AuthRepository.isUserAlreadyLogin()) {
             Intent(this, WelcomeActivity::class.java)
         } else {
             Intent(this, DashboardActivity::class.java)
@@ -277,9 +277,9 @@ class SplashActivity : BaseThemeActivity() {
 
     private suspend fun getServers(): String {
         return withContext(Dispatchers.IO) {
-            var response = AppRepository.getServersListSync()
+            val response = AppRepository.getServersListSync()
             if(response == 200) {
-                var serversString = AppRepository.getRawServersConfigAsString()
+                val serversString = AppRepository.getRawServersConfigAsString()
                 val proxies = RawUpdater.parseRaw(serversString)
                 if(!proxies.isNullOrEmpty()) {
                     import(proxies)
@@ -298,6 +298,7 @@ class SplashActivity : BaseThemeActivity() {
 
     @SuppressLint("DiscouragedApi")
     suspend fun import(proxies: List<AbstractBean>) {
+        AppRepository.debugLog("TEST100")
         removeAllProfiles()
         val targetId = DataStore.selectedGroupForImport()
         var counter = 0
@@ -306,12 +307,14 @@ class SplashActivity : BaseThemeActivity() {
         AppRepository.allServersOriginal = mutableListOf()
         AppRepository.allServersOriginal.clear()
         AppRepository.setAllServer(AppRepository.allServers)
+        AppRepository.debugLog("TEST101: ")
         AppRepository.allServersRaw.entrySet().forEach { entry ->
             val serverSubItems: MutableList<ListSubItem> = mutableListOf()
             val countryCode = entry.key
             val resourceName = "ic_${countryCode}_flag"
             val countryName = AppRepository.flagNameMapper(countryCode)
             entry.value.asJsonArray.forEach { it ->
+                AppRepository.debugLog("TEST101-"+counter.toString())
                 var profile = ProfileManager.createProfile(targetId, proxies[counter])
                 var serverId = it.asJsonObject.get("id").asInt
                 val tagsArray = it.asJsonObject.getAsJsonArray("tags")
@@ -329,6 +332,7 @@ class SplashActivity : BaseThemeActivity() {
                 )
             )
         }
+        AppRepository.debugLog("TEST102")
         AppRepository.allServersOriginal = AppRepository.allServers
         AppRepository.setAllServer(AppRepository.allServers)
         AdRepository.checkAdConsent(this@SplashActivity)

@@ -46,6 +46,7 @@ import io.nekohasekai.sagernet.ui.VpnRequestActivity
 import io.nekohasekai.sagernet.vpn.nav.MenuFragment
 import io.nekohasekai.sagernet.vpn.repositories.AdRepository
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
+import io.nekohasekai.sagernet.vpn.repositories.AuthRepository
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
 import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import io.nekohasekai.sagernet.vpn.serverlist.MyFragment
@@ -93,6 +94,12 @@ class DashboardActivity : BaseThemeActivity(),
         // load BannerAd and RewardedAd
         AdRepository.loadBannerAd(this@DashboardActivity)
         AdRepository.loadRewardedAd(this)
+
+        AuthRepository.getUserAccountInfo()
+
+        AuthRepository.getUserActiveServices().forEach {
+            AppRepository.debugLog("getUserSubscriptionLinks: " + it.server_group + " - " + it.sublink)
+        }
 
         AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
 

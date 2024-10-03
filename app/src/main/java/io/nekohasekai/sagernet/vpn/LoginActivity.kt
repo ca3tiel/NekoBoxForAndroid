@@ -104,8 +104,8 @@ class LoginActivity : BaseThemeActivity() {
             binding.LLFacebookSignIn.performClick()
         }
 
-        binding.txtEmail.setText("ahmad246@gmail.com")
-        binding.txtPassword.setText("ahmad246")
+        binding.txtEmail.setText("rifegt@gmail.com")
+        binding.txtPassword.setText("MG7nYUTaA&E2*b9FFZ2FY")
 
         binding.btnLogin.setOnClickListener {
             val email = binding.txtEmail.text.toString()
