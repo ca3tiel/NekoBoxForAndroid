@@ -1,5 +1,8 @@
 package io.nekohasekai.sagernet.vpn.repositories
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.content.SharedPreferences
 import android.util.ArrayMap
 import android.util.Log
@@ -8,17 +11,30 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import io.nekohasekai.sagernet.BuildConfig
+import io.nekohasekai.sagernet.database.DataStore
+import io.nekohasekai.sagernet.database.ProfileManager
+import io.nekohasekai.sagernet.database.SagerDatabase
+import io.nekohasekai.sagernet.fmt.AbstractBean
+import io.nekohasekai.sagernet.group.RawUpdater
+import io.nekohasekai.sagernet.ktx.onMainDispatcher
+import io.nekohasekai.sagernet.vpn.models.InfoApiResponse
 import io.nekohasekai.sagernet.vpn.serverlist.ListItem
+import io.nekohasekai.sagernet.vpn.serverlist.ListSubItem
 import io.nekohasekai.sagernet.vpn.serverlist.MyAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import org.koin.android.ext.android.get
 import java.io.IOException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.util.concurrent.ConcurrentLinkedQueue
+import kotlinx.coroutines.*
 
 object AppRepository {
     var LogTag: String = "HAMED_LOG"
@@ -252,13 +268,14 @@ object AppRepository {
     fun getServersListSync(): Int {
         val client = OkHttpClient()
         val url = apiServersListUrl
+        val userAccountInfo = AuthRepository.getUserAccountInfo()
 
         val request = Request.Builder()
             .url(url)
             .header("xmplus-authorization", getPanelApiHeaderToken())
             .header("Content-Type", "application/json")
             .header("Accept", "application/json")
-            .header("Authorization", "Bearer " + AuthRepository.getUserAccountInfo().data.token)
+            .header("Authorization", "Bearer " + userAccountInfo.data.token)
             .get()
             .build()
 
@@ -844,5 +861,71 @@ object AppRepository {
             }
         }
         return arrayMap
+    }
+
+    suspend fun getServersAndImport(context: Context): String {
+        return withContext(Dispatchers.IO) {
+            val response = getServersListSync()
+            if(response == 200) {
+                val serversString = getRawServersConfigAsString()
+                val proxies = RawUpdater.parseRaw(serversString)
+                if(!proxies.isNullOrEmpty()) {
+                    import(proxies, context)
+                }
+            }
+            "Finished"
+        }
+    }
+
+    @SuppressLint("DiscouragedApi")
+    suspend fun import(proxies: List<AbstractBean>, context: Context) {
+        removeAllProfiles()
+        val targetId = DataStore.selectedGroupForImport()
+        var counter = 0
+        allServers = mutableListOf()
+        allServers.clear()
+        allServersOriginal = mutableListOf()
+        allServersOriginal.clear()
+        setAllServer(allServers)
+        allServersRaw.entrySet().forEach { entry ->
+            val serverSubItems: MutableList<ListSubItem> = mutableListOf()
+            val countryCode = entry.key
+            val resourceName = "ic_${countryCode}_flag"
+            val countryName = flagNameMapper(countryCode)
+            entry.value.asJsonArray.forEach { it ->
+                val profile = ProfileManager.createProfile(targetId, proxies[counter])
+                val serverId = it.asJsonObject.get("id").asInt
+                val tagsArray = it.asJsonObject.getAsJsonArray("tags")
+                val tags = Array(tagsArray.size()) { tagsArray[it].asString }
+                serverSubItems.add(
+                    ListSubItem(profile.id, serverId, it.asJsonObject.get("name").asString, profile.status, profile.error, profile.ping, tags = tags)
+                )
+                counter++;
+            }
+            allServers.add(
+                ListItem(
+                    countryName,
+                    serverSubItems,
+                    iconResId = context.resources.getIdentifier(resourceName, "drawable", context.packageName)
+                )
+            )
+        }
+        allServersOriginal = allServers
+        setAllServer(allServers)
+
+        onMainDispatcher {
+            DataStore.editingGroup = targetId
+        }
+    }
+
+    private suspend fun removeAllProfiles() {
+        val groupId = DataStore.selectedGroupForImport()
+        val profilesUnfiltered = SagerDatabase.proxyDao.getByGroup(groupId)
+        val profiles = ConcurrentLinkedQueue(profilesUnfiltered)
+        profiles.forEach { it ->
+            ProfileManager.deleteProfile2(
+                it.groupId, it.id
+            )
+        }
     }
 }

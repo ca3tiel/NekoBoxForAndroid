@@ -7,6 +7,6 @@ data class UserData(
     val money: String,
     val services: List<Service>,
     val count: Int,
-    val xmp_token: String,
-    val token: String
+    val xmp_token: String?,
+    val token: String?
 )

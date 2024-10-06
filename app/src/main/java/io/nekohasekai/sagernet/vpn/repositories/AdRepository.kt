@@ -28,6 +28,8 @@ import io.nekohasekai.sagernet.vpn.DashboardActivity
 import io.nekohasekai.sagernet.vpn.WelcomeActivity
 import io.nekohasekai.sagernet.vpn.utils.InternetConnectionChecker
 import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 
 @SuppressLint("StaticFieldLeak")
@@ -163,7 +165,7 @@ object AdRepository {
         }
     }
 
-    fun checkAdConsent(context: Context) {
+    suspend fun checkAdConsent(context: Context): Boolean = suspendCoroutine { continuation ->
         // Set tag for under age of consent. false means users are not under age
         // of consent.
 
@@ -192,13 +194,17 @@ object AdRepository {
                     println("HAMED_LOG_loadAndShowError: " + loadAndShowError?.message)
                     // Consent has been gathered.
                     if (consentInformation.canRequestAds()) {
-                        println("HAMED_LOG_Consent_Status_can_show_ads: " + canShowAds(context).toString())
+                        val consentAcquired = canShowAds(context)
+                        println("HAMED_LOG_Consent_Status_can_show_ads1: " + consentInformation.canRequestAds().toString())
+                        println("HAMED_LOG_Consent_Status_can_show_ads2: " + consentAcquired.toString())
 //                        println("HAMED_LOG_appOpenAdManager: " + appOpenAdManager.toString())
 
+                        continuation.resume(consentAcquired)
                         appOpenAdManager.loadAd(context)
 //                        appOpenAdManager.showAdIfAvailable(context)
                         initializeMobileAdsSdk(context)
                     } else {
+                        continuation.resume(false)
                         println("HAMED_LOG_NOT_CONSENT")
                     }
                 }
@@ -206,6 +212,7 @@ object AdRepository {
             {
                 requestConsentError ->
                 // Consent gathering failed.
+                continuation.resume(false)
                 println("HAMED_LOG_requestConsentError: " + requestConsentError.message)
             })
     }
@@ -286,14 +293,10 @@ object AdRepository {
         AuthRepository.getUserAccountInfo()
 
         // Request load ads after user granted consent
-        if (AuthRepository.isUserAlreadyLogin()) {
-            val intent = Intent(context, DashboardActivity::class.java)
-            context.startActivity(intent)
-        } else {
-            val intent = Intent(context, MainActivity::class.java)
-            context.startActivity(intent)
-        }
-
+//        if (AuthRepository.isUserAlreadyLogin()) {
+//            val intent = Intent(context, DashboardActivity::class.java)
+//            context.startActivity(intent)
+//        }
     }
 
     fun checkInitializeMobileAdsSdk(context: Context) {

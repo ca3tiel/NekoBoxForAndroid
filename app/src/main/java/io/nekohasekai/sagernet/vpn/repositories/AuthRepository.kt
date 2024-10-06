@@ -8,13 +8,16 @@ import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import org.koin.android.ext.android.get
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-
-object AuthRepository {
+object AuthRepository : KoinComponent {
     private var token: String? = null
     private lateinit var email: String
     private lateinit var lastValidationError: String
     private lateinit var userAccountInfo: InfoApiResponse
+    private val infoApiResponse: InfoApiResponse by inject()
 
     private fun setUserToken(data: String) {
         AppRepository.sharedPreferences.edit().putString("userToken", data).apply()
@@ -22,8 +25,8 @@ object AuthRepository {
     }
 
     fun isUserAlreadyLogin(): Boolean {
-        val userAccountDataString = AppRepository.sharedPreferences.getString("userAccountInfo", null)
-        return userAccountDataString !== null
+        val userAccountInfo = getUserAccountInfo()
+        return userAccountInfo.data.token != null
     }
 
     fun clearUserToken() {
@@ -58,9 +61,14 @@ object AuthRepository {
 
     fun getUserAccountInfo(): InfoApiResponse {
         val userAccountDataString = AppRepository.sharedPreferences.getString("userAccountInfo", null)
+        AppRepository.debugLog("STEP_100: " + userAccountDataString.toString())
+        if (userAccountDataString == null) {
+            return infoApiResponse;
+        }
         userAccountDataString?.let {
             userAccountInfo = Gson().fromJson(userAccountDataString, InfoApiResponse::class.java)
         }
+        AppRepository.debugLog("STEP_101: ")
         return userAccountInfo
     }
 
