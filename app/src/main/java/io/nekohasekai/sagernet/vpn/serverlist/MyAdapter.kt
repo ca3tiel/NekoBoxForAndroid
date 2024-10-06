@@ -23,7 +23,6 @@ class MyAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemName: TextView = itemView.findViewById(R.id.itemName)
-        val itemIcon: ImageView = itemView.findViewById(R.id.itemIcon)
         val expandIcon: ImageView = itemView.findViewById(R.id.expandIcon)
         val dropdownList: RecyclerView = itemView.findViewById(R.id.dropdownList)
         val itemHeader: LinearLayout = itemView.findViewById(R.id.itemHeader)
@@ -43,7 +42,6 @@ class MyAdapter(
 
         // Bind basic item information
         holder.itemName.text = item.name
-        holder.itemIcon.setImageResource(item.iconResId)
 
         // Bind expand/collapse state
         val isExpanded = item.isExpanded

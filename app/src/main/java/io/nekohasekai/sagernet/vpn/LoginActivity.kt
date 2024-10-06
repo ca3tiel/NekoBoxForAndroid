@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import io.nekohasekai.sagernet.R
 import io.nekohasekai.sagernet.databinding.ActivityLoginBinding
+import io.nekohasekai.sagernet.vpn.repositories.AppRepository
 import io.nekohasekai.sagernet.vpn.repositories.AuthRepository
 import io.nekohasekai.sagernet.vpn.repositories.SocialAuthRepository
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +36,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+
 
 class LoginActivity : BaseThemeActivity() {
 
@@ -104,8 +107,8 @@ class LoginActivity : BaseThemeActivity() {
             binding.LLFacebookSignIn.performClick()
         }
 
-        binding.txtEmail.setText("ahmad246@gmail.com")
-        binding.txtPassword.setText("ahmad246")
+        binding.txtEmail.setText("rifegt@gmail.com")
+        binding.txtPassword.setText("MG7nYUTaA&E2*b9FFZ2FY")
 
         binding.btnLogin.setOnClickListener {
             val email = binding.txtEmail.text.toString()
@@ -175,6 +178,7 @@ class LoginActivity : BaseThemeActivity() {
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun performLogin(email: String, password: String) {
         runBlocking {
             try {
@@ -183,9 +187,12 @@ class LoginActivity : BaseThemeActivity() {
                     when (responseCode) {
                         200 -> {
                             runOnUiThread {
-                                binding.tvValidationError.visibility = View.GONE
-                                AuthRepository.setUserEmail(email)
-                                navigateToDashboardActivity()
+                                GlobalScope.launch {
+                                    AppRepository.getServersAndImport(this@LoginActivity)
+//                                    binding.tvValidationError.visibility = View.GONE
+//                                    AuthRepository.setUserEmail(email)
+                                    navigateToDashboardActivity()
+                                }
                             }
                         }
                         500,404 -> {

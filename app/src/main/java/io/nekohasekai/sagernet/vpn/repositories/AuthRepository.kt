@@ -1,21 +1,23 @@
 package io.nekohasekai.sagernet.vpn.repositories
 
-import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.google.gson.annotations.SerializedName
 import io.nekohasekai.sagernet.vpn.models.InfoApiResponse
+import io.nekohasekai.sagernet.vpn.models.Service
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import org.koin.android.ext.android.get
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-
-object AuthRepository {
+object AuthRepository : KoinComponent {
     private var token: String? = null
     private lateinit var email: String
     private lateinit var lastValidationError: String
     private lateinit var userAccountInfo: InfoApiResponse
+    private val infoApiResponse: InfoApiResponse by inject()
 
     private fun setUserToken(data: String) {
         AppRepository.sharedPreferences.edit().putString("userToken", data).apply()
@@ -23,8 +25,8 @@ object AuthRepository {
     }
 
     fun isUserAlreadyLogin(): Boolean {
-        val userAccountDataString = AppRepository.sharedPreferences.getString("userAccountInfo", null)
-        return userAccountDataString !== null
+        val userAccountInfo = getUserAccountInfo()
+        return userAccountInfo.data.token != null
     }
 
     fun clearUserToken() {
@@ -57,15 +59,31 @@ object AuthRepository {
         AppRepository.sharedPreferences.edit().putString("userAccountInfo", userAccountInfoJsonString).apply()
     }
 
-    fun getUserAccountInfo() {
+    fun getUserAccountInfo(): InfoApiResponse {
         val userAccountDataString = AppRepository.sharedPreferences.getString("userAccountInfo", null)
+        AppRepository.debugLog("STEP_100: " + userAccountDataString.toString())
+        if (userAccountDataString == null) {
+            return infoApiResponse;
+        }
         userAccountDataString?.let {
             userAccountInfo = Gson().fromJson(userAccountDataString, InfoApiResponse::class.java)
         }
+        AppRepository.debugLog("STEP_101: ")
+        return userAccountInfo
     }
 
     fun getUserEmail(): String {
         return userAccountInfo.data.email
+    }
+
+    fun getUserActiveServices(): List<Service> {
+        val services = userAccountInfo.data.services.filter {
+            it.status == "فعال"
+        }
+
+        services.sortedByDescending { it.server_group  }
+
+        return services
     }
 
     fun token(): Int {
@@ -87,6 +105,7 @@ object AuthRepository {
                 val jsonObject = gson.fromJson(responseBody, JsonObject::class.java)
                 val dataJsonObject = gson.fromJson(jsonObject.get("data").asJsonObject, JsonObject::class.java)
                 val token = dataJsonObject.get("token").asString
+                AppRepository.debugLog("SetUserToken")
                 setUserToken(token)
 
             }

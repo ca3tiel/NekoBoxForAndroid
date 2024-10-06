@@ -36,6 +36,7 @@ import io.nekohasekai.sagernet.ktx.Logs
 import io.nekohasekai.sagernet.ktx.runOnDefaultDispatcher
 import io.nekohasekai.sagernet.ui.MainActivity
 import io.nekohasekai.sagernet.utils.*
+import io.nekohasekai.sagernet.vpn.di.appModule
 import io.nekohasekai.sagernet.vpn.repositories.AdRepository
 import io.nekohasekai.sagernet.vpn.repositories.AdRepository.appOpenAdManager
 import io.nekohasekai.sagernet.vpn.repositories.AppRepository
@@ -48,6 +49,7 @@ import moe.matsuri.nb4a.utils.cleanWebview
 import java.io.File
 import java.util.Date
 import androidx.work.Configuration as WorkConfiguration
+import org.koin.core.context.startKoin
 
 class SagerNet : Application(),
     WorkConfiguration.Provider, Application.ActivityLifecycleCallbacks, LifecycleObserver {
@@ -101,6 +103,10 @@ class SagerNet : Application(),
 
     override fun onCreate() {
         super.onCreate()
+
+        startKoin {
+            modules(appModule)
+        }
 
         System.setProperty(DEBUG_PROPERTY_NAME, DEBUG_PROPERTY_VALUE_ON)
         Thread.setDefaultUncaughtExceptionHandler(CrashHandler)

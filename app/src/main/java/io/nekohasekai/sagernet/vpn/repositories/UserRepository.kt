@@ -17,4 +17,8 @@ object UserRepository {
     fun setUserState() {
 
     }
+
+    fun setService() {
+
+    }
 }
