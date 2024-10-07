@@ -108,12 +108,11 @@ class SplashActivity : BaseThemeActivity() {
 //        loadInterstitialAd()
 
         loadFcmToken()
-        AppRepository.sharedPreferences = getSharedPreferences("CountdownPrefs", Context.MODE_PRIVATE)
+        AppRepository.sharedPreferences = getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
 
         lifecycleScope.launch(Dispatchers.IO) {
             val userConsent = AdRepository.checkAdConsent(this@SplashActivity)
             startLoading()
-            AppRepository.debugLog("HAMED_LOG_TEST_203: " + userConsent.toString())
         }
 
 
